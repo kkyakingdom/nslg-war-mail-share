@@ -1,0 +1,1 @@
+﻿window.WARMAIL_STATUS={"state":"READY","message":"교전 탭을 연 뒤 웹에서 수집 시작을 누르세요.","mode":"웹 수동 상세 수집","lastAttempt":"","lastSuccess":"","nextRun":"","intervalMinutes":0,"pid":0,"newCount":0,"newAnalysisCount":0,"rawCount":0,"analysisCount":0,"lastBackup":"","publishState":"SKIP","publishMessage":"게시 경로 미설정","consecutiveFailures":0};
