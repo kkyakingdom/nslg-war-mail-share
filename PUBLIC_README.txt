@@ -1,5 +1,5 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.37.5.6 GITHUB VERIFIED FRESHNESS
-생성: 2026-10-11 23:30:11
+생성: 2026-10-11 23:31:42
 프로필: all
 분석 행: 1102
 닉네임 공개: none
