@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":73,"at":"2026-10-11T23:18:55.7964941+09:00","reason":"server-start","version":"v6.37.5.5 GITHUB AUTO LOGIN FIX"};
+﻿window.NSLG_DATA_GENERATION={"generation":74,"at":"2026-10-11T23:29:54.2875623+09:00","reason":"server-start","version":"v6.37.5.6 GITHUB VERIFIED FRESHNESS"};

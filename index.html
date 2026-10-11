@@ -133,6 +133,17 @@ body.simpleMode .commandOnly{display:none!important}body.simpleMode .commandSetu
 /* v6.36.4: quiet collector result + global period analysis */
 .v638PeriodBar{display:grid;grid-template-columns:minmax(260px,1.3fr) auto minmax(170px,.8fr);gap:10px;align-items:center;margin:0 0 12px;padding:10px 12px;border:1px solid #303843;border-radius:12px;background:linear-gradient(180deg,#141a20,#12171c)}
 .v638PeriodLead{display:flex;flex-direction:column;gap:2px}.v638PeriodLead b{font-size:12px;color:#f0d793}.v638PeriodLead span{font-size:9px;color:#89939e}.v638PeriodButtons{display:flex;gap:5px;flex-wrap:wrap}.v638PeriodButtons button{padding:7px 10px;font-size:10px;border-radius:8px}.v638PeriodButtons button.on{color:#f6dda0;border-color:#8c713d;background:#211b11;box-shadow:inset 0 -2px 0 rgba(232,195,106,.5)}.v638PeriodSummary{justify-self:end;text-align:right;font-size:10px;color:#aeb7c1;line-height:1.45}.v638PeriodSummary b{color:#edf2f7}.v634CollectGuide.v638Hidden{display:none!important}.v637Partial{border-color:#4a6255!important;color:#ccebd7!important;background:#142019!important}
+/* v6.37.5.6: verified GitHub freshness at-a-glance */
+.v63756ShareState{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #39414c;border-radius:999px;background:#151a20;color:#aeb7c1;font-size:10px;font-weight:800;white-space:nowrap;cursor:default;transition:border-color .15s ease,background .15s ease,color .15s ease}
+.v63756ShareState i{display:block;width:7px;height:7px;border-radius:50%;background:#68707a;box-shadow:0 0 0 3px rgba(104,112,122,.10)}
+.v63756ShareState.ready{border-color:#66542e;background:#201b11;color:#eed797;cursor:pointer}.v63756ShareState.ready i{background:#d6b35c}
+.v63756ShareState.latest{border-color:#37644a;background:#142019;color:#bde9cc;cursor:pointer}.v63756ShareState.latest i{background:#78c89a;box-shadow:0 0 0 3px rgba(120,200,154,.11)}
+.v63756ShareState.stale{border-color:#80612f;background:#241c10;color:#f0cf83;cursor:pointer}.v63756ShareState.stale i{background:#f0a34a;box-shadow:0 0 0 3px rgba(240,163,74,.11)}
+.v63756ShareState.busy{border-color:#65512f;background:#211b11;color:#f2d795}.v63756ShareState.busy i{background:#e8c36a;animation:v63756Pulse 1.1s ease-in-out infinite}
+.v63756ShareState.fail{border-color:#7d433d;background:#271716;color:#f0aaa4;cursor:pointer}.v63756ShareState.fail i{background:#e58c83}
+@keyframes v63756Pulse{0%,100%{opacity:.42;transform:scale(.86)}50%{opacity:1;transform:scale(1.15)}}
+@media(max-width:900px){.v63756ShareState{max-width:180px;overflow:hidden;text-overflow:ellipsis}}
+
 @media(max-width:980px){.v638PeriodBar{grid-template-columns:1fr}.v638PeriodSummary{justify-self:start;text-align:left}.v638PeriodButtons{overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}.v638PeriodButtons button{flex:0 0 auto}}
 </style>
 </head>
@@ -168,7 +179,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
 </script>
 <div id="nslgPublicBanner" style="position:sticky;top:0;z-index:99999;padding:7px 12px;text-align:center;background:#171b22;border-bottom:1px solid #51472d;color:#e8c36a;font:700 12px Pretendard,sans-serif">PUBLIC · 비밀번호 보호 · 읽기 전용 분석 화면</div>
 <div class="wrap">
-  <div class="top"><div><h1 id="appHome" class="appHome" role="button" tabindex="0" aria-label="전황 메인화면으로 이동" title="전황 메인화면으로 이동">깔개 분석기</h1><div class="sub">전황 · 전쟁실 · 덱 분석 · 전보 · 인물 · 지휘 판단 중심 UI</div></div><div class="topActions"><div class="modeSwitch" title="간편 모드는 핵심 화면만, 지휘부 모드는 모든 분석 기능을 표시합니다."><button id="modeSimple">일반</button><button id="modeCommand" class="on">지휘부</button></div><button id="v629GlobalSearchBtn" class="commandSetupBtn v629SearchBtn" title="통합 검색 · Ctrl+K">⌕ 검색</button><button id="v630AiBtn" class="commandSetupBtn v630AiTopBtn" title="깔개 AI · 전황 요약과 자연어 분석">✦ 깔개 AI</button><button id="v628CompareBtn" class="commandSetupBtn">비교</button><button id="v632ShareBtn" class="commandSetupBtn" title="GitHub 원클릭 공유 · 첫 실행은 로그인만 하면 저장소와 Pages를 자동 설정합니다">공유</button><button id="v6331SeasonChip" class="v6331SeasonChip" title="현재 시즌 관리">시즌: 확인 중</button><div class="badge" id="updated">데이터 로딩 중</div></div></div>
+  <div class="top"><div><h1 id="appHome" class="appHome" role="button" tabindex="0" aria-label="전황 메인화면으로 이동" title="전황 메인화면으로 이동">깔개 분석기</h1><div class="sub">전황 · 전쟁실 · 덱 분석 · 전보 · 인물 · 지휘 판단 중심 UI</div></div><div class="topActions"><div class="modeSwitch" title="간편 모드는 핵심 화면만, 지휘부 모드는 모든 분석 기능을 표시합니다."><button id="modeSimple">일반</button><button id="modeCommand" class="on">지휘부</button></div><button id="v629GlobalSearchBtn" class="commandSetupBtn v629SearchBtn" title="통합 검색 · Ctrl+K">⌕ 검색</button><button id="v630AiBtn" class="commandSetupBtn v630AiTopBtn" title="깔개 AI · 전황 요약과 자연어 분석">✦ 깔개 AI</button><button id="v628CompareBtn" class="commandSetupBtn">비교</button><button id="v632ShareBtn" class="commandSetupBtn" title="GitHub 원클릭 공유 · 첫 실행은 로그인만 하면 저장소와 Pages를 자동 설정합니다">공유</button><button id="v63756ShareState" class="v63756ShareState" type="button" title="GitHub 공유 상태 확인"><i></i><span>GitHub 확인 중</span></button><button id="v6331SeasonChip" class="v6331SeasonChip" title="현재 시즌 관리">시즌: 확인 중</button><div class="badge" id="updated">데이터 로딩 중</div></div></div>
   <div class="tabs mainTabs" id="v628MainTabs"><button class="tab on" data-tab="dashboard" data-group="dashboard">전황</button><button class="tab commandOnly" data-tab="warroom" data-group="warroom">전쟁실</button><button class="tab" data-tab="decks" data-group="decks">덱 분석</button><button class="tab" data-tab="records" data-group="records">전보</button><button class="tab" data-tab="players" data-group="players">인물</button><button id="v628AdminBtn" class="tab adminTab commandOnly" type="button">⚙ 관리</button></div>
   <div id="v628SubNav" class="v628SubNav hidden"></div>
   <div class="collectorStatus collectorStatusCompact" id="collectorStatus">
@@ -1444,7 +1455,56 @@ function v632StateHash(){const tab=document.querySelector('#v628MainTabs .tab.on
 function v632UpdateHash(){try{history.replaceState(null,'',location.pathname+location.search+v632StateHash())}catch(_){}}
 const v632BaseShow=showTab;showTab=function(id){v632BaseShow(id);setTimeout(v632UpdateHash,0)};const v632BaseOpenPlayer=openPlayerAnalysis;openPlayerAnalysis=function(name,alliance=''){v632BaseOpenPlayer(name,alliance);setTimeout(v632UpdateHash,0)};
 function v632LoadHash(){const h=new URLSearchParams(location.hash.replace(/^#/,'')),tab=h.get('tab');if(tab)showTab(tab);if(h.get('player'))openPlayerAnalysis(h.get('player'));if(h.get('alliance')){$('#warroomAlliance').value=h.get('alliance');V627_WR_H=V627_WR_H||3;v627RenderWarroom()}if(h.get('deck')){activeAnyDeck=h.get('deck');render()}}
-async function v6374GithubShare(){const b=$('#v632ShareBtn');if(window.NSLG_PUBLIC_MODE){v632UpdateHash();try{await navigator.clipboard.writeText(location.href);const old=b.textContent;b.textContent='링크 복사됨';setTimeout(()=>b.textContent=old,1200)}catch(_){prompt('이 링크를 복사하세요.',location.href)}return}const old=b.textContent;b.disabled=true;b.textContent='GitHub 연결 중…';let startErr=null;try{try{const r=await fetch('/api/github-share',{method:'POST'});const j=await r.json();if(!j.ok)throw new Error(j.message||'공유 시작 실패')}catch(e){startErr=e;await new Promise(x=>setTimeout(x,1200))}let done=null,lastPollErr=null;const labels={STARTING:'공유 시작 중…',RUNNING:'공유 준비 중…',INSTALLING:'GitHub 도구 설치 중…',LOGIN:'GitHub 로그인 중…',CREATING_REPO:'저장소 생성 중…',BUILDING:'공유 화면 생성 중…',UPLOADING:'GitHub 업로드 중…',PAGES:'Pages 설정 중…'};for(let i=0;i<600;i++){await new Promise(x=>setTimeout(x,1000));try{done=await fetch('/api/github-share-status?ts='+Date.now(),{cache:'no-store'}).then(x=>x.json());lastPollErr=null}catch(e){lastPollErr=e;if(i<8)continue;break}if(done?.state==='OK'||done?.state==='FAILED')break;b.textContent=labels[done?.state]||'GitHub 공유 중…'}if(done?.state==='OK'){b.textContent='공유 완료';if(done.pageUrl){try{await navigator.clipboard.writeText(done.pageUrl)}catch(_){}const msg='GitHub 공유가 완료되었습니다.\n\n공유 주소: '+done.pageUrl+'\n\n공유 주소는 클립보드에도 복사했습니다. 페이지를 열까요?';if(confirm(msg))window.open(done.pageUrl,'_blank')}else{alert(done.message||'GitHub 공유 완료')}}else if(done?.state==='FAILED'){throw new Error((done.message||'GitHub 공유 실패')+'\n\n공유 PowerShell 창은 자동으로 닫히지 않으므로 화면의 오류를 확인해 주세요.')}else if(startErr||lastPollErr){throw new Error('로컬 서버와 통신이 잠시 끊겼습니다.\n공유 PowerShell 창은 계속 열려 있어야 합니다. 그 창에 표시된 내용을 확인해 주세요.')}else{throw new Error('GitHub 공유 작업이 아직 끝나지 않았습니다.\n공유 PowerShell 창에서 진행 상태를 확인해 주세요.')}}catch(e){alert('GitHub 공유 실패\n'+(e?.message||e));b.textContent='공유 실패'}finally{b.disabled=false;setTimeout(()=>b.textContent=old,3000)}}
+let V63756_SHARE_STATUS=null;
+function v63756TimeMs(v){const n=Date.parse(v||'');return Number.isFinite(n)?n:0}
+function v63756Clock(v){const n=v63756TimeMs(v);if(!n)return'-';return new Date(n).toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false})}
+function v63756ShareChip(kind,text,title='',pageUrl=''){
+  const e=$('#v63756ShareState');if(!e)return;
+  e.className='v63756ShareState '+kind;e.querySelector('span').textContent=text;e.title=title||text;e.dataset.pageUrl=pageUrl||'';
+}
+function v63756ShareIsCurrent(j){
+  const collectAt=String(LASTCOLLECT?.at||'');
+  const sourceAt=String(j?.sourceCollectAt||'');
+  if(!collectAt)return j?.state==='OK';
+  if(sourceAt)return v63756TimeMs(sourceAt)>=v63756TimeMs(collectAt)-1000;
+  return false;
+}
+function v63756ShareTitle(j,current){
+  const parts=[];
+  if(j?.sourceCollectAt)parts.push('업로드된 수집: '+v63756Clock(j.sourceCollectAt));
+  if(LASTCOLLECT?.at)parts.push('현재 수집: '+v63756Clock(LASTCOLLECT.at));
+  if(Number(j?.sourceAnalysisRows)>=0)parts.push('업로드 분석 전보: '+Number(j.sourceAnalysisRows).toLocaleString()+'건');
+  if(j?.commitSha)parts.push('GitHub 확인 커밋: '+String(j.commitSha).slice(0,8));
+  if(j?.at)parts.push('업로드 확인: '+v63756Clock(j.at));
+  parts.push(current?'현재 수집 데이터와 일치합니다.':'현재 수집 데이터가 아직 GitHub에 반영되지 않았습니다.');
+  return parts.join('\n');
+}
+async function v63756RefreshShareStatus(){
+  const e=$('#v63756ShareState');if(!e)return;
+  if(window.NSLG_PUBLIC_MODE){e.style.display='none';return}
+  try{
+    const j=await fetch('/api/github-share-status?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('status '+r.status);return r.json()});
+    V63756_SHARE_STATUS=j;
+    const state=String(j?.state||'READY').toUpperCase(),running=['STARTING','RUNNING','INSTALLING','LOGIN','CREATING_REPO','BUILDING','UPLOADING','VERIFYING','PAGES'].includes(state);
+    if(running){v63756ShareChip('busy','GitHub 공유 중…',j.message||'GitHub 공유 작업 진행 중',j.pageUrl);return}
+    if(state==='FAILED'){v63756ShareChip('fail','GitHub 공유 실패',(j.message||'공유 실패')+'\n공유 버튼을 눌러 재시도하세요.',j.pageUrl);return}
+    if(!j?.configured){v63756ShareChip('ready','GitHub 미설정','공유 버튼을 눌러 GitHub 공유를 처음 설정하세요.','');return}
+    if(state==='OK'){
+      const current=v63756ShareIsCurrent(j),clock=v63756Clock(j.at).replace(/^\d{2}\.\s?\d{2}\.\s?/,'');
+      if(current)v63756ShareChip('latest','✓ GitHub 최신 · '+clock,v63756ShareTitle(j,true),j.pageUrl);
+      else v63756ShareChip('stale','↻ 공유 필요',v63756ShareTitle(j,false),j.pageUrl);
+      return
+    }
+    v63756ShareChip('stale','↻ 공유 확인 필요',j.message||'공유 버튼을 눌러 최신 데이터를 확인하세요.',j.pageUrl)
+  }catch(e){v63756ShareChip('fail','GitHub 상태 확인 실패','로컬 공유 상태를 읽지 못했습니다. '+(e?.message||e),'')}
+}
+function v63756InstallShareStatus(){
+  const e=$('#v63756ShareState');if(!e)return;
+  e.addEventListener('click',()=>{const u=e.dataset.pageUrl||V63756_SHARE_STATUS?.pageUrl||'';if(u)window.open(u,'_blank');else $('#v632ShareBtn')?.click()});
+  v63756RefreshShareStatus();setInterval(v63756RefreshShareStatus,5000)
+}
+setTimeout(v63756InstallShareStatus,500);
+async function v6374GithubShare(){const b=$('#v632ShareBtn');if(window.NSLG_PUBLIC_MODE){v632UpdateHash();try{await navigator.clipboard.writeText(location.href);const old=b.textContent;b.textContent='링크 복사됨';setTimeout(()=>b.textContent=old,1200)}catch(_){prompt('이 링크를 복사하세요.',location.href)}return}const old=b.textContent;b.disabled=true;b.textContent='GitHub 연결 중…';let startErr=null;try{try{const r=await fetch('/api/github-share',{method:'POST'});const j=await r.json();if(!j.ok)throw new Error(j.message||'공유 시작 실패')}catch(e){startErr=e;await new Promise(x=>setTimeout(x,1200))}let done=null,lastPollErr=null;const labels={STARTING:'공유 시작 중…',RUNNING:'공유 준비 중…',INSTALLING:'GitHub 도구 설치 중…',LOGIN:'GitHub 로그인 중…',CREATING_REPO:'저장소 생성 중…',BUILDING:'공유 화면 생성 중…',UPLOADING:'GitHub 업로드 중…',VERIFYING:'GitHub 반영 확인 중…',PAGES:'Pages 설정 중…'};for(let i=0;i<600;i++){await new Promise(x=>setTimeout(x,1000));try{done=await fetch('/api/github-share-status?ts='+Date.now(),{cache:'no-store'}).then(x=>x.json());lastPollErr=null}catch(e){lastPollErr=e;if(i<8)continue;break}if(done?.state==='OK'||done?.state==='FAILED')break;b.textContent=labels[done?.state]||'GitHub 공유 중…'}if(done?.state==='OK'){b.textContent='공유 완료';v63756RefreshShareStatus();if(done.pageUrl){try{await navigator.clipboard.writeText(done.pageUrl)}catch(_){}const msg='GitHub 공유가 완료되었습니다.\n\n공유 주소: '+done.pageUrl+'\n\n공유 주소는 클립보드에도 복사했습니다. 페이지를 열까요?';if(confirm(msg))window.open(done.pageUrl,'_blank')}else{alert(done.message||'GitHub 공유 완료')}}else if(done?.state==='FAILED'){throw new Error((done.message||'GitHub 공유 실패')+'\n\n공유 PowerShell 창은 자동으로 닫히지 않으므로 화면의 오류를 확인해 주세요.')}else if(startErr||lastPollErr){throw new Error('로컬 서버와 통신이 잠시 끊겼습니다.\n공유 PowerShell 창은 계속 열려 있어야 합니다. 그 창에 표시된 내용을 확인해 주세요.')}else{throw new Error('GitHub 공유 작업이 아직 끝나지 않았습니다.\n공유 PowerShell 창에서 진행 상태를 확인해 주세요.')}}catch(e){alert('GitHub 공유 실패\n'+(e?.message||e));b.textContent='공유 실패'}finally{b.disabled=false;setTimeout(()=>b.textContent=old,3000);setTimeout(v63756RefreshShareStatus,800)}}
 $('#v632ShareBtn')?.addEventListener('click',v6374GithubShare);
 
 function v632SeasonReport(){const rows=DATA,season=$('#seasonFilter')?.value||V629_SEASON||'현재 시즌',decks=statList(rows,true).map(z=>({...z,adj:adjustedRateNum(z.w,z.l)})).sort((a,b)=>b.n-a.n),players=playerStats(rows).sort((a,b)=>b.engagements-a.engagements),alli=[...new Set(rows.flatMap(r=>[r.alliance,r.oppAlliance]).filter(Boolean))].map(a=>v628AllianceCmp(a)).sort((a,b)=>b.n-a.n),html=`<!doctype html><meta charset="utf-8"><title>깔개 분석기 ${esc(season)} 보고서</title><style>body{font-family:sans-serif;max-width:1100px;margin:40px auto;color:#222}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #ddd;padding:7px;text-align:left}h1,h2{margin-top:26px}</style><h1>${esc(season)} · 깔개 분석기 시즌 보고서</h1><p>생성 ${new Date().toLocaleString('ko-KR')} · 분석 ${rows.length.toLocaleString()}전</p><h2>주요 덱</h2><table><tr><th>덱</th><th>표본</th><th>승</th><th>패</th><th>보정승률</th></tr>${decks.slice(0,30).map(z=>`<tr><td>${esc(z.al)}</td><td>${z.n}</td><td>${z.w}</td><td>${z.l}</td><td>${z.adj.toFixed(1)}%</td></tr>`).join('')}</table><h2>주요 플레이어</h2><table><tr><th>유저</th><th>교전</th><th>승</th><th>패</th><th>위협</th></tr>${players.slice(0,30).map(z=>`<tr><td>${esc(z.name)}</td><td>${z.engagements}</td><td>${z.w}</td><td>${z.l}</td><td>${z.threat}</td></tr>`).join('')}</table><h2>연맹</h2><table><tr><th>연맹</th><th>교전</th><th>승</th><th>패</th><th>보정승률</th></tr>${alli.map(z=>`<tr><td>${esc(z.name)}</td><td>${z.n}</td><td>${z.w}</td><td>${z.l}</td><td>${z.adj.toFixed(1)}%</td></tr>`).join('')}</table>`;const blob=new Blob([html],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`깔개분석기_${season}_시즌보고서_${new Date().toISOString().slice(0,10)}.html`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
