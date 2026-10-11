@@ -1,5 +1,5 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.37.5.5 GITHUB AUTO LOGIN FIX
-생성: 2026-10-11 23:20:46
+생성: 2026-10-11 23:22:39
 프로필: all
 분석 행: 1102
 닉네임 공개: none
