@@ -1,0 +1,1 @@
+﻿window.NSLG_LAST_COLLECT={at:"2026-10-10T19:42:56.5081529+09:00",parsedThisRun:284,cumulativePvp:1781,duplicatesCollapsed:4,rawJournalRows:1007,analysisRows:645,lowTroopExcluded:571,drawChainsResolved:5,pendingDrawExcluded:2,unresolvedExcluded:19,ambiguousDrawExcluded:0,lowSupplyExcluded:116,missingSupplyExcluded:358,npcExcluded:61,knownBattleHitsSkipped:2050};

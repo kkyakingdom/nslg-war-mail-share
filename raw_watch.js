@@ -1,0 +1,1 @@
+﻿window.NSLG_RAW_WATCH={lastScan:"2026-10-11T23:19:30.4986092+09:00",currentUnique:828,previousUnique:807,currentSetHash:"2508d9f3a57c0e00de7fb2ba5678e61e84385148352be617339dfe302f5e19fb",previousSetHash:"c1e6727116b62f1f2c3afd9a1ba555f1ed3f7273d5c5d7a7f5e48f75dbe5a405",stableScans:0,ready:false,readyMessage:"BattleID 목록 변동 확인 중",newCount:25,totalSeen:1194,error:""};

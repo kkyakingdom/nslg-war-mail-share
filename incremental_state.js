@@ -1,0 +1,1 @@
+﻿window.NSLG_INCREMENTAL_STATE={at:"",mode:"NORMAL",recentReparseMinutes:3,current:0,newCount:0,dirtyCount:0,detailWaitCount:0,staleCount:0,doneCount:0,newIds:[],dirtyIds:[],staleIds:[]};
