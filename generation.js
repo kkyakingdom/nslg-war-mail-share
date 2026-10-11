@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":77,"at":"2026-10-11T23:38:44.5741207+09:00","reason":"server-start","version":"v6.37.5.7 PUBLIC DATA SYNC FIX"};
+﻿window.NSLG_DATA_GENERATION={"generation":78,"at":"2026-10-11T23:40:19.1544743+09:00","reason":"merge:20261011_233701.zip","version":"v6.37.5.7 PUBLIC DATA SYNC FIX"};
