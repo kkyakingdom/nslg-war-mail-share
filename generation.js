@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":75,"at":"2026-10-11T23:31:00.8744402+09:00","reason":"merge:전보수집결과_MVP_20261011_221108.zip","version":"v6.37.5.6 GITHUB VERIFIED FRESHNESS"};
+﻿window.NSLG_DATA_GENERATION={"generation":76,"at":"2026-10-11T23:36:26.5469701+09:00","reason":"collection:20261011-233306","version":"v6.33"};
