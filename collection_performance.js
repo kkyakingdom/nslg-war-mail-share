@@ -1,1 +1,1 @@
-﻿window.NSLG_COLLECTION_PERFORMANCE={at:"",items:[]};
+﻿window.NSLG_COLLECTION_PERFORMANCE={"at":"2026-10-12T19:06:01.7120978+09:00","items":[{"at":"2026-10-12T19:06:01.4428733+09:00","cycle":"20261012-190232","state":"PARTIAL","mode":"FAST","reparseMinutes":0,"durationSec":205,"newRaw":62,"newAnalysis":31,"parsed":421,"scans":3,"unresolved":130,"throughput":2.05}],"summary":{"recent":1,"complete":0,"successRate":0,"avgDurationSec":0,"avgParsed":0,"unresolvedSum":0,"modeHint":"NORMAL"}};
