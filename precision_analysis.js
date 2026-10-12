@@ -193,17 +193,60 @@ renderQuality=function(){
 // Strict fair rows become the sole source for win-rate statistics.
 try{v6366FairRows=v6370FairRows}catch(_){ }
 
-// Evidence drill-down after clicking a matchup shows both baseline and reversal matchup evidence.
+// v6.38.2: matchup drill-down must use the exact same FULL observed battles shown in the matrix.
+// The selected row deck is always normalized to the left side so cards/records/results stay in the same perspective.
 const v6370BaseFiltered=baseFiltered;
+var V6382_MATCHUP_ORIENTED_BY_BID=new Map();
+function v6382SwapChainFlow(raw){
+  const s=String(raw||'').trim();if(!s)return s;
+  return s.split('||').map(part=>{const a=part.split('~');if(a.length<5)return part;return[a[0],a[1],a[3],a[2],invertResult(a[4])].join('~')}).join('||');
+}
+function v6382OrientMatchupRecord(r,swap){
+  if(!swap)return {...r,_v6382MatchupOriented:true};
+  const x={...r,_v6382MatchupOriented:true};
+  [x.user,x.oppUser]=[r.oppUser,r.user];[x.alliance,x.oppAlliance]=[r.oppAlliance,r.alliance];
+  [x.h1,x.oh1]=[r.oh1,r.h1];[x.h2,x.oh2]=[r.oh2,r.h2];[x.h3,x.oh3]=[r.oh3,r.h3];
+  [x.troops,x.oppTroops]=[r.oppTroops,r.troops];[x.mySupply,x.oppSupply]=[r.oppSupply,r.mySupply];
+  x.result=invertResult(r.result);x.chainFlow=v6382SwapChainFlow(r.chainFlow);return x;
+}
 baseFiltered=function(){
   if(typeof activePureMatchupPair==='undefined'||!activePureMatchupPair)return v6370BaseFiltered();
-  const rows=v6370PracticalMatchRows(),q=(document.querySelector('#q')?.value||'').trim().toLowerCase(),rf=document.querySelector('#resultFilter')?.value||'',oh=document.querySelector('#ownHero')?.value||'',ph=document.querySelector('#oppHero')?.value||'';
-  return rows.filter(r=>{if(rf&&r.result!==rf)return false;if(oh&&!heroes(r).includes(oh))return false;if(ph&&!heroes(r,true).includes(ph))return false;const a=deckDescriptor(r,false,activeKeyMode).key,b=deckDescriptor(r,true,activeKeyMode).key;if(activeOwnDeck&&activeOppDeck&&!((a===activeOwnDeck&&b===activeOppDeck)||(a===activeOppDeck&&b===activeOwnDeck)))return false;if(q&&!String(searchableText(r)).toLowerCase().includes(q))return false;return true});
+  const rows=typeof v6372FullMatchRows==='function'?v6372FullMatchRows():(ALL_DATA||[]),out=[];V6382_MATCHUP_ORIENTED_BY_BID=new Map();
+  for(const r of rows){
+    const a=deckDescriptor(r,false,activeKeyMode).key,b=deckDescriptor(r,true,activeKeyMode).key;
+    if(!activeOwnDeck||!activeOppDeck)continue;
+    if(a===activeOwnDeck&&b===activeOppDeck){const x=v6382OrientMatchupRecord(r,false);out.push(x);V6382_MATCHUP_ORIENTED_BY_BID.set(String(r.battleId),x)}
+    else if(a===activeOppDeck&&b===activeOwnDeck){const x=v6382OrientMatchupRecord(r,true);out.push(x);V6382_MATCHUP_ORIENTED_BY_BID.set(String(r.battleId),x)}
+  }
+  out.sort((a,b)=>(parseTime(b.time)||0)-(parseTime(a.time)||0));return out;
 };
 
-// Matchup matrix: keep the analysis model rich internally, but keep the matrix itself deliberately simple.
-// The large number is the current precision matchup estimate. The second line is the full observed PVP record
-// for the selected period/season. Reversal/supply/confidence details stay in the internal model and are not shown here.
+// Entity/detail clicks must keep the same normalized matchup perspective too.
+if(typeof v628EnhanceRecordEntities==='function'){
+  const v6382BaseEnhanceRecordEntities=v628EnhanceRecordEntities;
+  v628EnhanceRecordEntities=function(){
+    if(!activePureMatchupPair)return v6382BaseEnhanceRecordEntities();
+    try{v6382BaseEnhanceRecordEntities()}catch(_){}
+    const body=document.querySelector('#recordRows');if(!body)return;
+    body.querySelectorAll('tr[data-bid]').forEach(tr=>{
+      const r=V6382_MATCHUP_ORIENTED_BY_BID.get(String(tr.dataset.bid));if(!r)return;const t=tr.querySelectorAll('td');if(t.length<8)return;
+      tr.style.cursor='pointer';tr.onclick=e=>{if(e.target.closest('.entityHot'))return;openDetail(r)};
+      const bindPlayer=(cell,name)=>{if(!cell||!name)return;cell.classList.add('entityHot');cell.title='클릭: 유저 분석 · 우클릭: 빠른 메뉴';cell.onclick=e=>{e.stopPropagation();openPlayerAnalysis(name)};cell.oncontextmenu=e=>{e.preventDefault();e.stopPropagation();v628OpenEntityMenu('player',name,name,e.clientX,e.clientY)}};
+      bindPlayer(t[1],r.user||'');bindPlayer(t[4],r.oppUser||'');
+      [[t[2],false],[t[5],true]].forEach(([cell,isOpp])=>{if(!cell)return;const d=deckDescriptor(r,isOpp,'hero');if(!d?.key)return;cell.classList.add('entityHot');cell.title='클릭: 덱 빠른 메뉴';cell.onclick=e=>{e.stopPropagation();v628OpenEntityMenu('deck',d.key,ALIASES[d.key]||d.label,e.clientX,e.clientY)};cell.oncontextmenu=e=>{e.preventDefault();e.stopPropagation();v628OpenEntityMenu('deck',d.key,ALIASES[d.key]||d.label,e.clientX,e.clientY)}});
+    });
+  };
+}
+
+// Make it explicit that matchup evidence is the full observed record from the selected row-deck perspective.
+if(typeof renderRecords==='function'){
+  const v6382BaseRenderRecords=renderRecords;
+  renderRecords=function(rows){v6382BaseRenderRecords(rows);if(activePureMatchupPair){const c=document.querySelector('#recordCount');if(c)c.textContent+=(c.textContent?' · ':'')+'상성표 전체 전적 · 기준 덱 관점'}};
+}
+
+// v6.38.2 matchup matrix: the cell itself is deliberately literal.
+// Large number = FULL observed win rate. Second line = the exact same full W/L record opened on click.
+// Precision/model estimates remain available internally for AI/detail analysis, but never replace the observed rate here.
 function v6372FullMatchRows(){
   const range=typeof activeDateRange==='function'?activeDateRange():{from:0,to:Number.MAX_SAFE_INTEGER};
   const sf=document.querySelector('#seasonFilter')?.value||'',q=(document.querySelector('#q')?.value||'').trim().toLowerCase(),oh=document.querySelector('#ownHero')?.value||'',ph=document.querySelector('#oppHero')?.value||'';
@@ -238,18 +281,18 @@ renderMatchMatrix=function(){
   head.innerHTML='<tr><th class="corner">기준 덱 ↓ / 상대 덱 →</th>'+decks.map(k=>`<th title="${esc2(meta.get(k)?.t||'')}">${esc2(meta.get(k)?.l||k)}</th>`).join('')+'</tr>';
   if(!decks.length){body.innerHTML='<tr><td class="empty" colspan="17">상성 분석 표본이 없습니다.</td></tr>';v6370RenderMatchSummary(rows,fullRows,model);return}
   body.innerHTML=decks.map(a=>`<tr><th class="rowdeck" title="${esc2(meta.get(a)?.t||'')}">${esc2(meta.get(a)?.l||a)}</th>`+decks.map(b=>{
-    const xs=cells.get(a+'@@'+b)||[],ux=upsetCells.get(a+'@@'+b)||[],fx=fullCells.get(a+'@@'+b)||[],analysisN=xs.length+ux.length,fullN=fx.length;
-    if(!fullN||fullN<min||!analysisN)return'<td class="mx empty">—</td>';
-    if(a===b){return`<td class="mx even v6370Mx v6372SimpleMx" data-own="${esc2(a)}" data-opp="${esc2(b)}" title="승률 50.0% · 전체 ${fullN}전"><div class="mxrate">50%</div><div class="mxn">전체 ${fullN}전</div></td>`}
-    const base=xs.length?v6370SolveMatch(xs,model):null,m=v6371BlendMatch(base,ux),fw=fx.filter(o=>o.y===1).length,fl=fullN-fw,rate=(100*m.est).toFixed(1),title=`승률 ${rate}% · 전체 ${fullN}전 · ${fw}승 ${fl}패`;
-    return`<td class="mx v6370Mx v6372SimpleMx ${v6370CellClass(m.est)}" data-own="${esc2(a)}" data-opp="${esc2(b)}" title="${esc2(title)}"><div class="mxrate">${rate}%</div><div class="mxn">전체 ${fullN}전 · ${fw}승 ${fl}패</div></td>`
+    const xs=cells.get(a+'@@'+b)||[],ux=upsetCells.get(a+'@@'+b)||[],fx=fullCells.get(a+'@@'+b)||[],fullN=fx.length;
+    if(!fullN||fullN<min)return'<td class="mx empty">—</td>';
+    if(a===b){return`<td class="mx even v6370Mx v6372SimpleMx" data-own="${esc2(a)}" data-opp="${esc2(b)}" title="동일 덱 미러전 · 전체 ${fullN}전 · 기준 승률 50%"><div class="mxrate">50%</div><div class="mxn">전체 ${fullN}전 · 미러전</div></td>`}
+    const fw=fx.filter(o=>o.y===1).length,fl=fullN-fw,raw=fullN?fw/fullN:.5,rate=(100*raw).toFixed(1),title=`전체 관측 승률 ${rate}% · 전체 ${fullN}전 · ${fw}승 ${fl}패`;
+    return`<td class="mx v6370Mx v6372SimpleMx ${v6370CellClass(raw)}" data-own="${esc2(a)}" data-opp="${esc2(b)}" title="${esc2(title)}"><div class="mxrate">${rate}%</div><div class="mxn">전체 ${fullN}전 · ${fw}승 ${fl}패</div></td>`
   }).join('')+'</tr>').join('');
-  body.querySelectorAll('td[data-own]').forEach(td=>td.onclick=()=>{activePureMatchupPair=true;activeAnyDeck='';activeOwnDeck=td.dataset.own;activeOppDeck=td.dataset.opp;activeKeyMode=document.querySelector('#analysisMode')?.value||'hero';if(document.querySelector('#allianceFilter'))document.querySelector('#allianceFilter').value='';showTab('records');render()});
+  body.querySelectorAll('td[data-own]').forEach(td=>td.onclick=()=>{activePureMatchupPair=true;activeAnyDeck='';activeOwnDeck=td.dataset.own;activeOppDeck=td.dataset.opp;activeKeyMode=document.querySelector('#analysisMode')?.value||'hero';if(document.querySelector('#allianceFilter'))document.querySelector('#allianceFilter').value='';if(document.querySelector('#resultFilter'))document.querySelector('#resultFilter').value='';if(document.querySelector('#recordViewMode'))document.querySelector('#recordViewMode').value='battle';showTab('records');render()});
   v6370RenderMatchSummary(rows,fullRows,model);
 };
 function v6370RenderMatchSummary(rows,fullRows,model){
   const box=document.querySelector('#v6370PrecisionSummary');if(!box)return;const players=model.players.size,decks=model.decks.size;
-  box.innerHTML=`<div><b>전체 관측 전적</b><strong>${(fullRows||[]).length.toLocaleString()}전</strong><span>현재 기간·시즌의 전체 PVP</span></div><div><b>정밀 계산 표본</b><strong>${(rows||[]).length.toLocaleString()}전</strong><span>내부 상성 승률 계산에 사용</span></div><div><b>분석 범위</b><strong>${decks}덱</strong><span>${players}명 관측 기반 보정</span></div><div><b>상성표 표시</b><strong>승률 + 전체 전적</strong><span>세부 보정값은 셀에서 숨김</span></div>`;
+  box.innerHTML=`<div><b>전체 관측 전적</b><strong>${(fullRows||[]).length.toLocaleString()}전</strong><span>현재 기간·시즌의 전체 PVP</span></div><div><b>정밀 계산 표본</b><strong>${(rows||[]).length.toLocaleString()}전</strong><span>AI·상세 정밀 분석에만 사용</span></div><div><b>분석 범위</b><strong>${decks}덱</strong><span>${players}명 관측 기반 보정</span></div><div><b>상성표 표시</b><strong>실제 승률 + 전체 전적</strong><span>셀 클릭 시 동일한 전체 전보를 기준 덱 관점으로 표시</span></div>`;
 }
 
 // Deck table uses strict fair rows and weighted Jeffreys estimate rather than the old fixed 10-game prior.
