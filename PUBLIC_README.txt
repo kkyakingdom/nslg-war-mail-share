@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.42.0 AI ANALYST SUITE - CONTEXTUAL INTELLIGENCE + PUBLIC PERIOD LINK
-생성: 2026-10-12 23:46:06
+생성: 2026-10-13 01:23:15
 프로필: all
-분석 행: 1984
+분석 행: 2089
 닉네임 공개: none
 접속 잠금: 사용
 
