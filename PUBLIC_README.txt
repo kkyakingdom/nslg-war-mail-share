@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.41.6 STABILITY VISIBILITY - PARTIAL SETUP SEARCH
-생성: 2026-10-12 21:17:29
+생성: 2026-10-12 21:25:28
 프로필: all
-분석 행: 1752
+분석 행: 1769
 닉네임 공개: none
 접속 잠금: 사용
 
