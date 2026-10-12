@@ -180,7 +180,7 @@ body.simpleMode .commandOnly{display:none!important}body.simpleMode .commandSetu
 <style>
 /* v6.36.4: quiet collector result + global period analysis */
 .v638PeriodBar{display:grid;grid-template-columns:minmax(260px,1.3fr) auto minmax(170px,.8fr);gap:10px;align-items:center;margin:0 0 12px;padding:10px 12px;border:1px solid #303843;border-radius:12px;background:linear-gradient(180deg,#141a20,#12171c)}
-.v638PeriodLead{display:flex;flex-direction:column;gap:2px}.v638PeriodLead b{font-size:12px;color:#f0d793}.v638PeriodLead span{font-size:9px;color:#89939e}.v638PeriodButtons{display:flex;gap:5px;flex-wrap:wrap}.v638PeriodButtons button{padding:7px 10px;font-size:10px;border-radius:8px}.v638PeriodButtons button.on{color:#f6dda0;border-color:#8c713d;background:#211b11;box-shadow:inset 0 -2px 0 rgba(232,195,106,.5)}.v638PeriodSummary{justify-self:end;text-align:right;font-size:10px;color:#aeb7c1;line-height:1.45}.v638PeriodSummary b{color:#edf2f7}.v634CollectGuide.v638Hidden{display:none!important}.v637Partial{border-color:#4a6255!important;color:#ccebd7!important;background:#142019!important}
+.v638PeriodLead{display:flex;flex-direction:column;gap:2px}.v638PeriodLead b{font-size:12px;color:#f0d793}.v638PeriodLead span{font-size:9px;color:#89939e}.v638PeriodButtons{display:flex;gap:5px;flex-wrap:wrap}.v638PeriodButtons button{padding:7px 10px;font-size:10px;border-radius:8px}.v638PeriodButtons button.on{color:#f6dda0;border-color:#8c713d;background:#211b11;box-shadow:inset 0 -2px 0 rgba(232,195,106,.5)}.v638PeriodSummary{justify-self:end;text-align:right;font-size:10px;color:#aeb7c1;line-height:1.45}.v638PeriodSummary b{color:#edf2f7}.v638PeriodSummary.v6415Pending{color:#d4bc78}.v638PeriodSummary.v6415Pending:after{content:" · 갱신 중…";color:#8f99a4;font-size:9px}.v638PeriodButtons button.v6415Pending{box-shadow:inset 0 -2px 0 rgba(232,195,106,.7),0 0 0 1px rgba(232,195,106,.18)}.v634CollectGuide.v638Hidden{display:none!important}.v637Partial{border-color:#4a6255!important;color:#ccebd7!important;background:#142019!important}
 /* v6.37.5.6: verified GitHub freshness at-a-glance */
 .v63756ShareState{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #39414c;border-radius:999px;background:#151a20;color:#aeb7c1;font-size:10px;font-weight:800;white-space:nowrap;cursor:default;transition:border-color .15s ease,background .15s ease,color .15s ease}
 .v63756ShareState i{display:block;width:7px;height:7px;border-radius:50%;background:#68707a;box-shadow:0 0 0 3px rgba(104,112,122,.10)}
@@ -1971,7 +1971,10 @@ function v638FmtDate(ms){if(!Number.isFinite(ms)||ms<=0)return'-';const d=new Da
 function v638CurrentPeriod(){const f=$('#fromDate')?.value,t=$('#toDate')?.value;if(f||t){let from=f?new Date(f).getTime():Math.min(...DATA.map(r=>v625Derived(r).timeMs||Infinity)),to=t?new Date(t).getTime():v627AnchorNow();if(!Number.isFinite(from))from=0;if(!Number.isFinite(to))to=v627AnchorNow();if(to<from)[from,to]=[to,from];return{custom:true,value:'custom',label:'사용자 지정',from,to,hours:Math.max(1,(to-from)/3600000)}}const v=$('#recentPreset')?.value||'all',h=V638_PERIOD_HOURS[v]||0,end=v627AnchorNow(),from=h?end-h*3600000:0;return{custom:false,value:v,label:v638PeriodLabel(v),from,to:end,hours:h}}
 function v638SyncDashboardHours(){const p=v638CurrentPeriod();if(p.custom){V627_DASH_H=Math.max(1,Math.round(p.hours));V627_WR_H=V627_DASH_H;return}const h=V638_PERIOD_HOURS[p.value];if(h){V627_DASH_H=h;V627_WR_H=h;return}if(p.value==='all'){const ts=DATA.map(r=>v625Derived(r).timeMs||parseTime(r.time)).filter(Number.isFinite);const span=ts.length?Math.max(1,Math.ceil((v627AnchorNow()-Math.min(...ts))/3600000)):24;V627_DASH_H=span;V627_WR_H=span}}
 function v638RenderPeriodBar(){const bar=$('#v638PeriodBar');if(!bar)return;const p=v638CurrentPeriod(),rows=baseFiltered();bar.querySelectorAll('[data-v638-period]').forEach(b=>b.classList.toggle('on',!p.custom&&b.dataset.v638Period===p.value));const sum=$('#v638PeriodSummary');if(sum){let range='';if(rows.length){const times=rows.map(r=>v625Derived(r).timeMs||parseTime(r.time)).filter(Number.isFinite);if(times.length)range=`${v638FmtDate(Math.min(...times))} ~ ${v638FmtDate(Math.max(...times))}`;}sum.innerHTML=`<b>${esc(p.label)}</b> · ${rows.length.toLocaleString()}전${range?`<br>${esc(range)}`:''}`}}
-function v638ApplyPeriod(v){const sel=$('#recentPreset');if(!sel)return;if($('#fromDate'))$('#fromDate').value='';if($('#toDate'))$('#toDate').value='';sel.value=v;v638SyncDashboardHours();try{v625ClearMemoryCaches?.()}catch(_){}render();try{renderCommandDashboard();if(!$('#warroom')?.classList.contains('hidden'))v627RenderWarroom()}catch(_){}v638RenderPeriodBar();v635RenderContextBar?.()}
+let V6415_PERIOD_JOB=0,V6415_PERIOD_TIMER=0;
+function v6415PaintPeriodPending(v){const bar=$('#v638PeriodBar');if(!bar)return;bar.querySelectorAll('[data-v638-period]').forEach(b=>{const on=b.dataset.v638Period===v;b.classList.toggle('on',on);b.classList.toggle('v6415Pending',on)});const sum=$('#v638PeriodSummary');if(sum){sum.classList.add('v6415Pending');sum.innerHTML=`<b>${esc(v638PeriodLabel(v))}</b>`}try{v635RenderContextBar?.()}catch(_){}const fs=$('#v640FilterState');if(fs){const a=$('#allianceFilter')?.selectedOptions?.[0]?.textContent||'동맹 전체';fs.textContent=v638PeriodLabel(v)+' · 갱신 중 · '+a}}
+function v6415FinishPeriodUi(){const sum=$('#v638PeriodSummary');sum?.classList.remove('v6415Pending');$('#v638PeriodBar')?.querySelectorAll('[data-v638-period]').forEach(b=>b.classList.remove('v6415Pending'))}
+function v638ApplyPeriod(v){const sel=$('#recentPreset');if(!sel)return;const job=++V6415_PERIOD_JOB;if(V6415_PERIOD_TIMER)clearTimeout(V6415_PERIOD_TIMER);if($('#fromDate'))$('#fromDate').value='';if($('#toDate'))$('#toDate').value='';sel.value=v;v638SyncDashboardHours();try{v625ClearMemoryCaches?.()}catch(_){}v6415PaintPeriodPending(v);requestAnimationFrame(()=>{V6415_PERIOD_TIMER=setTimeout(()=>{if(job!==V6415_PERIOD_JOB)return;try{render()}finally{if(job===V6415_PERIOD_JOB){v6415FinishPeriodUi();try{v638RenderPeriodBar();v635RenderContextBar?.()}catch(_){}}}},24)})}
 function v638BindPeriods(){const bar=$('#v638PeriodBar');if(bar&&!bar.dataset.bound){bar.dataset.bound='1';bar.querySelectorAll('[data-v638-period]').forEach(b=>b.onclick=()=>v638ApplyPeriod(b.dataset.v638Period))}const sel=$('#recentPreset');if(sel&&!sel.dataset.v638Bound){sel.dataset.v638Bound='1';sel.addEventListener('change',()=>{v638SyncDashboardHours();setTimeout(()=>{try{renderCommandDashboard();if(!$('#warroom')?.classList.contains('hidden'))v627RenderWarroom()}catch(_){}v638RenderPeriodBar()},0)})}['fromDate','toDate'].forEach(id=>{const e=$('#'+id);if(e&&!e.dataset.v638Bound){e.dataset.v638Bound='1';e.addEventListener('change',()=>{v638SyncDashboardHours();setTimeout(()=>{try{renderCommandDashboard();if(!$('#warroom')?.classList.contains('hidden'))v627RenderWarroom()}catch(_){}v638RenderPeriodBar()},0)})}})}
 // Keep recent presets anchored to the newest collected battle when the dataset is not live.
 recentCutoff=function(){const v=$('#recentPreset')?.value||'all';if(v==='all')return 0;const h=V638_PERIOD_HOURS[v]||0,anchor=typeof v627AnchorNow==='function'?v627AnchorNow():Date.now();return h?anchor-h*3600000:0};
@@ -2504,6 +2507,65 @@ setTimeout(apply,150);
 #matchups .v641ConfDot{display:none!important}
 #matchups td.mx::before,#matchups td.mx::after,#matchups .mxn::before,#matchups .mxn::after{content:none!important;display:none!important}
 </style>
+
+
+<style id="v64114PlayerDeckClickStyle">
+/* v6.41.14: the whole used-deck row opens that player's battles with the selected deck. */
+#playerDeckRows tr.v64114PlayerDeckRow{cursor:pointer}
+#playerDeckRows tr.v64114PlayerDeckRow td:first-child{font-weight:780}
+#playerDeckRows tr.v64114PlayerDeckRow:hover{background:rgba(232,195,106,.055)}
+#playerDeckRows tr.v64114PlayerDeckRow:focus-within{outline:1px solid rgba(232,195,106,.26);outline-offset:-1px}
+#playerDeckRows .v64114OpenHint{font-size:8px;color:#7f8994;margin-top:3px;font-weight:500}
+</style>
+<script id="v64114PlayerDeckClickScript">
+(function(){
+  const q=(s,r=document)=>r.querySelector(s),qa=(s,r=document)=>[...r.querySelectorAll(s)];
+  function playerDeckRows(name,deckKey){
+    const ctx=window.playerAllianceContext||'';
+    return perspectiveRows(name,baseFiltered()).filter(x=>(!ctx||x.alliance===ctx)&&x.deck?.length===3&&canon(x.deck)===deckKey);
+  }
+  function openPlayerDeckInfo(name,deckKey,label){
+    const xs=playerDeckRows(name,deckKey).sort((a,b)=>(parseTime(b.source?.time)||0)-(parseTime(a.source?.time)||0));
+    const seen=new Set(),rows=[];
+    for(const x of xs){const id=String(x.source?.battleId||'');if(id&&seen.has(id))continue;if(id)seen.add(id);rows.push(x)}
+    const w=rows.filter(x=>x.result==='승').length,l=rows.filter(x=>x.result==='패').length,d=rows.length-w-l;
+    const decided=w+l,rate=decided?100*w/decided:0;
+    const opp=new Map();
+    for(const x of rows){if(!x.opp)continue;let z=opp.get(x.opp)||{n:0,w:0,l:0};z.n++;if(x.result==='승')z.w++;else if(x.result==='패')z.l++;opp.set(x.opp,z)}
+    const top=[...opp.entries()].sort((a,b)=>b[1].n-a[1].n||a[0].localeCompare(b[0],'ko'))[0];
+    const recent=rows.slice(0,10),rw=recent.filter(x=>x.result==='승').length,rl=recent.filter(x=>x.result==='패').length;
+    q('#v629EvidenceTitle').textContent=`${name} · ${label} 교전 정보`;
+    q('#v629EvidenceSub').textContent=`해당 인물 관점으로 좌우와 승패를 정규화 · 현재 기간·필터 기준`;
+    const health=q('#v629EvidenceHealth');
+    if(health){health.className='v634EvidenceSummary';health.innerHTML=`<div><span>교전</span><b>${rows.length.toLocaleString()}전</b></div><div><span>승 / 패</span><b>${w}승 ${l}패${d?` · ${d}무`:''}</b></div><div><span>관측 승률</span><b>${decided?rate.toFixed(1)+'%':'-'}</b></div><div><span>주요 상대</span><b>${top?esc(top[0])+' · '+top[1].n+'전':'-'}</b></div>`}
+    const hint=q('#v629Evidence .v629EvidenceHint');
+    if(hint){hint.className='v634EvidenceRule';hint.textContent=`최근 10교전 ${rw}승 ${rl}패 · 행을 누르면 원본 전보 상세를 엽니다. 사용 덱 표와 동일한 표본입니다.`}
+    const body=q('#v629EvidenceRows');
+    if(body){body.innerHTML=rows.slice(0,500).map((x,i)=>{const r=x.source||{},meAlliance=x.alliance||'',oppAlliance=x.flipped?(r.alliance||''):(r.oppAlliance||''),myLabel=ALIASES[canon(x.deck)]||ordered(x.deck),oppLabel=ALIASES[canon(x.oppDeck||[])]||ordered(x.oppDeck||[]);return `<tr data-v64114-i="${i}" class="clickable"><td>${esc(r.time||'')}</td><td><b>${esc(name)}</b><div class="small">${esc(meAlliance)}</div></td><td class="deck">${esc(myLabel)}</td><td><b>${esc(x.opp||'')}</b><div class="small">${esc(oppAlliance)}</div></td><td class="deck">${esc(oppLabel)}</td><td class="${resultClass(x.result)}">${esc(displayResult(x.result))}</td></tr>`}).join('')||'<tr><td colspan="6" class="empty">현재 조건에서 해당 덱 교전이 없습니다.</td></tr>';qa('[data-v64114-i]',body).forEach(tr=>tr.onclick=()=>{const x=rows[Number(tr.dataset.v64114I)];if(x?.source)openDetail(x.source)})}
+    q('#v629Evidence')?.classList.add('show');
+  }
+  function bind(){
+    const body=q('#playerDeckRows'),name=q('#playerInput')?.value?.trim();if(!body||!name||q('#playerSummary')?.classList.contains('hidden'))return;
+    const ctx=window.playerAllianceContext||'',map=new Map();
+    for(const x of perspectiveRows(name,baseFiltered()).filter(x=>!ctx||x.alliance===ctx)){if(x.deck?.length!==3)continue;const key=canon(x.deck),label=aliasForHeroKey(key,ordered(x.deck));if(!map.has(label))map.set(label,{key,label})}
+    const head=body.closest('table')?.querySelector('thead tr');
+    if(head&&!head.querySelector('th[data-v64114-open]')){const th=document.createElement('th');th.textContent='교전';th.dataset.v64114Open='1';head.appendChild(th)}
+    qa('tr',body).forEach(tr=>{
+      if(tr.querySelector('.empty'))return;
+      const cell=q('td.deck',tr),label=cell?.textContent?.trim()||'';const hit=map.get(label);if(!hit)return;
+      tr.classList.add('v64114PlayerDeckRow');tr.dataset.v64114DeckKey=hit.key;tr.title=`클릭: ${name}이 ${hit.label} 덱으로 치른 교전 정보`;
+      if(cell&&!q('.v64114OpenHint',cell)){const h=document.createElement('div');h.className='v64114OpenHint';h.textContent='클릭하여 교전 정보';cell.appendChild(h)}
+      tr.onclick=e=>{if(e.target.closest('button,a,input,select'))return;openPlayerDeckInfo(name,hit.key,hit.label)};
+      let btn=q('.v635EvidenceBtn',tr);if(!btn){const td=document.createElement('td');btn=document.createElement('button');btn.className='v635EvidenceBtn';td.appendChild(btn);tr.appendChild(td)}
+      btn.textContent='교전';btn.title='이 인물이 해당 덱으로 치른 교전 보기';btn.onclick=e=>{e.stopPropagation();openPlayerDeckInfo(name,hit.key,hit.label)};
+    })
+  }
+  window.v64114OpenPlayerDeckInfo=openPlayerDeckInfo;
+  window.v635BindEvidence=bind;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(bind,80),{once:true});else setTimeout(bind,80);
+})();
+</script>
+
 <script src="stats_summary.js"></script><script>
 (function(){
   if(!window.NSLG_PUBLIC_MODE)return;
