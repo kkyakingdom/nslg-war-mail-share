@@ -1,1 +1,1 @@
-﻿window.NSLG_COLLECTION_PERFORMANCE={at:"",items:[]};
+﻿window.NSLG_COLLECTION_PERFORMANCE={"at":"2026-10-12T17:58:49.1431804+09:00","items":[{"at":"2026-10-12T17:58:49.0906738+09:00","cycle":"20261012-175603","state":"PARTIAL","mode":"FAST","reparseMinutes":0,"durationSec":164,"newRaw":9,"newAnalysis":3,"parsed":12,"scans":3,"unresolved":85,"throughput":0.07}]};
