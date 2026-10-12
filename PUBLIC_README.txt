@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.41.15 STABILITY VISIBILITY - PERIOD RESPONSIVENESS
-생성: 2026-10-12 22:56:08
+생성: 2026-10-12 23:01:46
 프로필: all
-분석 행: 1881
+분석 행: 1927
 닉네임 공개: none
 접속 잠금: 사용
 
