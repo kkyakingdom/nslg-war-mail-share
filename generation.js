@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":79,"at":"2026-10-12T17:58:48.1118400+09:00","reason":"collection:20261012-175603","version":"v6.33"};
+﻿window.NSLG_DATA_GENERATION={"generation":80,"at":"2026-10-12T18:23:01.6527820+09:00","reason":"merge:20261011_233701.zip","version":"v6.40.5 START HOLD + CHAIN RANKING"};
