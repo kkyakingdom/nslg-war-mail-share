@@ -2247,7 +2247,7 @@ document.querySelectorAll('[data-promo-band]').forEach(b=>b.addEventListener('cl
 })();
 </script>
 
-<script src="feature_suite.js?v=6410">
+<script src="feature_suite.js?v=6420">
 // v6.41.1: period trend view removed because intermittent collection windows can bias time-series interpretation.
 (function(){
   const prevShowTab=showTab;
@@ -2563,6 +2563,72 @@ setTimeout(apply,150);
   window.v64114OpenPlayerDeckInfo=openPlayerDeckInfo;
   window.v635BindEvidence=bind;
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(bind,80),{once:true});else setTimeout(bind,80);
+})();
+</script>
+
+
+<script>
+/* v6.41.17: alliance/front comparison uses full observed PVP rather than fair-analysis subset.
+   This keeps fair-analysis metrics elsewhere intact while preventing recent front panels from
+   showing 0 when valid observed PVP exists outside WARMAIL_DATA. */
+(function(){
+  const q=s=>document.querySelector(s);
+  function fullRows(){return Array.isArray(window.WARMAIL_ALL_DATA)?window.WARMAIL_ALL_DATA:(Array.isArray(window.WARMAIL_DATA)?window.WARMAIL_DATA:[])}
+  function fullAnchor(){
+    let latest=0;
+    for(const r of fullRows()){
+      const t=(typeof v625Derived==='function'?v625Derived(r).timeMs:parseTime(r.time))||0;
+      if(t>latest)latest=t;
+    }
+    return latest&&Math.abs(Date.now()-latest)>15*60000?latest:Date.now();
+  }
+  function fullWindow(h,offset=0){
+    const end=fullAnchor()-offset*h*3600000,start=end-h*3600000;
+    return {start,end,rows:fullRows().filter(r=>{const t=(typeof v625Derived==='function'?v625Derived(r).timeMs:parseTime(r.time))||0;return t>=start&&t<=end})};
+  }
+  function renderObservedSideCompare(){
+    if(typeof v627SideEngagements!=='function'||typeof v627Stats!=='function')return;
+    const h=Number(window.V627_DASH_H||V627_DASH_H||3),cur=fullWindow(h,0),prev=fullWindow(h,1);
+    const fg=v627SideEngagements(cur.rows,'ally',true),eg=v627SideEngagements(cur.rows,'enemy',true),fp=v627SideEngagements(prev.rows,'ally',true),ep=v627SideEngagements(prev.rows,'enemy',true);
+    const fs=v627Stats(fg),es=v627Stats(eg),fps=v627Stats(fp),eps=v627Stats(ep);
+    const fNames=q('#dashFriendlyNames'),eNames=q('#dashEnemyNames');
+    if(fNames)fNames.textContent=(V627_SIDES?.allies||[]).join(' · ')||'진영 설정 필요';
+    if(eNames)eNames.textContent=(V627_SIDES?.enemies||[]).join(' · ')||'진영 설정 필요';
+    const fr=q('#dashFriendlyRate'),er=q('#dashEnemyRate');
+    if(fr)fr.textContent=fs.n?v627FormatPct(fs.rate):'-';
+    if(er)er.textContent=es.n?v627FormatPct(es.rate):'-';
+    const fstats=q('#dashFriendlyStats'),estats=q('#dashEnemyStats');
+    if(fstats)fstats.textContent=`${fs.n}교전 · ${fs.w}승 ${fs.l}패 · 점수 ${fs.score.toFixed(1)}`;
+    if(estats)estats.textContent=`${es.n}교전 · ${es.w}승 ${es.l}패 · 점수 ${es.score.toFixed(1)}`;
+    const vs=q('#dashVsCount');if(vs)vs.textContent=`${fg.length} 교전`;
+    const fd=v627Delta(fs,fps),ed=v627Delta(es,eps),fdEl=q('#dashFriendlyDelta'),edEl=q('#dashEnemyDelta');
+    if(fdEl)fdEl.innerHTML=`이전 구간 대비 <span class="${fd.cls}">${fd.text}</span>`;
+    if(edEl)edEl.innerHTML=`이전 구간 대비 <span class="${ed.cls}">${ed.text}</span>`;
+    const details=q('#v628DashboardDetails > summary');
+    if(details&&!details.dataset.v6417Label){details.dataset.v6417Label='1';details.textContent='세부 전황 펼치기 · 전체 관측 PVP 기준'}
+  }
+  function renderObservedWarroomVs(){
+    const body=q('#wrVsRows'),sel=q('#warroomAlliance');if(!body||!sel||typeof alliancePerspectiveEngagements!=='function')return;
+    const a=sel.value||(V627_SIDES?.enemies||[])[0]||'';if(!a)return;
+    const h=Number(window.V627_WR_H||V627_WR_H||3),cur=fullWindow(h,0),gs=alliancePerspectiveEngagements(a,cur.rows),vm=new Map();
+    for(const g of gs){
+      const oa=g.last?.oppAlliance||'동맹 없음';
+      if((V627_SIDES?.allies||[]).length&&!(V627_SIDES.allies||[]).includes(oa))continue;
+      let z=vm.get(oa);if(!z)z={name:oa,n:0,w:0,l:0};z.n++;if(g.result==='승')z.w++;else if(g.result==='패')z.l++;vm.set(oa,z);
+    }
+    body.innerHTML=[...vm.values()].sort((x,y)=>y.n-x.n).map(z=>`<tr><td>${esc(z.name)}</td><td>${z.n}</td><td class="win">${z.w}</td><td class="loss">${z.l}</td><td>${pct(z.w,z.l)}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">선택 시간대의 전체 관측 PVP에서 우리 진영 상대 전보가 없습니다.</td></tr>';
+    const panel=body.closest('.commandPanel'),small=panel?.querySelector('.panelTitle small');if(small)small.textContent='전체 관측 PVP · 선택 시간';
+  }
+  const baseDash=window.renderCommandDashboard;
+  if(typeof baseDash==='function')window.renderCommandDashboard=function(){const r=baseDash.apply(this,arguments);try{renderObservedSideCompare()}catch(e){}return r};
+  const baseWar=window.v627RenderWarroom;
+  if(typeof baseWar==='function')window.v627RenderWarroom=function(){const r=baseWar.apply(this,arguments);try{renderObservedWarroomVs()}catch(e){}return r};
+  const baseDecision=window.v628DecisionData;
+  if(typeof baseDecision==='function')window.v628DecisionData=function(){
+    const d=baseDecision.apply(this,arguments);try{const h=Number(d?.h||V627_DASH_H||3),cur=fullWindow(h,0),prev=fullWindow(h,1);d.fs=v627Stats(v627SideEngagements(cur.rows,'ally',true));d.fps=v627Stats(v627SideEngagements(prev.rows,'ally',true));d.es=v627Stats(v627SideEngagements(cur.rows,'enemy',true));d.observedFront=true}catch(e){}return d
+  };
+  // Re-render once after install so public/local views correct themselves immediately.
+  setTimeout(()=>{try{if(!q('#dashboard')?.classList.contains('hidden'))window.renderCommandDashboard?.();if(!q('#warroom')?.classList.contains('hidden'))window.v627RenderWarroom?.()}catch(e){}},0);
 })();
 </script>
 
