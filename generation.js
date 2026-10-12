@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":94,"at":"2026-10-12T20:41:52.4869544+09:00","reason":"startup","version":"v6.41.3 STABILITY VISIBILITY - UI PRUNING"};
+﻿window.NSLG_DATA_GENERATION={"generation":95,"at":"2026-10-12T20:45:23.7279161+09:00","reason":"collection:20261012-204153","version":"v6.41.3 STABILITY VISIBILITY - UI PRUNING"};
