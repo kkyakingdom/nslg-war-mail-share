@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.41.5 STABILITY VISIBILITY - GITHUB SHARE CONSOLE FIX
-생성: 2026-10-12 20:57:51
+생성: 2026-10-12 21:01:40
 프로필: all
-분석 행: 1720
+분석 행: 1731
 닉네임 공개: none
 접속 잠금: 사용
 
