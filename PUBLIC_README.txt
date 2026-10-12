@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.41.13 STABILITY VISIBILITY - MATCHUP MARKER CLEANUP
-생성: 2026-10-12 22:40:16
+생성: 2026-10-12 22:44:50
 프로필: all
-분석 행: 1807
+분석 행: 1881
 닉네임 공개: none
 접속 잠금: 사용
 
