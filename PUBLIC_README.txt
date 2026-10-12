@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.41.0 TRUSTED AUTOMATION COMPLETE
-생성: 2026-10-12 19:06:08
+생성: 2026-10-12 19:14:26
 프로필: all
-분석 행: 1485
+분석 행: 1520
 닉네임 공개: none
 접속 잠금: 사용
 
