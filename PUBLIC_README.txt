@@ -1,5 +1,5 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.42.2 SETUP USAGE TOP - HERO 3 + SKILL 6 COMBO RANKING
-생성: 2026-10-14 01:05:32
+생성: 2026-10-14 01:36:10
 프로필: all
 분석 행: 2534
 닉네임 공개: none

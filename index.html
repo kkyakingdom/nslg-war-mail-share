@@ -100,6 +100,12 @@ body{background:radial-gradient(circle at 50% -12%,#242016 0,#12171d 33%,#0d1014
 .v6431ArmsLetter.cavalry{color:#ffb25b}.v6431ArmsLetter.shield{color:#79bbff}.v6431ArmsLetter.spear{color:#70dfaa}.v6431ArmsLetter.archer{color:#d3a2ff}.v6431ArmsLetter.unknown{color:#a2aab5}
 .deckSummary>.promotionAvg{align-self:center}
 @media(max-width:700px){.v6431ArmsBadge{gap:7px;padding:4px 8px}.v6431ArmsLetter{font-size:12px}}
+
+/* v6.44.9a: battle detail always above evidence and arms dialogs.
+   Keep the evidence list mounted behind the battle detail for back navigation. */
+#v629Evidence.show{z-index:100000!important}
+#detail.show{z-index:100100!important}
+#detail.show .detailbox{position:relative;z-index:1}
 </style>
 
 <style>
@@ -3018,6 +3024,88 @@ button:hover:not(:disabled){filter:brightness(1.09)}
   wrap();document.addEventListener('DOMContentLoaded',wrap,{once:true});
   window.addEventListener('unhandledrejection',e=>{metrics.errors.push({type:'promise',message:String(e.reason?.message||e.reason).slice(0,200)});if(metrics.errors.length>20)metrics.errors.shift()});
   window.addEventListener('error',e=>{metrics.errors.push({type:'script',message:String(e.message).slice(0,200)});if(metrics.errors.length>20)metrics.errors.shift()});
+})();
+</script>
+
+
+<style>
+#v6448Overlay{position:fixed;inset:0;z-index:99999;background:rgba(4,7,12,.84);display:none;align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+#v6448Overlay.open{display:flex}#v6448Dialog{width:min(1200px,100%);max-height:92vh;display:flex;flex-direction:column;background:#161c25;border:1px solid #6e5b34;border-radius:15px;box-shadow:0 24px 90px #000b;color:#e9edf3;overflow:hidden}
+#v6448Header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid #303948}#v6448Header strong{font-size:21px;color:#e8c36a}#v6448Close{font-size:24px;background:transparent;border:1px solid #465062;color:#eee;border-radius:8px;cursor:pointer;padding:3px 13px}
+#v6448Summary{padding:10px 22px;color:#b9c5d3;font-size:13px;border-bottom:1px solid #303948}#v6448Content{display:grid;grid-template-columns:44% 56%;min-height:0;flex:1}#v6448Left,#v6448Right{overflow-y:auto;padding:16px;min-height:0}#v6448Left{border-right:1px solid #303948}#v6448Tools{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}#v6448Tools input,#v6448Tools select{background:#10151c;color:#fff;border:1px solid #465062;border-radius:7px;padding:9px;min-width:0}#v6448Tools input{flex:1}
+.v6448Deck{display:block;width:100%;text-align:left;border:1px solid #394456;border-radius:10px;background:#1d2632;color:#e9edf3;padding:12px;margin:7px 0;cursor:pointer}.v6448Deck.active{border-color:#e8c36a;background:#2a2a29}.v6448Deck b{font-size:15px;line-height:1.6}.v6448Meta{display:block;font-size:12px;color:#b9c5d3;margin-top:6px}.v6448Title{color:#e8c36a;font-size:16px;font-weight:800;margin-bottom:12px}.v6448Counter{border:1px solid #3b4657;background:#1c2530;border-radius:10px;padding:13px;margin-bottom:10px}.v6448Counter b{font-size:15px}.v6448Counter .v6448Rate{color:#ffb47f;font-size:18px;font-weight:800}.v6448Empty{padding:24px 10px;color:#b5bdc9;text-align:center}.v6448Open{display:inline-block;cursor:pointer;color:#e8c36a;text-decoration:underline;text-underline-offset:4px;background:none;border:0;font:inherit;font-weight:800}.v6448Open:focus-visible{outline:2px solid #e8c36a;outline-offset:3px}
+@media(max-width:720px){#v6448Overlay{padding:0}#v6448Dialog{height:100dvh;max-height:100dvh;border-radius:0}#v6448Content{display:flex;flex-direction:column}#v6448Left{max-height:42%;border-right:0;border-bottom:1px solid #303948}#v6448Right{flex:1}}
+
+/* v6.44.9: full-width all-decks counter comparison */
+#v6448Content{display:block;overflow-y:auto;min-height:0;flex:1}
+#v6448Left{border-right:0;overflow:visible;max-height:none;padding:16px 20px}
+#v6448Decks{display:flex;flex-direction:column;gap:10px}
+.v6449DeckRow{display:grid;grid-template-columns:minmax(210px,27%) minmax(0,1fr);border:1px solid #394456;border-radius:11px;background:#1b2430;overflow:hidden}
+.v6449Own{display:flex;flex-direction:column;gap:9px;padding:16px;border-right:1px solid #394456;justify-content:center}
+.v6449Own b{font-size:15px;line-height:1.55;color:#f2f3f5}.v6449Own span{font-size:12px;color:#b9c5d3;line-height:1.55}
+.v6449Counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:9px}
+.v6449Counter{min-width:0;text-align:left;display:flex;flex-direction:column;gap:6px;padding:12px;border:1px solid #465469;border-radius:9px;background:#202c39;color:#f1f4f7;cursor:pointer}
+.v6449Counter:hover,.v6449Counter:focus-visible{border-color:#e8c36a;background:#2b3440;outline:none}
+.v6449Counter strong{font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.v6449Rank{font-size:12px;color:#e8c36a;font-weight:700}.v6449CounterMeta{font-size:12px;color:#b8c5d5}
+.v6449CounterRate{font-size:20px;color:#ffb47f;font-weight:800}.v6449EvidenceLink{font-size:12px;color:#e8c36a;margin-top:auto}
+.v6449NoCounter{grid-column:1/-1;align-self:center;color:#aeb8c6;padding:12px;font-size:13px}
+@media(max-width:800px){.v6449DeckRow{grid-template-columns:1fr}.v6449Own{border-right:0;border-bottom:1px solid #394456}.v6449Counters{grid-template-columns:repeat(3,minmax(0,1fr))}#v6448Left{max-height:none}}
+@media(max-width:570px){.v6449Counters{grid-template-columns:1fr}.v6449Counter{gap:4px}#v6448Left{padding:10px}}
+</style>
+<div id="v6448Overlay"><div id="v6448Dialog" role="dialog" aria-modal="true" aria-labelledby="v6448Heading"><div id="v6448Header"><strong id="v6448Heading">병종 조합 상세</strong><button id="v6448Close" aria-label="닫기">×</button></div><div id="v6448Summary"></div><div id="v6448Content"><div id="v6448Left"><div id="v6448Tools"><input id="v6448Search" placeholder="장수 3명 검색" aria-label="덱 검색"><select id="v6448Sort"><option value="count">전적 많은 순</option><option value="rate">승률 높은 순</option><option value="users">사용 유저 많은 순</option></select></div><div id="v6448Decks"></div></div></div></div></div>
+<script>
+(function(){
+'use strict';
+let groups=[],active=null,selected=null,priorFocus=null;
+const $p=id=>document.getElementById(id);
+const escP=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function build(){
+ const rows=[window.WARMAIL_ALL_DATA,window.WARMAIL_DATA,typeof DATA!=='undefined'?DATA:null].find(x=>Array.isArray(x)&&x.length)||[];
+ const map=new Map(),seen=new Set();
+ for(const r of rows){
+  for(const opp of [false,true]){
+   const hs=heroes(r,opp);if(hs.length!==3)continue;
+   const parts=v6435TroopParts(r,opp);if(parts.length!==3||parts.some(x=>!x.t?.id))continue;
+   const ts=parts.map(x=>x.t).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+   const key=ts.map(x=>x.id).join('|'),label=ts.map(x=>x.abbr).join('');
+   const bid=String(r.battleId||''),who=String(opp?r.oppUser:r.user),uniq=bid+'|'+who+'|'+(opp?'R':'L');if(bid&&seen.has(uniq))continue;if(bid)seen.add(uniq);
+   const dk=canon(hs),name=aliasForHeroKey(dk,ordered(hs));
+   let g=map.get(key);if(!g){g={key,label,total:0,decks:new Map()};map.set(key,g)}g.total++;
+   let d=g.decks.get(dk);if(!d){d={key:dk,label:name,n:0,w:0,l:0,users:new Set(),matches:[]};g.decks.set(dk,d)}
+   d.n++;d.users.add(who);const result=opp?invertResult(r.result):r.result;if(result==='승')d.w++;if(result==='패')d.l++;
+   const other=heroes(r,!opp);if(other.length===3){const ok=canon(other),ol=aliasForHeroKey(ok,ordered(other));const otherParts=v6435TroopParts(r,!opp);const arms=otherParts.length===3&&otherParts.every(x=>x.t?.id)?otherParts.map(x=>x.t).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true})).map(x=>x.abbr).join(''):'미확인';d.matches.push({key:ok,label:ol,arms,result,opponent:opp?r.user:r.oppUser,source:r})}
+  }
+ }
+ groups=[...map.values()].sort((a,b)=>b.total-a.total||a.label.localeCompare(b.label,'ko'));
+}
+function rate(w,l){return w+l?(100*w/(w+l)).toFixed(1)+'%':'—'}
+function countersFor(d){
+ const m=new Map();for(const x of d.matches){if(x.result!=='승'&&x.result!=='패')continue;let c=m.get(x.key);if(!c){c={key:x.key,label:x.label,arms:new Map(),n:0,w:0,l:0,users:new Set(),rows:[]};m.set(x.key,c)}c.n++;if(x.result==='패')c.w++;else c.l++;c.users.add(x.opponent||'');c.arms.set(x.arms,(c.arms.get(x.arms)||0)+1);c.rows.push(x.source)}
+ return [...m.values()].filter(c=>c.n>=10).sort((a,b)=>b.w/(b.w+b.l)-a.w/(a.w+a.l)||b.n-a.n).slice(0,3)
+}
+let evidencePairs=new Map();
+function showPairEvidence(deckKey,counterKey){
+ const d=active?.decks.get(deckKey),c=evidencePairs.get(deckKey+'@@'+counterKey);if(!d||!c)return;
+ const rows=c.rows;const title=d.label+' VS '+c.label+' · 근거 전보';
+ // Reuse the collector's existing evidence UI and original report-detail click handlers.
+ $p('v6448Overlay').classList.remove('open');document.body.style.overflow='';
+ if(typeof v629OpenEvidence==='function')v629OpenEvidence(title,rows,'두 덱의 실제 교전 · 공격/방어 양방향 포함 · 상대 승률 '+rate(c.w,c.l));
+ const evidence=$p('v629Evidence');if(!evidence?.classList.contains('show')){$p('v6448Overlay').classList.add('open');document.body.style.overflow='hidden';return}
+ // Restore the list when the evidence panel is dismissed; do not stack modal layers.
+ const restore=()=>{if(evidence.classList.contains('show'))return;obs.disconnect();$p('v6448Overlay').classList.add('open');document.body.style.overflow='hidden'};
+ const obs=new MutationObserver(restore);obs.observe(evidence,{attributes:true,attributeFilter:['class']});
+}
+function renderDecks(){if(!active)return;const q=$p('v6448Search').value.trim().toLowerCase(),sort=$p('v6448Sort').value;let ds=[...active.decks.values()].filter(d=>d.label.toLowerCase().includes(q));ds.sort((a,b)=>sort==='rate'?((b.w/(b.w+b.l)||0)-(a.w/(a.w+a.l)||0))||b.n-a.n:sort==='users'?b.users.size-a.users.size||b.n-a.n:b.n-a.n);
+ evidencePairs.clear();
+ $p('v6448Decks').innerHTML=ds.map((d,i)=>{const top=countersFor(d);const cards=top.map((c,j)=>{evidencePairs.set(d.key+'@@'+c.key,c);const arms=[...c.arms].sort((a,b)=>b[1]-a[1])[0]?.[0]||'미확인';return '<button type="button" class="v6449Counter" data-own="'+escP(d.key)+'" data-counter="'+escP(c.key)+'" title="두 덱의 실제 근거 전보 보기"><span class="v6449Rank">'+(j+1)+'위 카운터 ↗</span><strong>'+escP(c.label)+'</strong><span class="v6449CounterMeta">병종 '+escP(arms)+'</span><span class="v6449CounterRate">'+rate(c.w,c.l)+'</span><span class="v6449CounterMeta">'+c.n+'전 · '+c.w+'승 '+c.l+'패 · '+c.users.size+'명</span><span class="v6449EvidenceLink">근거 전보 보기 →</span></button>'}).join('');return '<section class="v6449DeckRow"><div class="v6449Own"><b>'+(i+1)+'. '+escP(d.label)+'</b><span>'+d.n+'회 관측 · '+d.w+'승 '+d.l+'패 · 승률 '+rate(d.w,d.l)+' · '+d.users.size+'명</span></div><div class="v6449Counters">'+(cards||'<div class="v6449NoCounter">10전 이상인 상대 덱 없음 · 표본 부족</div>')+'</div></section>'}).join('')||'<div class="v6448Empty">검색된 덱이 없습니다.</div>';
+ $p('v6448Decks').querySelectorAll('[data-counter]').forEach(btn=>btn.onclick=()=>showPairEvidence(btn.dataset.own,btn.dataset.counter));
+}
+function open(label){build();active=groups.find(g=>g.label===label);if(!active)return;priorFocus=document.activeElement;$p('v6448Heading').textContent=active.label+' · 병종 조합 상세 분석';$p('v6448Summary').textContent='전체 '+active.total+'회 관측 · 사용 덱 '+active.decks.size+'개 · 덱별 카운터 TOP 3 전체 표시 · 카운터 클릭 시 근거 전보';$p('v6448Search').value='';$p('v6448Sort').value='count';$p('v6448Overlay').classList.add('open');document.body.style.overflow='hidden';renderDecks();$p('v6448Close').focus()}
+function close(){$p('v6448Overlay').classList.remove('open');document.body.style.overflow='';priorFocus?.focus?.()}
+$p('v6448Close').onclick=close;$p('v6448Overlay').addEventListener('click',e=>{if(e.target===$p('v6448Overlay'))close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$p('v6448Overlay').classList.contains('open'))close()});$p('v6448Search').addEventListener('input',renderDecks);$p('v6448Sort').addEventListener('change',renderDecks);
+function bind(){const body=$p('armsUsageRows');if(!body)return;body.querySelectorAll('tr').forEach(tr=>{const th=tr.querySelector('th');if(!th||th.querySelector('.v6448Open'))return;const label=th.childNodes[0]?.textContent?.trim();if(!label||!th.querySelector('.small'))return;const original=th.innerHTML;th.innerHTML='<button type="button" class="v6448Open" title="병종 조합 상세 팝업 열기">'+escP(label)+' ▣</button>'+original.slice(original.indexOf('<div'));th.querySelector('button').onclick=()=>open(label)})}
+const target=$p('armsUsageRows');if(target){new MutationObserver(()=>{if(!target.querySelector('.v6448Open'))bind()}).observe(target,{childList:true});bind()}
 })();
 </script>
 
