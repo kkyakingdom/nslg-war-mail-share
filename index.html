@@ -261,7 +261,15 @@ body.simpleMode .commandOnly{display:none!important}body.simpleMode .commandSetu
 #matchups .v6432Letters .v6431ArmsLetter{font-size:11px}
 #matchups .v6432Pct{font-size:10px}
 @media(max-width:700px){#matchups .matrix th.v6432DeckHead,#matchups .matrix td.mx{width:140px;min-width:140px;max-width:140px}#matchups .matrix th.rowdeck{width:165px;min-width:165px;max-width:165px}}
-</style><style>.v6433InlineAvg{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:#e8c36a;border:1px solid #7b633a;border-radius:6px;padding:2px 5px;white-space:nowrap}</style></head>
+</style><style>.v6433InlineAvg{display:inline-block;margin-left:6px;font-size:10px;font-weight:700;color:#e8c36a;border:1px solid #7b633a;border-radius:6px;padding:2px 5px;white-space:nowrap}</style>
+<style id="v6442OpponentHeaderParity">
+/* Local and GitHub builds use the same static matchup header renderer. */
+#matchups .matrix th.v6432DeckHead{width:170px!important;min-width:170px!important;max-width:170px!important;padding:7px 5px!important;vertical-align:middle!important}
+#matchups #matchHead .v6442OpponentHeroes{display:flex!important;flex-direction:column!important;justify-content:center;align-items:center;gap:3px;margin:0!important;max-height:none!important;overflow:visible!important;white-space:normal!important}
+#matchups #matchHead .v6442OpponentHero{display:block;width:100%;font-size:12px;line-height:1.3;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;word-break:keep-all;overflow-wrap:normal}
+@media(max-width:700px){#matchups .matrix th.v6432DeckHead{width:155px!important;min-width:155px!important;max-width:155px!important}}
+</style>
+</head>
 <body><script>
 window.NSLG_PUBLIC_MODE=true;
 window.NSLG_PUBLIC_ACCESS_HASH='7ba6de8b74a1751302131909116affb1ef205843f654190346be26ee8a9177da';
@@ -309,8 +317,8 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
   </div>
   <div id="v6380AutoBar" class="v6380AutoBar">
     <div class="v6380AutoLead"><i></i><span>교전창 자동 수집</span></div>
-    <div class="v6380AutoControls"><label><input id="v6380AutoEnabled" type="checkbox" checked> ON</label><label>쿨타임 <select id="v6380Cooldown"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option><option value="30">30분</option></select></label></div>
-    <div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
+    <div class="v6380AutoControls"><label><input id="v6380AutoEnabled" type="checkbox" checked> ON</label><label>방식 <select id="v6380Mode"><option value="assisted">기존 자동</option><option value="full">완전 자동 (준비 중)</option></select></label><label>쿨타임 <select id="v6380Cooldown"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option><option value="30">30분</option></select></label></div>
+    <div class="v6380AutoCoords" style="font-size:10px"><details><summary>완전 자동 좌표 등록 (준비)</summary><div style="padding:6px 0">게임 창 내부 좌표 · 진입 3곳 + 닫기 1곳<br><input id="vAutoClicks" placeholder="예: 100,200;300,400;500,600;700,800" style="width:min(100%,370px)"><button type="button" id="vAutoSaveClicks">좌표 저장</button><div id="vAutoCoordsNote">좌표만 저장합니다. 실제 백그라운드 클릭은 아직 지원하지 않습니다.</div></div></details></div><div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
     <div class="v6380AutoSub" id="v6380AutoSub">교전창을 열면 자동 수집 · GitHub 연결 시 자동 공유</div>
   </div>
   <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
@@ -2225,13 +2233,13 @@ setTimeout(install,80);
 
 <script id="v6380AutoCollectScript">
 (()=>{
-  const q=s=>document.querySelector(s),bar=q('#v6380AutoBar'),en=q('#v6380AutoEnabled'),cd=q('#v6380Cooldown'),st=q('#v6380AutoState'),sub=q('#v6380AutoSub');
+  const q=s=>document.querySelector(s),bar=q('#v6380AutoBar'),en=q('#v6380AutoEnabled'),cd=q('#v6380Cooldown'),mode=q('#v6380Mode'),coords=q('#vAutoClicks'),st=q('#v6380AutoState'),sub=q('#v6380AutoSub');
   if(!bar)return;if(window.NSLG_PUBLIC_MODE){bar.style.display='none';return}let saving=false;
   const dt=v=>{const d=new Date(v||'');return Number.isFinite(d.getTime())?d:null};
   const remain=v=>{const d=dt(v);if(!d)return'';const sec=Math.max(0,Math.ceil((d-Date.now())/1000));if(!sec)return'';const m=Math.floor(sec/60),ss=sec%60;return `${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`};
-  async function save(){if(saving)return;saving=true;try{const u='/api/auto-collect-settings?enabled='+(en.checked?'1':'0')+'&cooldown='+encodeURIComponent(cd.value);const r=await fetch(u,{method:'POST'}),j=await r.json();if(!r.ok||!j.ok)throw new Error(j.message||'저장 실패');await refresh()}catch(e){alert('자동 수집 설정 실패: '+(e?.message||e))}finally{saving=false}}
-  async function refresh(){try{const j=await fetch('/api/auto-collect-status?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('status '+r.status);return r.json()});if(!saving){en.checked=!!j.enabled;cd.value=String(j.cooldownMinutes||10)}bar.classList.remove('off','busy','cool');let text=j.message||'감시 중';const ph=String(j.phase||'WATCHING').toUpperCase(),left=remain(j.cooldownUntil);if(!j.enabled||ph==='OFF'){bar.classList.add('off');text='자동 수집 OFF'}else if(ph==='COLLECTING'||ph==='PENDING'){bar.classList.add('busy')}else if(ph==='COOLDOWN'){bar.classList.add('cool');if(left)text='쿨타임 '+left+' · 다음 교전창 열림 대기'}st.textContent=text;const gh=j.githubAuto?'<span class="v6380GithubOn">GitHub 자동 공유 ON</span>':'<span class="v6380GithubOff">GitHub 자동 공유 미설정 · 공유 버튼을 한 번 눌러주세요</span>';const last=dt(j.lastAutoCollectAt||j.lastCollectAt),lastText=last?`${String(last.getHours()).padStart(2,'0')}:${String(last.getMinutes()).padStart(2,'0')}`:'-';const dur=Number(j.lastCollectDurationSec||0),nr=Number(j.lastCollectNewRaw||0);sub.innerHTML=`5초 경량 감시 · ${j.currentUnique||0} BattleID · 최근 자동수집 ${lastText}${dur?` · ${dur}초`:''}${nr?` · 신규 ${nr}전`:''} · ${gh}`;}catch(e){st.textContent='자동 수집 상태 확인 실패';sub.textContent=String(e?.message||e)}}
-  en.addEventListener('change',save);cd.addEventListener('change',save);refresh();setInterval(refresh,2000);
+  async function save(){if(saving)return;saving=true;try{const u='/api/auto-collect-settings?enabled='+(en.checked?'1':'0')+'&cooldown='+encodeURIComponent(cd.value)+'&mode='+encodeURIComponent(mode.value);const r=await fetch(u,{method:'POST'}),j=await r.json();if(!r.ok||!j.ok)throw new Error(j.message||'저장 실패');await refresh()}catch(e){alert('자동 수집 설정 실패: '+(e?.message||e))}finally{saving=false}}
+  async function refresh(){try{const j=await fetch('/api/auto-collect-status?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('status '+r.status);return r.json()});if(!saving){en.checked=!!j.enabled;cd.value=String(j.cooldownMinutes||10);mode.value=j.mode||'assisted';if(coords&&document.activeElement!==coords&&Array.isArray(j.clicks))coords.value=j.clicks.map(p=>p.x+','+p.y).join(';')}bar.classList.remove('off','busy','cool');let text=j.message||'감시 중';const ph=String(j.phase||'WATCHING').toUpperCase(),left=remain(j.cooldownUntil);if(!j.enabled||ph==='OFF'){bar.classList.add('off');text='자동 수집 OFF'}else if(ph==='COLLECTING'||ph==='PENDING'){bar.classList.add('busy')}else if(ph==='COOLDOWN'){bar.classList.add('cool');if(left)text='쿨타임 '+left+' · 다음 교전창 열림 대기'}if(j.mode==='full')text='완전 자동 준비 중 · 백그라운드 입력 미검증 (자동 클릭 없음)';st.textContent=text;const gh=j.githubAuto?'<span class="v6380GithubOn">GitHub 자동 공유 ON</span>':'<span class="v6380GithubOff">GitHub 자동 공유 미설정 · 공유 버튼을 한 번 눌러주세요</span>';const last=dt(j.lastAutoCollectAt||j.lastCollectAt),lastText=last?`${String(last.getHours()).padStart(2,'0')}:${String(last.getMinutes()).padStart(2,'0')}`:'-';const dur=Number(j.lastCollectDurationSec||0),nr=Number(j.lastCollectNewRaw||0);sub.innerHTML=`5초 경량 감시 · ${j.currentUnique||0} BattleID · 최근 자동수집 ${lastText}${dur?` · ${dur}초`:''}${nr?` · 신규 ${nr}전`:''} · ${gh}`;}catch(e){st.textContent='자동 수집 상태 확인 실패';sub.textContent=String(e?.message||e)}}
+  en.addEventListener('change',save);cd.addEventListener('change',save);mode.addEventListener('change',save);q('#vAutoSaveClicks')?.addEventListener('click',async()=>{try{const raw=coords.value.trim();const r=await fetch('/api/auto-collect-settings?clicks='+encodeURIComponent(raw),{method:'POST'});const j=await r.json();if(!r.ok||!j.ok)throw Error(j.message||'저장 실패');q('#vAutoCoordsNote').textContent='좌표 저장 완료 · 자동 클릭 기능은 아직 비활성화';}catch(e){q('#vAutoCoordsNote').textContent='저장 실패: '+e.message}});refresh();setInterval(refresh,2000);
 })();
 </script>
 
@@ -2270,7 +2278,8 @@ function v6432Decorate(m,owns,opps){
  const row=new Map(),col=new Map();const add=(target,key,x,side)=>{let z=target.get(key);if(!z){z={total:0,known:0,items:new Map()};target.set(key,z)}z.total++;const a=v6432Arms(x.r,side);if(!a)return;z.known++;let item=z.items.get(a.identity);if(!item){item={...a,n:0,rows:[]};z.items.set(a.identity,item)}item.n++;item.rows.push(x)};
  for(const a of owns)for(const b of opps){const z=m.cells.get(a+'@@'+b);if(!z)continue;for(const x of z.rows){add(row,a,x,!!x.flipped);add(col,b,x,!x.flipped)}}
  const html=(z,label)=>z?v6432UsageHtml(z.items,z.total,z.known,label):'<div class="v6432Missing">병종 표본 없음</div>';
- q('#matchHead')?.querySelectorAll('th:not(.corner)').forEach((th,i)=>{const k=opps[i];th.classList.add('v6432DeckHead');const label=m.meta.get(k)?.l||k;th.innerHTML=`<div class="v6432DeckName">${esc(label)}</div>`});
+ const opponentHeroes=(k)=>{const t=String(m.meta.get(k)?.t||'');const parts=t.includes('\n')?t.split('\n').map(x=>x.split(' · ')[0]):t.split(' · ');return parts.filter(Boolean).slice(0,3).map(x=>`<span class="v6442OpponentHero">${esc(x)}</span>`).join('')};
+ q('#matchHead')?.querySelectorAll('th:not(.corner)').forEach((th,i)=>{const k=opps[i];th.classList.add('v6432DeckHead');const label=m.meta.get(k)?.l||k;th.title=String(m.meta.get(k)?.t||label);th.innerHTML=`<div class="v6432DeckName v6442OpponentHeroes">${opponentHeroes(k)}</div>`});
  q('#matchRows')?.querySelectorAll('tr').forEach((tr,i)=>{const th=tr.querySelector('th.rowdeck');if(!th)return;const k=owns[i],label=m.meta.get(k)?.l||k;const note=th.querySelector('.small')?.outerHTML||'';th.innerHTML=`<div class="v6432DeckName">${esc(label)}</div>${html(row.get(k),label)}${note}`});
  // 상성 셀 클릭 동작을 변경하지 않고, 병종 배지에서만 기존 근거 전보 모달을 연다.
  const evidence=(root,stat,key,side)=>{root?.querySelectorAll('[data-v6432-key]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();const item=stat?.items.get(btn.dataset.v6432Key);if(!item)return;const records=item.rows;const z={n:records.length,w:records.filter(x=>x.result==='승').length,l:records.filter(x=>x.result==='패').length,rows:records};perspectiveEvidence(`${m.meta.get(key)?.l||key} · 병종 ${item.key} · ${side} 근거 전보`,z,key,key) }))};
@@ -3012,6 +3021,20 @@ button:hover:not(:disabled){filter:brightness(1.09)}
   window.fetch=(input,init)=>{const u=String(input||'');if(u.startsWith('/api/')||u.includes('127.0.0.1')||u.includes('localhost'))return Promise.reject(new Error('PUBLIC_MODE_READ_ONLY'));return rawFetch(input,init)};
   ['adminMenuBtn','collectNowBtn','trustDiagBtn','v629SettingsUndoBtn','v629SettingsPreviewBtn','v628AdminBtn','sideSetupBtn'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none'});
   document.querySelectorAll('.commandOnly,.adminMenu,.adminPanel,.localOnly,#v640OpsDock,#v6380AutoBar,#v6380AutoCollectBar,#v63756ShareState,#collectorStatus,.qualityBar,#v634CollectGuide,#v640SystemDetails,#v639IntegrityBar,#v629VisitStrip').forEach(e=>e.style.display='none');
+})();
+</script><script src="public_mapping.js"></script>
+<script>
+(function(){
+  const m=window.NSLG_PUBLIC_MAPPING||{};
+  document.addEventListener('DOMContentLoaded',function(){
+    try{
+      if(typeof V6435_ARM_NAMES!=='undefined')Object.assign(V6435_ARM_NAMES,m.arms||{});
+      if(typeof V6435_ARM_SHORTS!=='undefined')Object.assign(V6435_ARM_SHORTS,m.shorts||{});
+      if(typeof ALIASES!=='undefined')Object.assign(ALIASES,m.aliases||{});
+      if(typeof HERO_OVERRIDES!=='undefined')Object.assign(HERO_OVERRIDES,m.heroes||{});
+      if(typeof renderArmsUsage==='function')renderArmsUsage();
+    }catch(e){console.warn('Public mapping initialization:',e)}
+  });
 })();
 </script></body>
 </html>
