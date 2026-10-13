@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":143,"at":"2026-10-14T01:36:00.9318339+09:00","reason":"startup","version":"v6.42.2 SETUP USAGE TOP - HERO 3 + SKILL 6 COMBO RANKING"};
+﻿window.NSLG_DATA_GENERATION={"generation":144,"at":"2026-10-14T01:38:42.9543518+09:00","reason":"collection:20261014-013603","version":"v6.42.2 SETUP USAGE TOP - HERO 3 + SKILL 6 COMBO RANKING"};
