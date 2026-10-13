@@ -313,7 +313,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
     <div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
     <div class="v6380AutoSub" id="v6380AutoSub">교전창을 열면 자동 수집 · GitHub 연결 시 자동 공유</div>
   </div>
-  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">장수 / 덱 매핑</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
+  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
   <div class="cards" id="v628DataCards">
     <div class="card"><div class="k">현재 분석 전보</div><div class="v" id="cTotal">0</div></div>
     <div class="card v6413CoreKpi"><div class="k">관측 승률</div><div class="v" id="v6413ObservedRate">-</div></div>
@@ -438,11 +438,12 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
 
   <section class="section hidden" id="chainrank"><h2><span>연속전투 랭킹</span><span class="small">검색과 별개로 전체 덱의 평균 연속전투 길이를 비교합니다. 덱을 누르면 실제 관측 전법을 펼쳐봅니다.</span></h2><div class="v6405RankBody"><div class="v6405RankHead"><div class="copy"><b>평균 연속전투 순위</b><span>같은 유저·같은 장수 조합이 이어진 연속교전을 1회로 보고, 한 번의 연속교전에서 평균 몇 전까지 이어졌는지 계산합니다.</span></div><div class="v6405RankControls"><label>최소 연속교전 <select id="v6405RankMin"><option value="1">1회+</option><option value="2" selected>2회+</option><option value="3">3회+</option><option value="5">5회+</option><option value="10">10회+</option></select></label></div></div><div id="v6405RankSummary" class="v6405RankSummary"></div><div class="v6405RankPanel"><div class="tablewrap"><table class="v6405RankTable"><thead><tr><th>순위</th><th>장수 조합</th><th>평균 연속전투</th><th>연속교전</th><th>총 연속전투</th><th>최장</th><th>후속전 승률</th></tr></thead><tbody id="v6405RankRows"></tbody></table></div></div><div class="v6405RankNote">※ 랭킹은 현재 분석 기간·시즌을 따르지만 상단 통합 검색어에는 영향을 받지 않습니다. 표본이 적은 덱의 과대평가를 피하려면 최소 연속교전 2회 이상을 권장합니다.</div></div></section>
 
+  <section class="section hidden" id="armsUsage"><h2>병종 분석 <span class="small">병종 순서 무관 · 덱별 관측 사용률</span></h2><div class="mappingControls"><span>각 병종 조합을 사용한 덱의 분포 · 양측 전보를 각각 1회 관측</span></div><div class="tablewrap"><table class="matrix"><thead id="armsUsageHead"></thead><tbody id="armsUsageRows"></tbody></table></div></section>
   <section class="section hidden" id="matchups"><h2><span>상성 분석</span><span class="small">행 = 기준 덱(내 덱) · 열 = 상대 덱 · 상대 돌파은 필터하지 않음 · 셀 숫자 = 전체 관측 승률 · 클릭 = 정확히 같은 근거 전보</span></h2><div class="v632MatchTools"><span>표본</span><button data-ms="1">전체</button><button data-ms="5">5전+</button><button data-ms="10">10전+</button><button data-ms="20">20전+</button><button data-ms="40">40전+</button><span class="v6417PromoSep" aria-hidden="true"></span><span class="v6417PromoLead">내 덱 평균 돌파</span><button data-promo-band="all">전체</button><button data-promo-band="0-1">0~1</button><button data-promo-band="2-3">2~3</button><button data-promo-band="4-5">4~5</button><span class="v6417PromoNote" id="v6417PromoNote">상대 덱 돌파 무관</span></div><div class="matrixLegend"><span class="lg good">우세 60%+</span><span class="lg midgood">근소우세 51~59%</span><span class="lg even">반반</span><span class="lg midbad">근소열세 41~49%</span><span class="lg bad">열세 40%-</span><span class="small">색상은 50% 기준으로 대칭 적용 · 연한 색 = 근소 우열, 진한 색 = 뚜렷한 우열</span></div><div class="tablewrap matrixwrap"><table class="matrix"><thead id="matchHead"></thead><tbody id="matchRows"></tbody></table></div></section>
   <section class="section hidden" id="players"><h2><span>유저 분석</span><span class="small">현재 기간·필터 기준 · 양쪽 어느 진영으로 등장해도 해당 유저 관점으로 환산</span></h2><div class="playerbar"><input id="playerInput" list="playerList" placeholder="분석할 유저명을 입력 또는 선택"><datalist id="playerList"></datalist><button id="playerGo">분석</button></div><div id="playerSummary" class="hidden"><div class="playerHead"><div class="mini"><div class="k">유저</div><div class="v" id="pName">-</div></div><div class="mini"><div class="k">공정조건 개별 전투</div><div class="v" id="pBattles">0</div></div><div class="mini"><div class="k">공정조건 교전</div><div class="v" id="pTotal">0</div></div><div class="mini"><div class="k">공정조건 승/패</div><div class="v" id="pRecord">0-0</div></div><div class="mini"><div class="k">공정조건 승률</div><div class="v" id="pRate">-</div></div><div class="mini"><div class="k">정밀 추정 승률</div><div class="v" id="pAdjRate">-</div></div><div class="mini"><div class="k">95% 하한</div><div class="v" id="pScore">-</div></div><div class="mini"><div class="k">최근 10교전</div><div class="v" id="pRecent">-</div></div><div class="mini"><div class="k">연속교전</div><div class="v" id="pChains">0</div></div><div class="mini"><div class="k">최장 연속전투</div><div class="v" id="pLongest">1</div></div><div class="mini"><div class="k">최근 활동</div><div class="v" id="pLast">-</div></div><div class="mini"><div class="k">주력 덱</div><div class="v" id="pMainDeck" style="font-size:13px">-</div></div></div><div id="v632PlayerProfile" class="v632PlayerProfile commandOnly"></div><div class="playerIntel commandOnly"><div class="playerTableTitle">지휘부 메모 / 태그 <span class="small">이 브라우저에만 저장</span></div><div class="playerIntelBody"><div class="tagEditor"><input id="playerTags" placeholder="태그 예: 핵심전력, 야간활동, 최근덱변경"><button id="playerIntelSave">저장</button></div><textarea id="playerMemo" placeholder="숫자로 표현하기 어려운 지휘부 메모를 기록하세요."></textarea><div class="intelSaved" id="playerIntelState"></div></div></div><div class="playerTables"><div class="playerTableBlock"><div class="playerTableTitle">사용 덱 <span class="small">공정조건 분석</span></div><div class="tablewrap"><table><thead><tr><th>사용 덱</th><th>교전</th><th>승</th><th>패</th><th>승률</th><th>표본보정</th><th>성과점수</th></tr></thead><tbody id="playerDeckRows"></tbody></table></div></div><div class="playerTableBlock"><div class="playerTableTitle">주요 상대 <span class="small">공정조건 분석</span></div><div class="tablewrap"><table><thead><tr><th>상대</th><th>교전</th><th>승</th><th>패</th><th>승률</th><th>표본보정</th><th>성과점수</th></tr></thead><tbody id="playerOppRows"></tbody></table></div></div></div></div><div class="empty" id="playerEmpty">유저를 선택하면 전투/교전 수, 최근 폼, 주력 덱, 주요 상대를 보여줍니다.</div></section>
 
   <section class="section hidden" id="alliances"><h2><span>연맹 분석</span><span class="small">전체 관측 전적과 공정조건 분석을 분리 · 공정조건은 연속전투를 하나의 교전으로 계산</span></h2><div class="allianceBar"><select id="allianceAnalysisSelect"><option value="">연맹 선택</option></select><span class="small">전체 관측과 정밀 공정조건을 분리하고 95% 범위를 함께 표시합니다.</span></div><div class="diagGrid allianceSummary"><div class="diagCard"><div class="k">공정조건 개별 전투</div><div class="v" id="aBattles">0</div></div><div class="diagCard"><div class="k">공정조건 교전</div><div class="v" id="aEngagements">0</div></div><div class="diagCard"><div class="k">공정조건 승/패</div><div class="v" id="aRecord">0-0</div></div><div class="diagCard"><div class="k">공정조건 승률</div><div class="v" id="aRate">-</div></div><div class="diagCard"><div class="k">정밀 추정 승률</div><div class="v" id="aAdjRate">-</div></div><div class="diagCard"><div class="k">95% 하한</div><div class="v" id="aScore">-</div></div><div class="diagCard"><div class="k">참전 인원</div><div class="v" id="aPlayers">0</div></div></div><div class="allianceTables"><div class="playerTableBlock"><div class="playerTableTitle">상대 연맹별 성적 <span class="small">공정조건 분석</span></div><div class="tablewrap"><table><thead><tr><th>상대 연맹</th><th>교전</th><th>승</th><th>패</th><th>승률</th><th>표본보정</th><th>성과점수</th><th>신뢰도</th></tr></thead><tbody id="allianceOppRows"></tbody></table></div></div><div class="playerTableBlock"><div class="playerTableTitle">연맹 주요 플레이어 <span class="small">공정조건 분석</span></div><div class="tablewrap"><table><thead><tr><th>플레이어</th><th>교전</th><th>승</th><th>패</th><th>승률</th><th>표본보정</th><th>성과점수</th><th>신뢰도</th></tr></thead><tbody id="alliancePlayerRows"></tbody></table></div></div></div></section>
-  <section class="section hidden" id="mappings"><h2><span>장수 / 덱 이름 매핑 관리</span><span class="small">저장한 장수 이름은 기존 전보에도 즉시 적용 · 덱 별칭은 장수 조합 키 기준</span></h2><div class="mappingControls"><input id="mappingSearch" placeholder="장수 ID·이름·덱 구성 검색"><button id="mappingRefresh">새로고침</button><span class="small" id="mappingState">매핑 정보를 불러오는 중</span></div><div class="mappingNotice">장수 매핑은 사용자 오버라이드로 저장되어 다음 수집에도 유지됩니다. 이름을 비워 저장하면 사용자 오버라이드를 해제하고 기본 매핑으로 돌아갑니다.</div><div class="mappingSplit"><div class="mappingBlock"><div class="mappingBlockTitle"><span>장수 이름 매핑</span><span class="small" id="heroMappingCount">0개</span></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>장수명</th><th>출처/상태</th><th>관측</th><th></th></tr></thead><tbody id="heroMappingRows"></tbody></table></div></div><div class="mappingBlock"><div class="mappingBlockTitle"><span>덱 별칭</span><span class="small" id="deckMappingCount">0개</span></div><div class="tablewrap"><table><thead><tr><th>장수 조합</th><th>별칭</th><th>표본</th><th></th></tr></thead><tbody id="deckMappingRows"></tbody></table></div></div></div></section>
+  <section class="section hidden" id="mappings"><h2><span>매핑 관리</span><span class="small">저장한 장수 이름은 기존 전보에도 즉시 적용 · 덱 별칭은 장수 조합 키 기준</span></h2><div class="mappingControls"><input id="mappingSearch" placeholder="ID·이름·덱 구성 검색"><button id="mappingRefresh">새로고침</button><span class="small" id="mappingState">매핑 정보를 불러오는 중</span></div><div class="mappingNotice">장수 매핑은 사용자 오버라이드로 저장되어 다음 수집에도 유지됩니다. 이름을 비워 저장하면 사용자 오버라이드를 해제하고 기본 매핑으로 돌아갑니다.</div><div class="mappingTabs"><button type="button" data-map-tab="hero" class="on">장수</button><button type="button" data-map-tab="skill">전법</button><button type="button" data-map-tab="deck">덱 별칭</button><button type="button" data-map-tab="arms">병종</button></div><div class="mappingSplit"><div class="mappingBlock" data-map-pane="hero"><div class="mappingBlockTitle"><span>장수 이름 매핑</span><span class="small" id="heroMappingCount">0개</span></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>장수명</th><th>출처/상태</th><th>관측</th><th></th></tr></thead><tbody id="heroMappingRows"></tbody></table></div></div><div class="mappingBlock" data-map-pane="deck"><div class="mappingBlockTitle"><span>덱 별칭</span><span class="small" id="deckMappingCount">0개</span></div><div class="tablewrap"><table><thead><tr><th>장수 조합</th><th>별칭</th><th>표본</th><th></th></tr></thead><tbody id="deckMappingRows"></tbody></table></div></div><div class="mappingBlock" data-map-pane="skill"><div class="mappingBlockTitle"><span>전법 이름 매핑</span><span class="small" id="skillMappingCount"></span></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>이름</th><th>기본/상태</th><th>관리</th></tr></thead><tbody id="skillMappingRows"></tbody></table></div></div><div class="mappingBlock" data-map-pane="arms"><div class="mappingBlockTitle"><span>병종 이름 매핑</span><span class="small" id="armsMappingCount"></span></div><div class="tablewrap"><table><thead><tr><th>ID</th><th>이름</th><th>약칭</th><th>기본/상태</th><th>관리</th></tr></thead><tbody id="armsMappingRows"></tbody></table></div></div></div></section>
   <section class="section hidden" id="diagnostics"><h2><span>수집 진단</span><span class="small">RAW 감지 → 상세확정 → 분석반영 흐름</span></h2><div class="diagGrid"><div class="diagCard"><div class="k">현재 RAW 감지</div><div class="v" id="dRawCurrent">-</div></div><div class="diagCard"><div class="k">원본 확정</div><div class="v" id="dRawConfirmed">-</div></div><div class="diagCard"><div class="k">중복 별칭</div><div class="v" id="dRawAliases">-</div></div><div class="diagCard"><div class="k">상세 미확인</div><div class="v" id="dRawUnresolved">-</div></div></div><div class="diagActions"><button id="diagRefreshBtn">진단 새로고침</button><button id="diagRetryBtn">누락 후보 재수집</button><button id="diagDbCheckBtn">DB 점검</button><button id="diagBackupBtn">백업 목록/복구</button><button id="diagMergeBtn">백업 가져오기/병합</button></div><div class="diagList" id="lastCollectSummary">최근 수집 요약 대기</div><div class="diagCheck" id="dbCheckSummary">DB 점검을 누르면 중복 ID·연속전투 병력 연결·상세 누락·시간 이상을 검사합니다.</div><div class="validationBox"><div class="playerTableTitle">수집 결과 검산표</div><div class="tablewrap"><table><thead><tr><th>항목</th><th>값</th><th>판정/설명</th></tr></thead><tbody id="validationRows"></tbody></table></div></div><div class="v632DiagGrid"><div class="v632DiagPanel"><div class="playerTableTitle">수집 성능 · 최근 20회</div><div id="v632PerfSummary" class="v632PerfSummary"></div><div id="v632PerfHistory" class="v632PerfHistory"></div></div><div class="v632DiagPanel"><div class="playerTableTitle">지연 발견 패턴</div><div id="v632LatencyPattern" class="v632LatencyPattern"></div></div></div><div class="tablewrap"><table><thead><tr><th>BattleID</th><th>대표 ID</th><th>상태</th><th>설명</th></tr></thead><tbody id="rawResolutionRows"></tbody></table></div></section>
 </div>
 <div class="detail" id="detail"><div class="detailbox"><div class="detailtop"><div><b>전보 상세</b><div class="detailid" id="dId"></div></div><button id="detailClose">닫기</button></div><div class="detailbody"><div class="metaLine" id="dTime"></div><div class="battlegrid" style="margin-top:12px"><div class="side" id="dLeft"></div><div class="side" id="dRight"></div></div><div id="dChain"></div></div></div></div>
@@ -494,21 +495,32 @@ function recentCutoff(){const v=$('#recentPreset').value;if(v==='all')return 0;c
 function baseFiltered(){const q=$('#q').value.trim().toLowerCase(),rf=$('#resultFilter').value,af=$('#allianceFilter').value,oh=$('#ownHero').value,ph=$('#oppHero').value,sf=$('#seasonFilter')?.value||'',range=activeDateRange();return DATA.filter(r=>{const ms=parseTime(r.time);if(Number.isFinite(ms)&&(ms<range.from||ms>range.to))return false;if(sf&&(r.season||'현재 시즌')!==sf)return false;if(rf&&r.result!==rf)return false;if(af&&r.alliance!==af&&r.oppAlliance!==af)return false;if(oh&&!heroes(r).includes(oh))return false;if(ph&&!heroes(r,true).includes(ph))return false;if(activeOwnDeck&&deckDescriptor(r,false,activeKeyMode).key!==activeOwnDeck)return false;if(activeOppDeck&&deckDescriptor(r,true,activeKeyMode).key!==activeOppDeck)return false;if(activeAnyDeck&&deckDescriptor(r,false,activeKeyMode).key!==activeAnyDeck&&deckDescriptor(r,true,activeKeyMode).key!==activeAnyDeck)return false;if(q&&!searchableText(r).toLowerCase().includes(q))return false;return true})}
 function renderCards(rows){const w=rows.filter(r=>r.result==='승').length,l=rows.filter(r=>r.result==='패').length,decks=new Set(rows.flatMap(r=>[canon(heroes(r)),canon(heroes(r,true))]).filter(Boolean)),users=new Set(rows.flatMap(r=>[r.user,r.oppUser]).filter(x=>x&&x!=='xxxx'));$('#cTotal').textContent=rows.length.toLocaleString();$('#cWin').textContent=w.toLocaleString();$('#cLoss').textContent=l.toLocaleString();$('#cDecks').textContent=decks.size.toLocaleString();$('#cUsers').textContent=users.size.toLocaleString();$('#cComplete').textContent=rows.filter(isComplete).length.toLocaleString()}
 /* v6.43.1: 병종은 전보 상세의 장수 순서대로 중앙 통합 표시 */
-function v6431ArmsBadge(r,opp=false){
+// Shared ID-based troop resolver: all views use the same raw IDs and current short-name mapping.
+const V6435_ARM_BASE={'1':'방패병','2':'궁병','3':'창병','4':'기병','17':'백전 궁병','18':'백전 창병'};
+const V6435_ARM_SHORT={'1':'방','2':'궁','3':'창','4':'기','17':'궁','18':'창'};
+let V6435_ARM_NAMES={},V6435_ARM_SHORTS={};
+function v6435Troop(d){
+ if(!d)return null;
+ const adv=String(d.advancedArmsId??'').trim(),basic=String(d.basicArmsId??'').trim();
+ const advName=String(d.advancedArms||'').trim(),basicName=String(d.basicArms||'').trim();
+ let id='';
+ // An explicitly known advanced troop always wins over its basic troop.
+ if(adv && adv!=='0' && (V6435_ARM_NAMES[adv]||V6435_ARM_BASE[adv]||advName))id=adv;
+ else if(basic && basic!=='0')id=basic;
+ if(!id){const raw=advName||basicName;id=Object.keys(V6435_ARM_BASE).find(k=>V6435_ARM_BASE[k]===raw)||'';}
+ const name=V6435_ARM_NAMES[id]||V6435_ARM_BASE[id]||advName||basicName;
+ const baseId=Object.keys(V6435_ARM_BASE).find(k=>V6435_ARM_BASE[k]===basicName)||basic;
+ const short=V6435_ARM_SHORTS[id]||V6435_ARM_SHORT[id]||V6435_ARM_SHORTS[baseId]||V6435_ARM_SHORT[baseId]||'';
+ return short?{id,name,abbr:short}:null;
+}
+function v6435TroopParts(r,opp=false){
  const hs=heroes(r,opp),ds=detailMembers(r,opp);
- if(!hs.length)return '';
- const map={"기병":["기","cavalry"],"방패병":["방","shield"],"창병":["창","spear"],"궁병":["궁","archer"]};
- const ids={"4":"기병","1":"방패병","3":"창병","2":"궁병"};
- const parts=hs.slice(0,3).map((h,i)=>{
-  const d=detailMemberForHero(ds,h,i);
-  // 고급 병종의 코드가 특수병종인 경우 기본 병종으로 분류하되, 원본 상세정보는 툴팁에 유지.
-  const raw=String(d?.advancedArms||'').trim(),base=String(d?.basicArms||'').trim();
-  const known=(map[raw]&&raw)||(map[base]&&base)||ids[String(d?.basicArmsId||'')]||'';
-  const [abbr,kind]=map[known]||['?','unknown'];
-  const detail=raw&&raw!==known?' · 고급 '+raw:'';
-  return {abbr,kind,title:h+': '+(known||'병종 미확인')+detail};
- });
- return `<span class="v6431ArmsWrap" role="group" aria-label="병종 구성: ${esc(parts.map(x=>x.title).join(', '))}" title="${esc(parts.map(x=>x.title).join(' / '))}"><span class="v6431ArmsBadge">${parts.map(x=>`<span class="v6431ArmsLetter ${x.kind}" title="${esc(x.title)}">${x.abbr}</span>`).join('')}</span></span>`;
+ return hs.slice(0,3).map((h,i)=>({hero:h,t:v6435Troop(detailMemberForHero(ds,h,i))}));
+}
+function v6431ArmsBadge(r,opp=false){
+ const parts=v6435TroopParts(r,opp);
+ if(!parts.length)return '';
+ return `<span class="v6431ArmsWrap" title="${esc(parts.map(x=>x.hero+': '+(x.t?.name||'병종 미확인')).join(' / '))}"><span class="v6431ArmsBadge">${parts.map(x=>`<span class="v6431ArmsLetter" title="${esc(x.hero+': '+(x.t?.name||'병종 미확인'))}">${esc(x.t?.abbr||'?')}</span>`).join('')}</span></span>`;
 }
 function deckSummaryHtml(r,opp=false){const hs=heroes(r,opp),ds=detailMembers(r,opp);if(!hs.length)return'-';const vals=[],heroHtml=hs.map((h,i)=>{const d=detailMemberForHero(ds,h,i),lv=d&&d.level?String(d.level):'?',pv=promotionValue(d);if(Number.isFinite(pv))vals.push(pv);return`${esc(h)}<span class="heroInlineLevel">(${esc(lv)})</span>`}).join(' <span class="deckSep">·</span> ');let promo='<span class="promotionAvg promoUnknown">?(돌파)</span>';if(hs.length===3&&vals.length===3){const avg=vals.reduce((a,b)=>a+b,0)/3,shown=Math.abs(avg-Math.round(avg))<.05?String(Math.round(avg)):avg.toFixed(1),cls=avg<2?'promoLow':avg<4?'promoMid':'promoHigh';promo=`<span class="promotionAvg ${cls}" title="3장수 평균 돌파 ${esc(shown)}">${esc(shown)}(돌파)</span>`}return`<div class="deckSummary"><span class="deckHeroes">${heroHtml}</span>${v6431ArmsBadge(r,opp)}<span class="v6433LastLine">${promo}</span></div>`}
 function skillDisplay(d,n){const name=d&&d['skill'+n]?String(d['skill'+n]):'',id=d&&d['skill'+n+'Id']?String(d['skill'+n+'Id']):'';if(name&&name!==id)return`<span title="전법 ID ${esc(id)}">${esc(name)}</span>`;if(id)return`<span class="hoverSkillUnknown" title="다음 수집에서 한국어 이름 자동매핑을 다시 시도합니다">전법명 수집중 <small>(ID ${esc(id)})</small></span>`;return'-'}
@@ -1163,8 +1175,8 @@ function renderTrendAnalysis(){
 async function renderMappingManager(force=false){
   const j=await v626LoadMappings(force),q=($('#mappingSearch')?.value||'').trim().toLowerCase(),heroesRows=(j.heroes||[]).filter(x=>!q||[x.id,x.name,x.status,x.source].join(' ').toLowerCase().includes(q));$('#heroMappingCount').textContent=`${heroesRows.length}개`;$('#heroMappingRows').innerHTML=heroesRows.map(x=>`<tr><td class="mapKey">${esc(x.id)}</td><td><input class="mapInput heroMapInput" data-id="${esc(x.id)}" value="${esc(x.name||'')}" placeholder="장수명"></td><td><span class="mapSource">${esc(x.source||'')} · ${esc(x.status||'')}</span></td><td>${Number(x.observed||0).toLocaleString()}</td><td><button class="mapSave heroMapSave" data-id="${esc(x.id)}">저장</button></td></tr>`).join('')||'<tr><td colspan="5" class="empty">장수 매핑 없음</td></tr>';
   const aliases=new Map((j.decks||[]).map(x=>[x.key,x.alias||''])),decks=v626ObservedDecks().filter(x=>!q||[x.key,x.label,aliases.get(x.key)||''].join(' ').toLowerCase().includes(q));$('#deckMappingCount').textContent=`${decks.length}개`;$('#deckMappingRows').innerHTML=decks.map(x=>`<tr><td><div>${esc(x.label)}</div><div class="mapKey">${esc(x.key)}</div></td><td><input class="mapInput deckMapInput" data-key="${esc(x.key)}" value="${esc(aliases.get(x.key)||'')}" placeholder="별칭 없음"></td><td>${x.n.toLocaleString()}</td><td><button class="mapSave deckMapSave" data-key="${esc(x.key)}">저장</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">덱 데이터 없음</td></tr>';$('#mappingState').textContent=`장수 ${(j.heroes||[]).length} · 덱 별칭 ${(j.decks||[]).length}`;
-  $('#heroMappingRows').querySelectorAll('.heroMapSave').forEach(b=>b.onclick=async()=>{const id=b.dataset.id,inp=$(`#heroMappingRows input[data-id="${CSS.escape(id)}"]`),name=inp?.value||'';b.disabled=true;b.textContent='저장 중';try{const r=await fetch('/api/hero-map?id='+encodeURIComponent(id)+'&name='+encodeURIComponent(name),{method:'POST'}),x=await r.json();if(!r.ok||!x.ok)throw new Error(x.message||'저장 실패');V626_MAPPING_CACHE=null;await v626LoadMappings(true);v626PopulateTrendDeck();v625ClearMemoryCaches?.();render();await renderMappingManager(true)}catch(e){alert('장수 매핑 저장 실패: '+e.message);b.disabled=false;b.textContent='저장'}});
-  $('#deckMappingRows').querySelectorAll('.deckMapSave').forEach(b=>b.onclick=async()=>{const key=b.dataset.key,inp=$(`#deckMappingRows input[data-key="${CSS.escape(key)}"]`),alias=inp?.value||'';b.disabled=true;b.textContent='저장 중';try{const r=await fetch('/api/alias?key='+encodeURIComponent(key)+'&alias='+encodeURIComponent(alias),{method:'POST'}),x=await r.json();if(!r.ok||!x.ok)throw new Error(x.message||'저장 실패');ALIASES[key]=alias;if(!alias)delete ALIASES[key];V626_MAPPING_CACHE=null;v625ClearMemoryCaches?.();render();await renderMappingManager(true)}catch(e){alert('덱 별칭 저장 실패: '+e.message)}finally{b.disabled=false;b.textContent='저장'}})
+  $('#heroMappingRows').querySelectorAll('.heroMapSave').forEach(b=>b.onclick=async()=>{const id=b.dataset.id,inp=$(`#heroMappingRows input[data-id="${CSS.escape(id)}"]`),name=inp?.value||'';b.disabled=true;b.textContent='저장 중';try{const r=await fetch('/api/hero-map?id='+encodeURIComponent(id)+'&name='+encodeURIComponent(name),{method:'POST'}),x=await r.json();if(!r.ok||!x.ok)throw new Error(x.message||'저장 실패');V626_MAPPING_CACHE=null;await v626LoadMappings(true);v626PopulateTrendDeck();v625ClearMemoryCaches?.();try{render()}catch(e){console.warn("매핑 화면 갱신 건너뜀",e)}await renderMappingManager(true)}catch(e){alert('장수 매핑 저장 실패: '+e.message);b.disabled=false;b.textContent='저장'}});
+  $('#deckMappingRows').querySelectorAll('.deckMapSave').forEach(b=>b.onclick=async()=>{const key=b.dataset.key,inp=$(`#deckMappingRows input[data-key="${CSS.escape(key)}"]`),alias=inp?.value||'';b.disabled=true;b.textContent='저장 중';try{const r=await fetch('/api/alias?key='+encodeURIComponent(key)+'&alias='+encodeURIComponent(alias),{method:'POST'}),x=await r.json();if(!r.ok||!x.ok)throw new Error(x.message||'저장 실패');ALIASES[key]=alias;if(!alias)delete ALIASES[key];V626_MAPPING_CACHE=null;v625ClearMemoryCaches?.();try{render()}catch(e){console.warn("매핑 화면 갱신 건너뜀",e)}await renderMappingManager(true)}catch(e){alert('덱 별칭 저장 실패: '+e.message)}finally{b.disabled=false;b.textContent='저장'}})
 }
 const _v626Render=render;render=function(){_v626Render();if(!$('#trends')?.classList.contains('hidden'))renderTrendAnalysis()};
 showTab=function(id){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===id));['records','decks','matchups','players','alliances','mappings','diagnostics'].forEach(x=>$('#'+x)?.classList.toggle('hidden',x!==id));if(id==='players')renderPlayer();if(id==='alliances')renderAllianceAnalysis();if(id==='trends')renderTrendAnalysis();if(id==='mappings')renderMappingManager();if(id==='diagnostics')renderDiagnostics()};
@@ -1301,8 +1313,8 @@ const _v627AfterRefresh=v6261RenderAfterDataRefresh;v6261RenderAfterDataRefresh=
 /* v6.29: consolidated navigation, decision-first dashboard, favorites, compare, reset-safe UI */
 const V628_FAV_KEY='nslg_v628_favorites',V628_SETUP_KEY='nslg_v628_setup_done';
 let V628_CURRENT_TAB='dashboard';
-const V628_GROUPS={dashboard:['dashboard'],warroom:['warroom','alliances'],decks:['decks','matchups','setupfinder','chains','chainrank'],records:['records'],players:['players'],admin:['mappings','diagnostics']};
-const V628_SUBS={warroom:[['warroom','상대 전쟁실'],['alliances','연맹 분석']],decks:[['decks','덱 통계'],['matchups','상성 분석'],['setupfinder','세팅 분석'],['chainrank','연속전투 랭킹']],admin:[['mappings','매핑 관리'],['diagnostics','수집 진단']]};
+const V628_GROUPS={dashboard:['dashboard'],warroom:['warroom','alliances'],decks:['decks','matchups','armsUsage','setupfinder','chains','chainrank'],records:['records'],players:['players'],admin:['mappings','diagnostics']};
+const V628_SUBS={warroom:[['warroom','상대 전쟁실'],['alliances','연맹 분석']],decks:[['decks','덱 통계'],['matchups','상성 분석'],['armsUsage','병종 분석'],['setupfinder','세팅 분석'],['chainrank','연속전투 랭킹']],admin:[['mappings','매핑 관리'],['diagnostics','수집 진단']]};
 function v628GroupFor(id){for(const [g,ids] of Object.entries(V628_GROUPS))if(ids.includes(id))return g;return'dashboard'}
 function v628ApplyGroupClass(id){const g=v628GroupFor(id);[...document.body.classList].filter(x=>x.startsWith('v628-group-')).forEach(x=>document.body.classList.remove(x));document.body.classList.add('v628-group-'+g);document.body.classList.toggle('v628-no-data',!DATA.length);document.querySelectorAll('#v628MainTabs [data-group]').forEach(b=>b.classList.toggle('on',b.dataset.group===g));document.querySelectorAll('#v628MobileNav [data-tab]').forEach(b=>b.classList.toggle('on',v628GroupFor(b.dataset.tab)===g));v628RenderSubNav(g,id)}
 function v628RenderSubNav(group,id){const box=$('#v628SubNav'),items=V628_SUBS[group]||[];if(!items.length){box.classList.add('hidden');box.innerHTML='';return}box.classList.remove('hidden');box.innerHTML=items.map(([sid,label])=>`<button class="${sid===id?'on':''}" data-subtab="${sid}">${label}</button>`).join('');box.querySelectorAll('[data-subtab]').forEach(b=>b.onclick=()=>showTab(b.dataset.subtab))}
@@ -2240,28 +2252,30 @@ function desc(r,opp,mode){return deckDescriptor(r,opp,mode)}
 function buildMatrix(rows,mode){const deckCount=new Map(),ownCount=new Map(),oppCount=new Map(),meta=new Map(),cells=new Map();const bumpDeck=(d)=>{if(!d?.complete||!d.key)return false;deckCount.set(d.key,(deckCount.get(d.key)||0)+1);if(!meta.has(d.key))meta.set(d.key,{l:d.label,t:d.title});return true};const bumpSideCount=(own,opp)=>{ownCount.set(own,(ownCount.get(own)||0)+1);oppCount.set(opp,(oppCount.get(opp)||0)+1)};const bump=(a,b,res,r,flipped)=>{bumpSideCount(a,b);const k=a+'@@'+b;let z=cells.get(k);if(!z)z={n:0,w:0,l:0,rows:[]};z.n++;if(res==='승')z.w++;else if(res==='패')z.l++;z.rows.push({r,result:res,flipped});cells.set(k,z)};for(const r of rows){if(r.result!=='승'&&r.result!=='패')continue;const a=desc(r,false,mode),b=desc(r,true,mode);if(!bumpDeck(a)||!bumpDeck(b))continue;const leftOk=promoMatches(r,false),rightOk=promoMatches(r,true);if(a.key===b.key){if(!leftOk&&!rightOk)continue;bumpSideCount(a.key,b.key);const k=a.key+'@@'+b.key;let z=cells.get(k);if(!z)z={n:0,w:0,l:0,rows:[],mirror:true};z.n++;z.rows.push({r,result:'무',flipped:!leftOk&&rightOk});cells.set(k,z);continue}if(leftOk)bump(a.key,b.key,r.result,r,false);if(rightOk)bump(b.key,a.key,invertResult(r.result),r,true)}return{deckCount,ownCount,oppCount,meta,cells}}
 // v6.43.2: 상성표 병종 사용률은 기존 상성표와 동일한 관측 집합/방향을 사용한다.
 function v6432Arms(r,opp=false){
- const hs=heroes(r,opp),ds=detailMembers(r,opp);if(hs.length!==3)return null;
- const ids={'1':'방','2':'궁','3':'창','4':'기'},names={'기병':'기','방패병':'방','창병':'창','궁병':'궁'};
- const parts=hs.map((h,i)=>{const d=detailMemberForHero(ds,h,i);if(!d)return null;const a=String(d.advancedArms||'').trim(),b=String(d.basicArms||'').trim();return names[a]||names[b]||ids[String(d.basicArmsId||'')]||null});
- return parts.every(Boolean)?{key:parts.slice().sort((a,b)=>'기방창궁'.indexOf(a)-'기방창궁'.indexOf(b)).join(''),parts:parts.slice().sort((a,b)=>'기방창궁'.indexOf(a)-'기방창궁'.indexOf(b)),hs}:null;
+ const parts=v6435TroopParts(r,opp);
+ if(parts.length!==3||parts.some(x=>!x.t))return null;
+ const sorted=parts.map(x=>x.t).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));
+ // Group by original IDs: two different troop IDs must not merge just because aliases match.
+ const ids=sorted.map(x=>x.id);
+ return {key:sorted.map(x=>x.abbr).join(''),identity:ids.join('|'),parts:sorted.map(x=>x.abbr),hs:heroes(r,opp)};
 }
 function v6432UsageHtml(entries,total,known,label){
  if(!total)return '<div class="v6432Missing">병종 표본 없음</div>';
  const sorted=[...entries.values()].sort((a,b)=>b.n-a.n||a.key.localeCompare(b.key,'ko'));
  const colors={'기':'cavalry','방':'shield','창':'spear','궁':'archer'};
- const badges=sorted.slice(0,2).map((z,i)=>{const pct=(100*z.n/known).toFixed(known&&100*z.n%known===0?0:1);const title=`병종 구성 ${z.key} (장수별 순서 무관)`;return `<button type="button" class="v6432Usage ${i===0?'top':''}" data-v6432-key="${esc(z.key)}" title="${esc(title)} · ${z.n}전 / 병종 확인 ${known}전" aria-label="${esc(label+' '+z.key+' '+pct+'%, '+z.n+'전, 근거 전보 보기')}"><span class="v6432Letters">${z.parts.map(ch=>`<span class="v6431ArmsLetter ${colors[ch]}">${ch}</span>`).join('')}</span><span class="v6432Pct">${pct}%</span></button>`}).join('');
- return `<div class="v6432UsageList">${badges}${sorted.length>2?`<span class="v6432Other" title="나머지 ${sorted.length-2}개 병종 조합">외 ${sorted.length-2}개</span>`:''}<span class="v6432Coverage" title="병종 정보가 확인된 전보 / 해당 덱 전체 전보">병종 확인 ${known}/${total}전</span></div>`;
+ const badges=sorted.slice(0,2).map((z,i)=>{const pct=(100*z.n/known).toFixed(known&&100*z.n%known===0?0:1);const title=`병종 구성 ${z.key} (장수별 순서 무관)`;return `<button type="button" class="v6432Usage ${i===0?'top':''}" data-v6432-key="${esc(z.identity)}" title="${esc(title)} · ${z.n}전 / 병종 확인 ${known}전" aria-label="${esc(label+' '+z.key+' '+pct+'%, '+z.n+'전, 근거 전보 보기')}"><span class="v6432Letters">${z.parts.map(ch=>`<span class="v6431ArmsLetter ${colors[ch]}">${ch}</span>`).join('')}</span><span class="v6432Pct">${pct}%</span></button>`}).join('');
+ return `<div class="v6432UsageList">${badges}</div>`;
 }
 function v6432Decorate(m,owns,opps){
- const row=new Map(),col=new Map();const add=(target,key,x,side)=>{let z=target.get(key);if(!z){z={total:0,known:0,items:new Map()};target.set(key,z)}z.total++;const a=v6432Arms(x.r,side);if(!a)return;z.known++;let item=z.items.get(a.key);if(!item){item={...a,n:0,rows:[]};z.items.set(a.key,item)}item.n++;item.rows.push(x)};
+ const row=new Map(),col=new Map();const add=(target,key,x,side)=>{let z=target.get(key);if(!z){z={total:0,known:0,items:new Map()};target.set(key,z)}z.total++;const a=v6432Arms(x.r,side);if(!a)return;z.known++;let item=z.items.get(a.identity);if(!item){item={...a,n:0,rows:[]};z.items.set(a.identity,item)}item.n++;item.rows.push(x)};
  for(const a of owns)for(const b of opps){const z=m.cells.get(a+'@@'+b);if(!z)continue;for(const x of z.rows){add(row,a,x,!!x.flipped);add(col,b,x,!x.flipped)}}
  const html=(z,label)=>z?v6432UsageHtml(z.items,z.total,z.known,label):'<div class="v6432Missing">병종 표본 없음</div>';
- q('#matchHead')?.querySelectorAll('th:not(.corner)').forEach((th,i)=>{const k=opps[i];th.classList.add('v6432DeckHead');const label=m.meta.get(k)?.l||k;th.innerHTML=`<div class="v6432DeckName">${esc(label)}</div>${html(col.get(k),label)}`});
+ q('#matchHead')?.querySelectorAll('th:not(.corner)').forEach((th,i)=>{const k=opps[i];th.classList.add('v6432DeckHead');const label=m.meta.get(k)?.l||k;th.innerHTML=`<div class="v6432DeckName">${esc(label)}</div>`});
  q('#matchRows')?.querySelectorAll('tr').forEach((tr,i)=>{const th=tr.querySelector('th.rowdeck');if(!th)return;const k=owns[i],label=m.meta.get(k)?.l||k;const note=th.querySelector('.small')?.outerHTML||'';th.innerHTML=`<div class="v6432DeckName">${esc(label)}</div>${html(row.get(k),label)}${note}`});
  // 상성 셀 클릭 동작을 변경하지 않고, 병종 배지에서만 기존 근거 전보 모달을 연다.
  const evidence=(root,stat,key,side)=>{root?.querySelectorAll('[data-v6432-key]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();const item=stat?.items.get(btn.dataset.v6432Key);if(!item)return;const records=item.rows;const z={n:records.length,w:records.filter(x=>x.result==='승').length,l:records.filter(x=>x.result==='패').length,rows:records};perspectiveEvidence(`${m.meta.get(key)?.l||key} · 병종 ${item.key} · ${side} 근거 전보`,z,key,key) }))};
  q('#matchRows')?.querySelectorAll('tr').forEach((tr,i)=>evidence(tr.querySelector('th.rowdeck'),row.get(owns[i]),owns[i],'기준 덱'));
- q('#matchHead')?.querySelectorAll('th:not(.corner)').forEach((th,i)=>evidence(th,col.get(opps[i]),opps[i],'상대 덱'));
+ // Opponent headings contain hero names only; no troop badges/evidence.
 }
 function perspectiveEvidence(title,z,a,b){const modal=q('#v629Evidence');if(!modal)return;const uniq=[];const seen=new Set();for(const x of z.rows){const id=String(x.r.battleId||'');if(seen.has(id))continue;seen.add(id);uniq.push(x)}const w=uniq.filter(x=>x.result==='승').length,l=uniq.filter(x=>x.result==='패').length;q('#v629EvidenceTitle').textContent=title;q('#v629EvidenceSub').textContent=`기준 덱 관점으로 좌/우와 승패를 자동 정규화 · ${uniq.length}전 = ${w}승 ${l}패 · ${rate(w,l).toFixed(1)}%${promoBand==='all'?'':` · 내 덱 평균 ${promoBandLabel()}돌파`}`;q('#v629EvidenceHealth').className='v634EvidenceSummary';q('#v629EvidenceHealth').innerHTML=`<div><span>근거 표본</span><b>${uniq.length}건</b></div><div><span>기준 승</span><b>${w}</b></div><div><span>기준 패</span><b>${l}</b></div><div><span>관측 승률</span><b>${rate(w,l).toFixed(1)}%</b></div>`;const body=q('#v629EvidenceRows');body.innerHTML=uniq.sort((x,y)=>(parseTime(y.r.time)||0)-(parseTime(x.r.time)||0)).slice(0,500).map((x,i)=>{const r=x.r,me=x.flipped?r.oppUser:r.user,opp=x.flipped?r.user:r.oppUser,meHs=x.flipped?heroes(r,true):heroes(r),opHs=x.flipped?heroes(r):heroes(r,true);return `<tr data-v639-e="${i}" class="clickable"><td>${esc(r.time)}</td><td>${esc(me)}<div class="small">${esc(x.flipped?r.oppAlliance:r.alliance||'')}</div></td><td>${esc(ALIASES[canon(meHs)]||ordered(meHs))}</td><td>${esc(opp)}<div class="small">${esc(x.flipped?r.alliance:r.oppAlliance||'')}</div></td><td>${esc(ALIASES[canon(opHs)]||ordered(opHs))}</td><td class="${resultClass(x.result)}">${esc(displayResult(x.result))}</td></tr>`}).join('')||'<tr><td colspan="6" class="empty">근거 전보가 없습니다.</td></tr>';body.querySelectorAll('[data-v639-e]').forEach(tr=>tr.onclick=()=>{const x=uniq[Number(tr.dataset.v639E)];if(x?.r)openDetail(x.r)});const hint=q('#v629Evidence .v629EvidenceHint');if(hint){hint.textContent=`데이터 계보: 전체 PVP ${(window.WARMAIL_ALL_DATA||[]).length.toLocaleString()}건 → 현재 기간·시즌 ${scopeRows().length.toLocaleString()}건${promoBand==='all'?'':` → 내 덱 평균 ${promoBandLabel()}돌파`} → 조합 일치 ${uniq.length.toLocaleString()}건. 상대 덱 돌파은 필터하지 않으며 상성표 숫자와 정확히 같은 전보 집합입니다.`}modal.classList.add('show')}
 window.renderMatchMatrix=function(){syncPromoButtons();const mode=q('#analysisMode')?.value||'hero',min=Number(q('#minSample')?.value||1),rows=scopeRows(),m=buildMatrix(rows,mode),sortCount=x=>[...x.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ko')).map(v=>v[0]),owns=sortCount(m.ownCount),opps=sortCount(m.oppCount),promoTxt=promoBand==='all'?'':` · 내 평균 ${promoBandLabel()}돌파`;q('#matchHead').innerHTML='<tr><th class="corner">기준 덱 ↓ / 상대 덱 →'+promoTxt+'</th>'+opps.map(k=>`<th>${esc(m.meta.get(k)?.l||k)}</th>`).join('')+'</tr>';if(!owns.length||!opps.length){q('#matchRows').innerHTML='<tr><td class="empty">상성 표본이 없습니다.</td></tr>';return}q('#matchRows').innerHTML=owns.map(a=>`<tr><th class="rowdeck" title="현재 조건 ${m.ownCount.get(a)||0}전 · 전보 많은 순">${esc(m.meta.get(a)?.l||a)}${promoBand==='all'?'':`<div class="small">내 평균 ${promoBandLabel()}돌파 · ${m.ownCount.get(a)||0}전</div>`}</th>`+opps.map(b=>{const z=m.cells.get(a+'@@'+b);if(!z||z.n<min)return'<td class="mx empty">—</td>';if(a===b)return`<td class="mx even" data-own="${esc(a)}" data-opp="${esc(b)}"><div class="mxrate">50%</div><div class="mxn">전체 ${z.n}전 · 미러전</div></td>`;const rr=rate(z.w,z.l),band=promoBand==='all'?'':` · 내 평균 ${promoBandLabel()}돌파`;return`<td class="mx ${matrixCellClass(rr)}" data-own="${esc(a)}" data-opp="${esc(b)}"><div class="mxrate">${rr.toFixed(1)}%</div><div class="mxn">전체 ${z.n}전 · ${z.w}승 ${z.l}패</div></td>`}).join('')+'</tr>').join('');v6432Decorate(m,owns,opps);q('#matchRows').querySelectorAll('td[data-own]').forEach(td=>td.onclick=()=>{const z=m.cells.get(td.dataset.own+'@@'+td.dataset.opp);if(z)perspectiveEvidence(`${m.meta.get(td.dataset.own)?.l||td.dataset.own} → ${m.meta.get(td.dataset.opp)?.l||td.dataset.opp}${promoBand==='all'?'':` · 내 평균 ${promoBandLabel()}돌파`} · 근거 전보`,z,td.dataset.own,td.dataset.opp)});auditSymmetry(m,[...new Set([...owns,...opps])]);renderIntegrity()}
@@ -2751,7 +2765,247 @@ try{if(!$p('players')?.classList.contains('hidden'))renderPlayerPromo();if(!$p('
 })();
 </script>
 <script src="ai_matchup_lab_v6429.js"></script>
-<script src="ai_research_integration_v6430.js"></script><script src="stats_summary.js"></script><script>
+<script src="ai_research_integration_v6430.js"></script><style>
+.mappingTabs{display:flex;gap:8px;padding:12px 15px;flex-wrap:wrap}.mappingTabs button{background:#171e28;border:1px solid #364252;color:#ccd4de;padding:9px 21px;border-radius:9px;cursor:pointer}.mappingTabs button.on{background:#554522;color:#f1d27e;border-color:#a88a43}.mappingSplit{display:block!important}.mappingBlock[data-map-pane]{display:none}.mappingBlock[data-map-pane].mapVisible{display:block}.mappingBlock .mapRestore{margin-left:6px;color:#e8c36a}.v6433DeckName{line-height:1.4;overflow-wrap:anywhere;word-break:keep-all;white-space:normal}.v6433DeckName .v6433NamePart{display:block}
+</style>
+<script>
+(function(){
+let tab='hero',busy=false;
+function sync(){document.querySelectorAll('[data-map-tab]').forEach(x=>x.classList.toggle('on',x.dataset.mapTab===tab));document.querySelectorAll('[data-map-pane]').forEach(x=>x.classList.toggle('mapVisible',x.dataset.mapPane===tab));}
+document.querySelectorAll('[data-map-tab]').forEach(x=>x.addEventListener('click',()=>{tab=x.dataset.mapTab;sync();if(tab==='arms'||tab==='skill')loadExtra()}));sync();
+async function loadExtra(){if(busy)return;busy=true;try{const r=await fetch('/api/name-mappings',{cache:'no-store'});const j=await r.json();if(!r.ok||!j.ok)throw Error(j.message||'조회 실패');for(const kind of ['skill','arms']){const rows=j[kind]||[],el=document.getElementById(kind+'MappingRows');document.getElementById(kind+'MappingCount').textContent=rows.length+'개';el.innerHTML=rows.filter(x=>!document.getElementById('mappingSearch').value.trim()||[x.id,x.name,x.base,x.short].join(' ').toLowerCase().includes(document.getElementById('mappingSearch').value.trim().toLowerCase())).map(x=>`<tr><td class="mapKey">${esc(x.id)}</td><td><input class="mapInput" data-map-id="${esc(x.id)}" value="${esc(x.name||'')}" placeholder="미확인"></td>${kind==='arms'?`<td><input class="mapInput" data-map-short="${esc(x.id)}" value="${esc(x.short||'')}" placeholder="약칭"></td>`:''}<td><span class="mapSource">${esc(x.base||'자동 이름 미확인')} · ${x.manual?'수동 변경':'기본/자동'}</span></td><td><button class="mapSave" data-map-save="${esc(x.id)}">저장</button><button class="mapSave mapRestore" data-map-restore="${esc(x.id)}">복원</button></td></tr>`).join('')||'<tr><td colspan="4" class="empty">매핑 없음</td></tr>';el.querySelectorAll('[data-map-save],[data-map-restore]').forEach(b=>b.onclick=async()=>{const id=b.dataset.mapSave||b.dataset.mapRestore,restore=b.hasAttribute('data-map-restore'),name=el.querySelector('input[data-map-id="'+id+'"]')?.value||'';b.disabled=true;try{const url='/api/name-map?kind='+encodeURIComponent(kind)+'&id='+encodeURIComponent(id)+'&name='+encodeURIComponent(name)+'&restore='+(restore?'1':'0')+(kind==='arms'?'&short='+encodeURIComponent(el.querySelector('input[data-map-short="'+id+'"]')?.value||''):'');const r=await fetch(url,{method:'POST'}),v=await r.json();if(!r.ok||!v.ok)throw Error(v.message||'저장 실패');await loadExtraAfterSave();}catch(e){alert('매핑 변경 실패: '+e.message)}finally{b.disabled=false}})}}catch(e){document.getElementById('mappingState')&&(document.getElementById('mappingState').textContent='이름 매핑 조회 실패: '+e.message)}finally{busy=false}}
+async function loadExtraAfterSave(){busy=false;await loadExtra();if(typeof window.v6435RefreshTroops==='function')await window.v6435RefreshTroops();try{if(typeof renderRecords==='function' && typeof filtered==='function')renderRecords(filtered())}catch(_){/* avoid global re-render when inactive tabs are unmounted */}}
+const old=window.renderMappingManager;if(typeof old==='function')window.renderMappingManager=async function(force){await old(force);const hero=document.getElementById('heroMappingRows'),deck=document.getElementById('deckMappingRows');for(const tr of hero.querySelectorAll('tr')){const btn=tr.querySelector('.heroMapSave');if(!btn||tr.querySelector('.mapRestore'))continue;const restore=document.createElement('button');restore.className='mapSave mapRestore';restore.textContent='복원';restore.onclick=()=>{const inp=tr.querySelector('.heroMapInput');inp.value='';btn.click()};btn.parentElement.appendChild(restore)}for(const tr of deck.querySelectorAll('tr')){const btn=tr.querySelector('.deckMapSave');if(!btn||tr.querySelector('.mapRestore'))continue;const restore=document.createElement('button');restore.className='mapSave mapRestore';restore.textContent='복원';restore.onclick=()=>{tr.querySelector('.deckMapInput').value='';btn.click()};btn.parentElement.appendChild(restore)}sync();if(tab==='skill'||tab==='arms')await loadExtra()};
+document.getElementById('mappingSearch')?.addEventListener('input',()=>{if(tab==='skill'||tab==='arms')loadExtra()});
+// 기준/상대 덱: 이름은 동일한 줄바꿈·크기·별칭 규칙으로 표시한다.
+const oldDecorate=window.v6432Decorate;
+if(typeof oldDecorate==='function')window.v6432Decorate=function(m,owns,opps){oldDecorate(m,owns,opps);document.querySelectorAll('#matchHead .v6432DeckName,#matchRows .v6432DeckName').forEach(el=>{el.classList.add('v6433DeckName');el.title=el.textContent;});};
+})();
+</script>
+<style>
+#armsUsage .matrix th,#armsUsage .matrix td{min-width:160px;vertical-align:top;padding:12px}
+#armsUsage .matrix th:first-child{position:sticky;left:0;background:#20252e;z-index:2;min-width:110px}
+#armsUsage .usageCard{background:#1c2430;border:1px solid #354150;border-radius:9px;padding:9px;margin:3px;cursor:pointer;color:#e4e7ec;min-height:72px;width:100%;text-align:left}
+#armsUsage .usageCard b{display:block;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+#armsUsage .usageCard strong{display:block;color:#e8c36a;margin-top:6px}
+#armsUsage .usageCard:hover{border-color:#e8c36a}
+</style><script>
+(function(){
+const oldShow=window.showTab;
+window.showTab=function(id){if(id==='armsUsage'){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===id));document.querySelectorAll('.section').forEach(x=>x.classList.add('hidden'));document.getElementById('armsUsage')?.classList.remove('hidden');if(typeof v628ApplyGroupClass==='function')v628ApplyGroupClass(id);renderArmsUsage();return}return oldShow(id)};
+function renderArmsUsage(){
+ const head=document.getElementById('armsUsageHead'),body=document.getElementById('armsUsageRows');if(!head||!body)return;
+ const rows=typeof scopeRows==='function'?scopeRows():DATA,groups=new Map(),seen=new Set();
+ for(const r of rows){for(const opp of [false,true]){
+  const hs=heroes(r,opp);if(hs.length!==3)continue;
+  const a=v6432Arms(r,opp);if(!a)continue;
+  const bid=String(r.battleId||'');const unique=bid+'|'+(opp?'R':'L');if(bid&&seen.has(unique))continue;if(bid)seen.add(unique);
+  const deck=canon(hs),label=ALIASES[deck]||ordered(hs);let g=groups.get(a.identity);if(!g){g={key:a.key,total:0,decks:new Map()};groups.set(a.identity,g)}g.total++;
+  let d=g.decks.get(deck);if(!d){d={deck,label,n:0,rows:[]};g.decks.set(deck,d)}d.n++;d.rows.push({r,result:opp?invertResult(r.result):r.result,flipped:opp});
+ }}
+ const sorted=[...groups.entries()].sort((a,b)=>b[1].total-a[1].total||a[0].localeCompare(b[0],'ko'));
+ const max=Math.max(0,...sorted.map(x=>x[1].decks.size));const cols=Math.min(8,max);
+ head.innerHTML='<tr><th>병종 조합</th>'+Array.from({length:cols},(_,i)=>'<th>사용 덱 '+(i+1)+'위</th>').join('')+'</tr>';
+ body.innerHTML=sorted.map(([key,g],ri)=>{const ds=[...g.decks.values()].sort((a,b)=>b.n-a.n||a.label.localeCompare(b.label,'ko'));return '<tr><th>'+esc(g.key)+'<div class="small">총 '+g.total+'회 관측</div></th>'+Array.from({length:cols},(_,i)=>{const d=ds[i];if(!d)return '<td>—</td>';return '<td><button class="usageCard" data-usage-row="'+ri+'" data-usage-col="'+i+'"><b>'+esc(d.label)+'</b><strong>'+(100*d.n/g.total).toFixed(1)+'%</strong><span class="small">'+d.n+' / '+g.total+'회 · 근거 전보 보기</span></button></td>'}).join('')+'</tr>'}).join('')||'<tr><td>병종 정보가 확인된 전보가 없습니다.</td></tr>';
+ body.querySelectorAll('[data-usage-row]').forEach(btn=>btn.onclick=()=>{const [key,g]=sorted[Number(btn.dataset.usageRow)],d=[...g.decks.values()].sort((a,b)=>b.n-a.n||a.label.localeCompare(b.label,'ko'))[Number(btn.dataset.usageCol)];if(d&&typeof perspectiveEvidence==='function')perspectiveEvidence('병종 '+key+' · '+d.label+' · 사용 근거 전보',{n:d.n,w:d.rows.filter(x=>x.result==='승').length,l:d.rows.filter(x=>x.result==='패').length,rows:d.rows},d.deck,d.deck)});
+}
+window.renderArmsUsage=renderArmsUsage;
+})();
+</script><script>
+(function(){
+ async function refreshTroopMappings(){
+  try{
+   const r=await fetch('/api/name-mappings',{cache:'no-store'}),j=await r.json();
+   if(!r.ok||!j.ok)return;
+   V6435_ARM_NAMES={};V6435_ARM_SHORTS={};
+   for(const x of j.arms||[]){const id=String(x.id);V6435_ARM_NAMES[id]=x.name||x.base||V6435_ARM_BASE[id]||'';if(x.short&&String(x.short).trim())V6435_ARM_SHORTS[id]=String(x.short).trim();}
+   if(typeof renderRecords==='function'&&typeof filtered==='function')renderRecords(filtered());
+   if(typeof renderMatchMatrix==='function'&&!document.getElementById('matchups')?.classList.contains('hidden'))renderMatchMatrix();
+   if(typeof renderArmsUsage==='function'&&!document.getElementById('armsUsage')?.classList.contains('hidden'))renderArmsUsage();
+  }catch(e){console.warn('Troop mapping refresh failed:',e)}
+ }
+ window.v6435RefreshTroops=refreshTroopMappings;
+ refreshTroopMappings();
+ window.addEventListener('focus',refreshTroopMappings);
+})();
+</script><style id="v6436FixStyle">
+#v628AdvancedFilters{display:none!important}
+#matchHead th.v6432DeckHead,#matchRows th.rowdeck{min-width:205px!important;width:205px!important;max-width:260px!important;vertical-align:top}
+#matchHead .v6432DeckName,#matchRows .v6432DeckName{font-size:12px!important;line-height:1.55!important;white-space:normal!important;overflow-wrap:anywhere!important;max-height:none!important;overflow:visible!important;display:block!important;margin-bottom:7px}
+#matchHead .v6432UsageList,#matchRows .v6432UsageList{display:flex!important;flex-direction:column!important;gap:5px!important;align-items:center!important}
+#matchHead .v6432Usage,#matchRows .v6432Usage{width:max-content;max-width:100%;white-space:nowrap}
+#matchHead .v6432Other,#matchRows .v6432Other,#matchHead .v6432Coverage,#matchRows .v6432Coverage{display:none!important}
+#armsUsage .tablewrap{overflow-x:auto}#armsUsage .matrix th:first-child{min-width:135px}
+#armsUsage .usageCard{min-width:150px}#armsUsage .usageCard b{white-space:normal}
+</style>
+<script id="v6436FixScript">
+(function(){
+'use strict';
+// Keep old filters mounted for compatibility, but remove all their restrictions.
+function resetHiddenFilters(){for(const id of ['ownHero','oppHero','seasonFilter','recentPreset','analysisMode','recordLimit','recordViewMode','fromDate','toDate']){const e=document.getElementById(id);if(!e)continue;if(id==='analysisMode')e.value='hero';else if(id==='recordLimit')e.value='500';else if(id==='recordViewMode')e.value='battle';else if(id==='recentPreset')e.value='all';else e.value='';}}
+resetHiddenFilters();
+// Historical data may be stored in WARMAIL_ALL_DATA rather than the filtered DATA array.
+// A separate fallback avoids silently displaying an empty table when a side lacks 3 details.
+function rowsForUsage(){const lists=[window.WARMAIL_ALL_DATA,window.WARMAIL_DATA,typeof DATA!=='undefined'?DATA:null];return lists.find(x=>Array.isArray(x)&&x.length)||[]}
+function sideArms(r,opp){const hs=heroes(r,opp);if(hs.length!==3)return null;const parts=v6435TroopParts(r,opp);if(parts.length!==3||parts.some(x=>!x.t?.id))return null;const ts=parts.map(x=>x.t).sort((a,b)=>a.id.localeCompare(b.id,'en',{numeric:true}));return{identity:ts.map(x=>x.id).join('|'),label:ts.map(x=>x.abbr).join('')}}
+window.renderArmsUsage=function(){
+ const head=document.getElementById('armsUsageHead'),body=document.getElementById('armsUsageRows');if(!head||!body)return;
+ try{
+  const rows=rowsForUsage(),groups=new Map(),seen=new Set();let sides=0,missing=0;
+  for(const r of rows){for(const opp of [false,true]){const hs=heroes(r,opp);if(hs.length!==3)continue;sides++;const a=sideArms(r,opp);if(!a){missing++;continue}
+   const battle=String(r.battleId||'');const who=String(opp?r.oppUser:r.user);const unique=battle+'|'+who+'|'+(opp?'R':'L');if(battle&&seen.has(unique))continue;if(battle)seen.add(unique);
+   const dk=canon(hs),label=aliasForHeroKey(dk,ordered(hs));let g=groups.get(a.identity);if(!g){g={label:a.label,total:0,decks:new Map()};groups.set(a.identity,g)}g.total++;
+   let d=g.decks.get(dk);if(!d){d={label,n:0,rows:[]};g.decks.set(dk,d)}d.n++;d.rows.push({r,result:opp?invertResult(r.result):r.result,flipped:opp});
+  }}
+  const sorted=[...groups.values()].sort((a,b)=>b.total-a.total||a.label.localeCompare(b.label,'ko'));
+  const prepared=sorted.map(g=>({...g,ranked:[...g.decks.values()].sort((a,b)=>b.n-a.n||a.label.localeCompare(b.label,'ko'))}));
+  const cols=Math.min(8,Math.max(0,...prepared.map(g=>g.ranked.length)));
+  head.innerHTML='<tr><th>병종 조합</th>'+Array.from({length:cols},(_,i)=>'<th>사용 덱 '+(i+1)+'위</th>').join('')+'</tr>';
+  body.innerHTML=prepared.map((g,ri)=>'<tr><th>'+esc(g.label)+'<div class="small">'+g.total+'회 관측</div></th>'+Array.from({length:cols},(_,i)=>{const d=g.ranked[i];if(!d)return '<td>—</td>';return '<td><div class="usageCard"><b>'+esc(d.label)+'</b><strong>'+(100*d.n/g.total).toFixed(1)+'%</strong></div></td>'}).join('')+'</tr>').join('')||'<tr><td colspan="2" class="empty">확인된 병종 조합이 없습니다. 전체 '+rows.length+'전보 · 덱 '+sides+'측 · 병종 정보 부족 '+missing+'측. 전보 상세의 병종 ID를 확인해주세요.</td></tr>';
+  // Usage cells are read-only: show only hero names and percentage.
+ }catch(e){console.error('병종 분석 오류',e);body.innerHTML='<tr><td class="empty">병종 분석 오류: '+esc(String(e.message||e))+'</td></tr>'}
+};
+// The tab handler reads renderArmsUsage from its lexical scope; refresh when tab is opened.
+const oldShow=window.showTab;if(typeof oldShow==='function')window.showTab=function(id){const out=oldShow.apply(this,arguments);if(id==='armsUsage')window.renderArmsUsage();return out};
+const oldRefresh=window.v6435RefreshTroops;if(typeof oldRefresh==='function')window.v6435RefreshTroops=async function(){const out=await oldRefresh();if(!document.getElementById('armsUsage')?.classList.contains('hidden'))window.renderArmsUsage();return out};
+})();
+</script>
+<style id="v6437UsageLayout">
+/* The two analyses must never share a visible table. */
+#armsUsage.hidden,#matchups.hidden{display:none!important}
+#armsUsage:not(.hidden){display:block}
+#armsUsage .tablewrap{overflow-x:auto;max-width:100%}
+#armsUsage .matrix{border-collapse:separate;border-spacing:0;min-width:max-content}
+#armsUsage .matrix th:first-child{min-width:185px;width:185px;max-width:225px;position:sticky;left:0;z-index:3;background:#20252e;vertical-align:middle;font-size:19px!important;font-weight:800;line-height:1.65;white-space:normal;overflow-wrap:anywhere;padding:18px 14px!important}
+#armsUsage .matrix th:first-child .small{font-size:12px;font-weight:400;line-height:1.5;color:#aeb6c1;margin-top:7px}
+#armsUsage .matrix td{min-width:205px;padding:12px!important;vertical-align:middle}
+#armsUsage .usageCard{cursor:default!important;min-height:88px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:14px!important;margin:0!important;box-sizing:border-box}
+#armsUsage .usageCard b{font-size:14px!important;font-weight:700;line-height:1.55;word-break:keep-all;overflow-wrap:anywhere}
+#armsUsage .usageCard strong{font-size:20px!important;line-height:1.2;margin:0!important}
+#armsUsage .usageCard:hover{border-color:#354150!important}
+#matchHead .v6432DeckHead{min-width:170px;max-width:210px;vertical-align:middle}
+#matchHead .v6432DeckHead .v6432DeckName{font-size:13px;line-height:1.6;white-space:normal;word-break:keep-all;overflow-wrap:anywhere}
+</style>
+
+<!-- v6.43.9: unified tab visibility and troop usage rendering -->
+<style id="v6439TabIsolation">
+  body:not([data-v6439-tab="armsUsage"]) #armsUsage {display:none!important;visibility:hidden!important}
+  body[data-v6439-tab="armsUsage"] #armsUsage {display:block!important;visibility:visible!important}
+  body[data-v6439-tab="armsUsage"] .section:not(#armsUsage) {display:none!important}
+</style>
+<script>
+(function(){
+  'use strict';
+  const sectionIds=['dashboard','warroom','records','decks','matchups','armsUsage','setupfinder','chains','chainrank','players','alliances','mappings','diagnostics','trends'];
+  function reconcile(id){
+    if(!sectionIds.includes(id))return;
+    document.body.dataset.v6439Tab=id;
+    document.querySelectorAll('.section[id]').forEach(function(el){
+      el.classList.toggle('hidden',el.id!==id);
+    });
+    if(id==='armsUsage'){
+      const el=document.getElementById('armsUsage');
+      if(el)el.classList.remove('hidden');
+      try{if(typeof window.renderArmsUsage==='function')window.renderArmsUsage()}
+      catch(err){console.error('Arms usage render failed',err)}
+    }
+  }
+  // Bind the lexical showTab function used by the legacy inline click handlers,
+  // not only window.showTab (which earlier patches replaced inconsistently).
+  if(typeof showTab==='function'){
+    const oldShowTab=showTab;
+    showTab=function(id){
+      const result=oldShowTab.apply(this,arguments);
+      reconcile(id);
+      return result;
+    };
+    window.showTab=showTab;
+  }
+  // Ensure dynamically recreated navigation buttons still reach the same path.
+  document.addEventListener('click',function(event){
+    const el=event.target.closest('[data-subtab],[data-tab]');
+    if(!el)return;
+    const id=el.dataset.subtab||el.dataset.tab;
+    if(!sectionIds.includes(id))return;
+    setTimeout(function(){reconcile(id)},0);
+  },true);
+  // Remove visible escaped newline artifacts accidentally inserted as text nodes
+  // by older HTML patches; never alter script, style, input, or actual report data.
+  function removeEscapedNewlineArtifacts(){
+    const walk=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+    const bad=[];
+    while(walk.nextNode()){
+      const node=walk.currentNode;
+      if(node.parentElement&&node.parentElement.closest('script,style,textarea,pre,code'))continue;
+      if(/^(?:\\n|\\r|\\t|\s)+$/.test(node.textContent)&&node.textContent.includes('\\n'))bad.push(node);
+    }
+    bad.forEach(n=>n.remove());
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    const active=(typeof V628_CURRENT_TAB!=='undefined'&&V628_CURRENT_TAB)||document.querySelector('[data-subtab].on')?.dataset.subtab||'dashboard';
+    reconcile(active);
+    removeEscapedNewlineArtifacts();
+  });
+  if(document.readyState!=='loading'){
+    const active=(typeof V628_CURRENT_TAB!=='undefined'&&V628_CURRENT_TAB)||document.querySelector('[data-subtab].on')?.dataset.subtab||'dashboard';
+    reconcile(active);
+    removeEscapedNewlineArtifacts();
+  }
+})();
+</script>
+
+<!-- v6.43.10: compact troop-usage table, presentation only -->
+<style id="v64310CompactArmsUsage">
+/* Preserve the same troop grouping, ranking, percentages and scrolling. */
+#armsUsage .matrix thead th{height:44px!important;min-height:0!important;padding:8px 10px!important;line-height:1.3!important;vertical-align:middle!important}
+#armsUsage .matrix tbody tr{height:72px!important}
+#armsUsage .matrix tbody th:first-child{min-width:150px!important;width:150px!important;max-width:165px!important;font-size:17px!important;line-height:1.3!important;padding:9px 10px!important}
+#armsUsage .matrix tbody th:first-child .small{font-size:11px!important;line-height:1.25!important;margin-top:3px!important}
+#armsUsage .matrix tbody td{min-width:185px!important;padding:6px 8px!important;vertical-align:middle!important}
+#armsUsage .usageCard{min-height:0!important;height:auto!important;padding:8px 10px!important;gap:4px!important;margin:0!important;border-radius:8px!important}
+#armsUsage .usageCard b{font-size:13px!important;line-height:1.35!important}
+#armsUsage .usageCard strong{font-size:18px!important;line-height:1.2!important;margin:0!important}
+</style>
+
+<!-- v6.44.0 premium visual system and non-invasive performance telemetry -->
+<style id="v6440PremiumSystem">
+:root{--premium-bg:#0d1118;--premium-panel:#161d27;--premium-panel-2:#1b2430;--premium-line:#2a3544;--premium-gold:#e8c36a;--premium-text:#edf2f8;--premium-muted:#9aa9ba}
+body{background:var(--premium-bg)!important;color:var(--premium-text);font-family:Pretendard,"Noto Sans KR","Malgun Gothic",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.section{border-radius:12px!important;border-color:var(--premium-line)!important;box-shadow:0 4px 18px rgba(0,0,0,.10)}
+.section>h2{letter-spacing:-.025em;font-weight:750!important}
+button,select,input{transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--premium-gold)!important;outline-offset:2px}
+button:hover:not(:disabled){filter:brightness(1.09)}
+.tablewrap{scrollbar-color:#49566b #141b24;scrollbar-width:thin}
+.matrix{font-variant-numeric:tabular-nums}
+.matrix td,.matrix th{border-color:#2b3543!important}
+.matrix tbody tr:hover>td{box-shadow:inset 0 0 0 9999px rgba(232,195,106,.025)}
+#armsUsage .matrix thead th{height:42px!important;font-size:12px!important;letter-spacing:.01em;background:#19222d!important}
+#armsUsage .matrix tbody tr{height:70px!important}
+#armsUsage .matrix tbody th:first-child{font-size:17px!important;color:#e5d2a1!important;background:#1d2632!important;min-width:148px!important;width:148px!important}
+#armsUsage .matrix tbody td{padding:5px 8px!important}
+#armsUsage .usageCard{background:#1d2836!important;border:1px solid #344052!important;border-radius:9px!important;padding:8px 11px!important;min-height:54px!important}
+#armsUsage .usageCard strong{color:var(--premium-gold)!important;font-variant-numeric:tabular-nums}
+#armsUsage .usageCard:hover{border-color:#987e4c!important}
+#matchups .matrixwrap{overscroll-behavior-x:contain}
+#matchups .matrix thead th{position:sticky;top:0;z-index:3}
+#matchups .matrix tbody th:first-child{position:sticky;left:0;z-index:2}
+@media(max-width:780px){#armsUsage .matrix tbody th:first-child{min-width:112px!important;width:112px!important;font-size:14px!important}#armsUsage .matrix tbody td{min-width:168px!important}}
+@media(prefers-reduced-motion:reduce){button,select,input{transition:none!important}}
+</style>
+<script id="v6440Telemetry">
+(function(){'use strict';
+  // Metrics are session-only. No war-mail content or identifiers are collected or sent.
+  const metrics=window.NSLG_PERF={tabs:[],errors:[],startedAt:Date.now(),snapshot:function(){return{tabs:this.tabs.slice(-30),errors:this.errors.slice(-10),uptimeMs:Date.now()-this.startedAt}}};
+  function record(name,elapsed){if(!Number.isFinite(elapsed))return;metrics.tabs.push({name,ms:Math.round(elapsed*10)/10});if(metrics.tabs.length>60)metrics.tabs.shift();if(elapsed>500)console.warn('[NSLG PERF] Slow tab transition',name,Math.round(elapsed)+'ms')}
+  function wrap(){if(typeof window.showTab!=='function'||window.showTab.__nslgMeasured)return;const original=window.showTab;function measured(id){const start=performance.now();try{return original.apply(this,arguments)}finally{requestAnimationFrame(()=>record(String(id),performance.now()-start))}}measured.__nslgMeasured=true;window.showTab=measured}
+  wrap();document.addEventListener('DOMContentLoaded',wrap,{once:true});
+  window.addEventListener('unhandledrejection',e=>{metrics.errors.push({type:'promise',message:String(e.reason?.message||e.reason).slice(0,200)});if(metrics.errors.length>20)metrics.errors.shift()});
+  window.addEventListener('error',e=>{metrics.errors.push({type:'script',message:String(e.message).slice(0,200)});if(metrics.errors.length>20)metrics.errors.shift()});
+})();
+</script>
+
+<script src="stats_summary.js"></script><script>
 (function(){
   if(!window.NSLG_PUBLIC_MODE)return;
   const rawFetch=window.fetch.bind(window);
