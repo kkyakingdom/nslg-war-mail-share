@@ -275,10 +275,58 @@ body.simpleMode .commandOnly{display:none!important}body.simpleMode .commandSetu
 #matchups #matchHead .v6442OpponentHero{display:block;width:100%;font-size:12px;line-height:1.3;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;word-break:keep-all;overflow-wrap:normal}
 @media(max-width:700px){#matchups .matrix th.v6432DeckHead{width:155px!important;min-width:155px!important;max-width:155px!important}}
 </style>
+
+<style id="imperialUIPhase1">
+/* Imperial Intelligence: presentation-only enhancement, no analysis logic changed. */
+:root{--bg:#0d1117;--panel:#151b23;--panel2:#1b2430;--line:#2d3947;--line2:#405063;--text:#f0f2f4;--muted:#aeb8c5;--gold:#dcb873;--gold2:#f1d39a;--good:#72c9a1;--bad:#ef938c}
+body{background:radial-gradient(ellipse 90% 360px at 50% -120px,rgba(173,128,59,.095),transparent 72%),#0d1117;line-height:1.52;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1640px;padding:clamp(12px,2vw,28px)}
+.top{padding:8px 2px 16px;border-bottom:1px solid rgba(220,184,115,.15);align-items:center}
+.top h1{font-size:clamp(23px,2vw,30px);font-weight:780;letter-spacing:-.04em}
+.top .sub{font-size:13px;letter-spacing:.01em}
+.mainTabs{background:rgba(13,17,23,.97);border-bottom:1px solid #33404f;box-shadow:0 8px 22px rgba(0,0,0,.18);padding-top:11px;padding-bottom:11px}
+.mainTabs .tab{font-size:14px;font-weight:650;min-height:40px;padding:9px 17px;white-space:nowrap}
+button,input,select{font-size:13px;min-height:37px;transition:background-color .14s,border-color .14s,box-shadow .14s}
+button:focus-visible,input:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:2px solid #dcb873;outline-offset:2px}
+button:hover{background-color:#25303d;border-color:#8b7550}
+.card,.panel,.box{border-color:#2d3947;box-shadow:0 3px 18px rgba(0,0,0,.10)}
+.card{background:linear-gradient(165deg,#1b2430,#151b23);border-radius:14px}
+.card .v{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.collectorStatus{border-color:#34404c;background:#141b24}
+.stK,.small,.sub,.muted{color:var(--muted)}
+/* Better legibility for real content and evidence tables. */
+table{font-variant-numeric:tabular-nums}
+table th{font-size:12px;letter-spacing:.015em}
+table td{font-size:13px;line-height:1.5}
+table tbody tr:hover{background-color:rgba(220,184,115,.055)}
+#armsUsageRows button.v6448Open{font-size:15px!important;font-weight:750!important;color:#f1d39a!important;letter-spacing:.01em;min-height:38px}
+.v6449CounterCard,.v6449DeckRow{transition:border-color .14s,background-color .14s}
+.v6449CounterCard:hover{border-color:#dcb873!important}
+/* Density and accessibility choices saved locally in this browser. */
+body.ii-font-large{font-size:16px}
+body.ii-font-large table td{font-size:15px}
+body.ii-font-large table th{font-size:14px}
+body.ii-font-large .small,body.ii-font-large .sub{font-size:14px}
+body.ii-font-large button,body.ii-font-large input,body.ii-font-large select{font-size:15px}
+body.ii-density-roomy table td{padding-top:13px;padding-bottom:13px}
+body.ii-density-roomy .card{padding:22px}
+body.ii-density-compact table td{padding-top:5px;padding-bottom:5px}
+body.ii-density-compact .card{padding:12px}
+.ii-settings{position:relative;display:inline-flex;align-items:center}
+.ii-settings-toggle{white-space:nowrap;border-color:#5a4b33;color:#f1d39a;background:#211d17}
+.ii-settings-pop{position:absolute;z-index:999;right:0;top:calc(100% + 9px);width:254px;padding:16px;border:1px solid #77613c;border-radius:14px;background:#1a222d;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.ii-settings-pop[hidden]{display:none!important}
+.ii-settings-pop label{display:block;margin:10px 0 5px;font-size:13px;color:#c6ced9}
+.ii-settings-pop select{width:100%;min-height:40px}
+.ii-settings-pop strong{display:block;font-size:15px;color:#f1d39a}
+.ii-settings-pop p{font-size:12px;color:#aeb8c5;margin:10px 0 0}
+@media(max-width:760px){.wrap{padding:12px}.top{gap:10px;align-items:flex-start;flex-wrap:wrap}.topActions{gap:5px}.mainTabs .tab{padding:9px 12px}.ii-settings-pop{right:auto;left:0}}
+@media(prefers-reduced-motion:reduce){button,input,select,.v6449CounterCard,.v6449DeckRow{transition:none!important}}
+</style>
 </head>
-<body><script>
+<body><script src="access_config.js"></script><script>
 window.NSLG_PUBLIC_MODE=true;
-window.NSLG_PUBLIC_ACCESS_HASH='7ba6de8b74a1751302131909116affb1ef205843f654190346be26ee8a9177da';
+window.NSLG_PUBLIC_ACCESS_HASH='a67ae99df04ecbdbbd885e266be5c7ffaba85d003ca5b9c9e7ac1c5699acb1ac';
 document.documentElement.classList.add('nslgLocked');
 </script>
 <style>
@@ -300,9 +348,9 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
   const gate=document.getElementById('nslgAccessGate'),input=document.getElementById('nslgAccessPassword'),btn=document.getElementById('nslgAccessSubmit'),err=document.getElementById('nslgAccessError');
   const hex=buf=>Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
   async function digest(s){return hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))}
-  function open(){try{sessionStorage.setItem('nslg_public_unlocked','1')}catch(_){}document.documentElement.classList.remove('nslgLocked');gate.remove()}
+  function open(){try{sessionStorage.setItem('nslg_public_unlocked_'+window.NSLG_PUBLIC_ACCESS_HASH,'1')}catch(_){}document.documentElement.classList.remove('nslgLocked');gate.remove()}
   async function submit(){btn.disabled=true;err.textContent='확인 중…';try{if(await digest(input.value)===window.NSLG_PUBLIC_ACCESS_HASH){open();return}err.textContent='비밀번호가 올바르지 않습니다.';input.select()}catch(_){err.textContent='브라우저에서 비밀번호 확인을 지원하지 않습니다.'}finally{btn.disabled=false}}
-  try{if(sessionStorage.getItem('nslg_public_unlocked')==='1'){open();return}}catch(_){}
+  try{if(sessionStorage.getItem('nslg_public_unlocked_'+window.NSLG_PUBLIC_ACCESS_HASH)==='1'){open();return}}catch(_){}
   btn.addEventListener('click',submit);input.addEventListener('keydown',e=>{if(e.key==='Enter')submit()});setTimeout(()=>input.focus(),0);
 })();
 </script>
@@ -310,7 +358,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
 <div id="nslgPublicSubmitNote" style="margin:8px auto 10px;max-width:1180px;padding:10px 13px;border:1px solid #33404b;border-radius:10px;background:#111820;color:#c9d1d9;font:600 11px/1.55 Pretendard,sans-serif;text-align:center"><b style="color:#ecd17f">전보 제보 안내</b> · 끄야왕에게 전보 스크린샷을 보내주면 확인 후 분석 데이터에 반영됩니다.</div>
 <div class="wrap">
   <div class="top"><div><h1 id="appHome" class="appHome" role="button" tabindex="0" aria-label="전황 메인화면으로 이동" title="전황 메인화면으로 이동">깔개 분석기</h1><div class="sub">전보 기반 전황 · 상성 · 세팅 분석</div></div><div class="topActions"><div class="modeSwitch" title="간편 모드는 핵심 화면만, 지휘부 모드는 모든 분석 기능을 표시합니다."><button id="modeSimple">일반</button><button id="modeCommand" class="on">지휘부</button></div><button id="v629GlobalSearchBtn" class="commandSetupBtn v629SearchBtn" title="통합 검색 · Ctrl+K">⌕ 검색</button><button id="v630AiBtn" class="commandSetupBtn v630AiTopBtn" title="깔개 AI · 전황 요약과 자연어 분석">✦ 깔개 AI</button><button id="v628CompareBtn" class="commandSetupBtn">비교</button><button id="v632ShareBtn" class="commandSetupBtn" title="GitHub 원클릭 공유 · 첫 실행은 로그인만 하면 저장소와 Pages를 자동 설정합니다">공유</button><button id="v63756ShareState" class="v63756ShareState" type="button" title="GitHub 공유 상태 확인"><i></i><span>GitHub 확인 중</span></button><button id="v6331SeasonChip" class="v6331SeasonChip" title="현재 시즌 관리">시즌: 확인 중</button><div class="badge" id="updated">데이터 로딩 중</div></div></div>
-  <div class="tabs mainTabs" id="v628MainTabs"><button class="tab on" data-tab="dashboard" data-group="dashboard">전황</button><button class="tab" data-tab="records" data-group="records">전보</button><button class="tab" data-tab="decks" data-group="decks">덱 분석</button><button class="tab commandOnly" data-tab="warroom" data-group="warroom">전쟁실</button><button class="tab" data-tab="players" data-group="players">인물</button><button id="v628AdminBtn" class="tab adminTab commandOnly" type="button">관리</button></div>
+  <div class="tabs mainTabs" id="v628MainTabs"><button class="tab on" data-tab="dashboard" data-group="dashboard">전황</button><button class="tab" data-tab="records" data-group="records">전보</button><button class="tab" data-tab="decks" data-group="decks">덱 분석</button><button class="tab" data-tab="warroom" data-group="warroom">전쟁실</button><button class="tab" data-tab="players" data-group="players">인물</button><button id="v628AdminBtn" class="tab adminTab commandOnly" type="button">관리</button></div>
   <div id="v628SubNav" class="v628SubNav hidden"></div>
   <div class="collectorStatus collectorStatusCompact" id="collectorStatus">
     <div class="statusLead"><span class="stDot"></span><b id="stState">상태 확인 중</b></div>
@@ -318,6 +366,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
     <div class="statusMetric"><span>RAW 감시</span><b id="stNext">-</b></div>
     <div class="statusMetric"><span>수집 준비</span><b id="stReady">확인 중</b></div>
     <div class="statusMetric"><span>RAW 신규</span><b id="stNew">-</b></div>
+    <div id="gameProcessChooser" style="display:none;align-items:center;gap:5px;min-width:180px;flex-wrap:wrap"><label for="gameProcessSelect" style="font-size:11px">수집 대상</label><select id="gameProcessSelect" style="max-width:250px;background:#1c2029;color:#f3f0e8;border:1px solid #3b424e;border-radius:7px;padding:7px" aria-label="전보 수집 대상 게임 프로세스"></select><button id="refreshGameProcesses" type="button" title="실행 중인 게임 다시 찾기">↻</button><small id="gameProcessMessage" style="font-size:10px;color:#e8c36a"></small></div>
     <button id="collectNowBtn" class="collectNowBtn" title="게임에서 교전 탭을 연 뒤 수동 상세 수집">수집 시작</button>
     <div class="moreWrap"><button id="moreBtn" class="moreBtn" aria-label="더보기">⋯</button><div class="moreMenu hidden" id="moreMenu"><button id="exportBtn">검색 결과 CSV 저장</button><button id="backupRestoreBtn">백업에서 복구</button><button id="backupMergeBtn">백업 가져오기/병합</button><button id="analysisSettingsBtn">수집 기준 설정</button><button id="battleResetBtn" class="dangerMenu">전보 초기화</button><button id="skillDiagBtn">미확정 전법 보기</button></div></div>
   </div>
@@ -327,7 +376,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
     <div class="v6380AutoCoords" style="font-size:10px"><details><summary>완전 자동 좌표 등록 (준비)</summary><div style="padding:6px 0">게임 창 내부 좌표 · 진입 3곳 + 닫기 1곳<br><input id="vAutoClicks" placeholder="예: 100,200;300,400;500,600;700,800" style="width:min(100%,370px)"><button type="button" id="vAutoSaveClicks">좌표 저장</button><div id="vAutoCoordsNote">좌표만 저장합니다. 실제 백그라운드 클릭은 아직 지원하지 않습니다.</div></div></details></div><div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
     <div class="v6380AutoSub" id="v6380AutoSub">교전창을 열면 자동 수집 · GitHub 연결 시 자동 공유</div>
   </div>
-  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
+  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="nslgPasswordSettingsBtn" type="button">비밀번호 설정</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
   <div class="cards" id="v628DataCards">
     <div class="card"><div class="k">현재 분석 전보</div><div class="v" id="cTotal">0</div></div>
     <div class="card v6413CoreKpi"><div class="k">관측 승률</div><div class="v" id="v6413ObservedRate">-</div></div>
@@ -426,7 +475,7 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
     </div></details>
     <div class="simpleOnly simpleBrief"><div class="panelTitle"><span>빠른 요약</span><small>간편 모드</small></div><div class="simpleUserBar"><input id="simpleUser" list="playerList" placeholder="내 유저명 선택"><button id="simpleUserSave">내 유저 저장</button></div><div id="simpleSummary" class="simpleSummary"></div></div>
   </section>
-  <section class="section hidden commandOnly" id="warroom">
+  <section class="section hidden" id="warroom">
     <h2><span>상대 전쟁실</span><span class="small">연맹 하나를 선택해 교전·핵심 플레이어·주력 덱·우리 진영 상대 성적을 확인합니다.</span></h2>
     <div class="warroomBar"><select id="warroomAlliance"><option value="">상대 연맹 선택</option></select><div class="dashWindow compact" id="warroomWindow"><button data-h="3" class="on">3시간</button><button data-h="6">6시간</button><button data-h="12">12시간</button><button data-h="24">24시간</button><button data-h="72">3일</button></div></div>
     <div class="warSummary"><div class="warCard"><span>교전</span><b id="wrEng">0</b></div><div class="warCard"><span>상대 승률</span><b id="wrRate">-</b></div><div class="warCard"><span>관측 유저</span><b id="wrPlayers">0</b></div><div class="warCard"><span>주력 덱</span><b id="wrMainDeck">-</b></div><div class="warCard"><span>직전 대비 활동</span><b id="wrDelta">-</b></div></div>
@@ -3109,12 +3158,151 @@ const target=$p('armsUsageRows');if(target){new MutationObserver(()=>{if(!target
 })();
 </script>
 
+
+<script id="imperialUISettingsPhase1">
+(()=>{'use strict';
+const KEY='nslg_imperial_ui_prefs_v1';
+let prefs={font:'normal',density:'normal'};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'{}');if(['normal','large'].includes(x.font))prefs.font=x.font;if(['normal','roomy','compact'].includes(x.density))prefs.density=x.density}catch(_){}
+function apply(){document.body.classList.toggle('ii-font-large',prefs.font==='large');for(const d of ['roomy','compact'])document.body.classList.toggle('ii-density-'+d,prefs.density===d)}
+apply();
+const host=document.querySelector('.topActions');if(!host)return;
+const wrap=document.createElement('div');wrap.className='ii-settings';
+wrap.innerHTML='<button type="button" class="ii-settings-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="ii-settings-panel">⚙ 화면 설정</button><div class="ii-settings-pop" id="ii-settings-panel" hidden><strong>화면 표시 설정</strong><label for="ii-font">글자 크기</label><select id="ii-font"><option value="normal">기본</option><option value="large">크게</option></select><label for="ii-density">정보 밀도</label><select id="ii-density"><option value="normal">기본</option><option value="roomy">넓게</option><option value="compact">압축</option></select><p>설정은 이 브라우저에만 저장됩니다.</p></div>';
+host.appendChild(wrap);
+const toggle=wrap.querySelector('.ii-settings-toggle'),panel=wrap.querySelector('.ii-settings-pop');
+const font=wrap.querySelector('#ii-font'),density=wrap.querySelector('#ii-density');font.value=prefs.font;density.value=prefs.density;
+function close(){panel.hidden=true;toggle.setAttribute('aria-expanded','false')}
+toggle.addEventListener('click',()=>{panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden))});
+for(const [el,key] of [[font,'font'],[density,'density']])el.addEventListener('change',()=>{prefs[key]=el.value;apply();try{localStorage.setItem(KEY,JSON.stringify(prefs))}catch(_){}});
+document.addEventListener('click',e=>{if(!wrap.contains(e.target))close()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){close();e.stopPropagation()}});
+})();
+</script>
+<style id="imperialUIPhase2to6">
+/* Phase 2: hierarchy and premium matchup cards */
+:root{--ii-bg:#0d1117;--ii-panel:#171e27;--ii-edge:#34404e;--ii-gold:#e8c779;--ii-ink:#eef1f5;--ii-muted:#abb8c7}
+body{color:var(--ii-ink);-webkit-font-smoothing:antialiased}
+.top h1{letter-spacing:-.045em}.top .sub{font-size:12px!important;color:#b2bdc9!important}
+.section h2{font-size:17px!important;letter-spacing:-.02em}.section h2 .small{font-size:12px!important}
+.tablewrap table{font-size:13px!important}.tablewrap th{font-size:12px!important;white-space:nowrap}.tablewrap td{font-size:13px!important;line-height:1.55}
+button,select,input{transition:background-color .14s ease,border-color .14s ease,color .14s ease}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid #e8c779!important;outline-offset:2px}
+.mainTabs .tab{font-size:13px!important;min-height:40px}.v628SubNav button{font-size:12px!important;min-height:34px}
+.v640OpsTitle,.v640OpsValue,.v640OpsSub,.v640DataNumbers span,.v640OpsActions button{font-size:12px!important}
+.v640OpsCell{padding:13px 14px!important}.v640OpsCell .v6380AutoSub{font-size:11px!important}
+.v640FilterTitle b{font-size:13px!important}.v640FilterTitle span{font-size:12px!important}
+.v640FilterShell #v628PrimaryFilters input,.v640FilterShell #v628PrimaryFilters select,.v640FilterShell #v628PrimaryFilters button{font-size:13px!important;min-height:40px}
+.v638PeriodButtons button{font-size:12px!important;min-height:32px}.v638PeriodLead b{font-size:12px!important}.v638PeriodLead span,.v638PeriodSummary{font-size:11px!important}
+.card .k{font-size:12px!important}.card .v{font-size:23px!important}.card{padding:15px!important}
+/* Phase 2: arm matchup scan */
+#v6448Dialog{width:min(1480px,96vw)!important;max-height:94vh!important;background:linear-gradient(155deg,#202833,#111820)!important;border:1px solid #4a5360!important;box-shadow:0 32px 100px #000c!important}
+#v6448Header{background:linear-gradient(95deg,#292719,#18212b)!important;border-bottom:1px solid #665635!important;padding:16px 20px!important}
+#v6448Heading{font-size:20px!important;color:#f2dfae!important}
+#v6448Summary{font-size:13px!important;color:#c6cfda!important;padding:12px 20px!important}
+#v6448Tools{position:sticky;top:0;z-index:2;background:#19212b!important;padding:12px!important;box-shadow:0 6px 16px #0005}
+#v6448Tools input,#v6448Tools select{font-size:14px!important;min-height:40px}
+.v6449DeckRow{grid-template-columns:minmax(230px,26%) minmax(0,1fr)!important;background:#171f29!important;border-color:#354354!important;box-shadow:0 4px 12px #0002}
+.v6449Own{background:linear-gradient(130deg,#25261f,#1a222b);padding:18px!important}
+.v6449Own b{font-size:16px!important;color:#f5ebd5!important}.v6449Own span{font-size:13px!important;color:#c0cbd6!important}
+.v6449Counters{gap:10px!important;padding:12px!important}
+.v6449Counter{border:1px solid #445368!important;background:#222e3b!important;padding:14px!important;min-height:150px;border-radius:11px!important}
+.v6449Counter:hover{background:#2b3b4b!important;transform:translateY(-1px);box-shadow:0 8px 24px #0004}
+.v6449Counter strong{font-size:15px!important}.v6449CounterRate{font-size:23px!important;font-variant-numeric:tabular-nums}.v6449CounterMeta{font-size:12px!important}
+.v6449EvidenceLink{font-size:13px!important;font-weight:750}
+/* Phase 3: modal layering and consistent navigation */
+#v6448Overlay{z-index:12000!important}#v629Evidence{z-index:13000!important}#detail{z-index:15000!important}
+#detail .detailbox,#v629Evidence .detailbox{box-shadow:0 28px 90px #000c;border:1px solid #485362}
+#detail .detailtop,#v629Evidence .detailtop{position:sticky;top:0;z-index:3;background:#1c2530;padding:14px 18px;border-bottom:1px solid #394657}
+#detail .detailtop b,#v629Evidence .detailtop b{font-size:18px}
+#v629EvidenceRows tr{cursor:pointer}#v629EvidenceRows tr:hover{background:#293747}
+.ii-back{margin-left:auto;margin-right:10px;min-height:35px;border:1px solid #5b5035;background:#28251d;color:#f0d79c;border-radius:8px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.ii-back:hover{background:#3a3121}
+/* Phase 4: player and alliance readability */
+#players .tablewrap td,#alliances .tablewrap td{line-height:1.65}
+#players .tablewrap th,#alliances .tablewrap th{font-size:12px}
+#players button,#alliances button{min-height:32px}
+/* Phase 5: search and evidence */
+#q{font-size:14px!important;min-width:180px}#q::placeholder{color:#9ba9b8}
+#v629Evidence .v629EvidenceTable{scrollbar-width:thin}#v629Evidence .v629EvidenceTable th{position:sticky;top:0;background:#1c2733;z-index:2;font-size:12px}#v629Evidence .v629EvidenceTable td{font-size:13px;line-height:1.5}
+.ii-help{font-size:12px;color:#aebccc;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 10px;padding:8px 12px;border:1px solid #2c3948;border-radius:9px;background:#121922}
+.ii-help kbd{font:inherit;font-size:11px;padding:2px 5px;border:1px solid #4b5663;border-radius:4px;background:#222d39;color:#f2dca7}
+/* Phase 6: responsive, reduced motion, usable targets */
+@media(max-width:1100px){.v640OpsDock{grid-template-columns:1fr 1fr!important}.v640OpsCell.collect{grid-column:1/-1}.v6449DeckRow{grid-template-columns:1fr!important}.v6449Own{border-right:0!important;border-bottom:1px solid #3a4553}.v6449Counters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.wrap{padding:12px!important}.top h1{font-size:22px!important}.v640OpsDock{grid-template-columns:1fr!important}.v640OpsCell.collect{grid-column:auto}.v6449Counters{grid-template-columns:1fr!important}.v6449Counter{min-height:auto}.section h2{font-size:15px!important}.mainTabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}.mainTabs .tab{white-space:nowrap}.ii-help{display:none}#v6448Dialog{width:100vw!important;max-height:100dvh!important;border-radius:0!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+<script id="imperialUIPhase2to6">
+(()=>{'use strict';
+// Add a compact discoverable keyboard hint; no collector/data logic changes.
+const tabs=document.querySelector('.mainTabs');
+if(tabs){const hint=document.createElement('div');hint.className='ii-help';hint.setAttribute('aria-label','빠른 사용 안내');hint.innerHTML='<span><kbd>/</kbd> 전보 검색</span><span><kbd>Esc</kbd> 팝업 닫기 / 이전 화면</span><span>카운터 덱 클릭 → 실제 근거 전보</span>';tabs.insertAdjacentElement('afterend',hint)}
+// Back-navigation is inserted only into existing modals and does not replace their event handlers.
+const evidence=document.getElementById('v629Evidence'),detail=document.getElementById('detail');
+const evClose=document.getElementById('v629EvidenceClose'),detailClose=document.getElementById('detailClose');
+function isOpen(el){return !!el&&(el.classList.contains('show')||el.classList.contains('open')||getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden'&&getComputedStyle(el).opacity!=='0')}
+function addBack(host,label,fn){if(!host||host.querySelector('.ii-back'))return;const b=document.createElement('button');b.type='button';b.className='ii-back';b.textContent='← '+label;b.addEventListener('click',fn);const close=host.querySelector('button[id$="Close"]');if(close)host.insertBefore(b,close);else host.appendChild(b)}
+addBack(evidence?.querySelector('.detailtop'),'이전 화면',()=>evClose?.click());
+addBack(detail?.querySelector('.detailtop'),'전보 목록',()=>detailClose?.click());
+// Ensure browser focus returns to the underlying list rather than the page behind it.
+let lastEvidenceFocus=null;
+evidence?.addEventListener('click',e=>{const row=e.target.closest('#v629EvidenceRows tr');if(row)lastEvidenceFocus=row},true);
+detailClose?.addEventListener('click',()=>{setTimeout(()=>{if(isOpen(evidence)){(lastEvidenceFocus?.isConnected?lastEvidenceFocus:evClose)?.focus?.()}},0)});
+// '/' focuses the global search; do not hijack typing, shortcuts or any open modal.
+document.addEventListener('keydown',e=>{if(e.key!=='/'||e.ctrlKey||e.metaKey||e.altKey||e.isComposing)return;const t=e.target;if(t?.closest?.('input,textarea,select,[contenteditable="true"]'))return;if(isOpen(detail)||isOpen(evidence)||document.getElementById('v6448Overlay')?.classList.contains('open'))return;const q=document.getElementById('q');if(q&&q.offsetParent!==null){e.preventDefault();q.focus();q.select()}},true);
+// Report the active analysis period to assist users without altering the stored filter.
+const period=document.getElementById('v638PeriodSummary');if(period)period.setAttribute('role','status');
+})();
+</script>
+<style>
+#nslgSpecialGate,#nslgPasswordSettings{display:none;position:fixed;inset:0;z-index:2147483646;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.82);font-family:Pretendard,"Noto Sans KR",sans-serif}
+.nslgPassBox{box-sizing:border-box;width:min(440px,96vw);background:#1c2029;color:#e9edf2;border:1px solid #8b713b;border-radius:16px;padding:24px;box-shadow:0 20px 80px #000a}
+.nslgPassBox h3{margin:0 0 12px;color:#e8c36a;font-size:19px}.nslgPassBox p{font-size:12px;line-height:1.6;color:#b7bec9}.nslgPassBox label{display:block;font-size:13px;margin:14px 0}
+.nslgPassBox input{box-sizing:border-box;display:block;width:100%;margin:8px 0;padding:11px;border-radius:8px;background:#101319;border:1px solid #4b5360;color:#fff;font-size:15px}
+.nslgPassActions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}.nslgPassActions button{padding:10px 14px;border-radius:8px;border:1px solid #8b713b;background:#2a2416;color:#f4d789;cursor:pointer}.nslgPassError{min-height:18px;color:#ff9e9e;font-size:12px}.nslgPassWarn{color:#e2b76c!important}
+</style><script src="access_layers.js"></script><script>
+// PC 로컬 화면에서만 게임 프로세스 선택. GitHub 공개 웹에서는 숨김.
+(function(){
+ const wrap=document.getElementById('gameProcessChooser'),sel=document.getElementById('gameProcessSelect'),refresh=document.getElementById('refreshGameProcesses'),msg=document.getElementById('gameProcessMessage');
+ if(!wrap||!sel)return;
+ const local=location.hostname==='127.0.0.1'||location.hostname==='localhost';
+ if(!local)return;
+ wrap.style.display='flex';
+ let loading=false;
+ async function load(){
+  if(loading)return;loading=true;msg.textContent='검색 중…';
+  try{
+   const r=await fetch('/api/game-processes?ts='+Date.now(),{cache:'no-store'}),j=await r.json();
+   if(!r.ok||!j.ok)throw Error(j.message||'프로세스 검색 실패');
+   sel.replaceChildren();
+   const auto=document.createElement('option');auto.value='0';auto.textContent='자동 선택 (기존 방식)';sel.appendChild(auto);
+   for(const p of (j.processes||[])){
+    const o=document.createElement('option');o.value=String(p.pid);o.textContent=p.name+' · PID '+p.pid+(p.title?' · '+p.title.slice(0,55):'');sel.appendChild(o);
+   }
+   sel.value=String(j.selectedPid||0);
+   if(sel.selectedIndex<0){sel.value='0';msg.textContent='선택한 게임이 종료됨 · 다시 선택 필요';}
+   else msg.textContent=(j.processes||[]).length+'개 발견';
+  }catch(e){msg.textContent='검색 오류: '+e.message;}finally{loading=false;}
+ }
+ sel.addEventListener('change',async()=>{
+  sel.disabled=true;msg.textContent='저장 중…';
+  try{
+   const r=await fetch('/api/game-process',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pid:Number(sel.value)})}),j=await r.json();
+   if(!r.ok||!j.ok)throw Error(j.message||'저장 실패');
+   msg.textContent=j.selectedPid?'PID '+j.selectedPid+' 선택 완료':'자동 선택';
+  }catch(e){alert('수집 대상 변경 실패: '+e.message);await load();}
+  finally{sel.disabled=false;}
+ });
+ refresh.addEventListener('click',load);
+ load();
+})();
+</script>
 <script src="stats_summary.js"></script><script>
 (function(){
   if(!window.NSLG_PUBLIC_MODE)return;
   const rawFetch=window.fetch.bind(window);
   window.fetch=(input,init)=>{const u=String(input||'');if(u.startsWith('/api/')||u.includes('127.0.0.1')||u.includes('localhost'))return Promise.reject(new Error('PUBLIC_MODE_READ_ONLY'));return rawFetch(input,init)};
-  ['adminMenuBtn','collectNowBtn','trustDiagBtn','v629SettingsUndoBtn','v629SettingsPreviewBtn','v628AdminBtn','sideSetupBtn'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none'});
+  ['adminMenuBtn','collectNowBtn','trustDiagBtn','v629SettingsUndoBtn','v629SettingsPreviewBtn','v628AdminBtn','sideSetupBtn','nslgPasswordSettingsBtn'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none'});
   document.querySelectorAll('.commandOnly,.adminMenu,.adminPanel,.localOnly,#v640OpsDock,#v6380AutoBar,#v6380AutoCollectBar,#v63756ShareState,#collectorStatus,.qualityBar,#v634CollectGuide,#v640SystemDetails,#v639IntegrityBar,#v629VisitStrip').forEach(e=>e.style.display='none');
 })();
 </script><script src="public_mapping.js"></script>
