@@ -372,11 +372,11 @@ html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
   </div>
   <div id="v6380AutoBar" class="v6380AutoBar">
     <div class="v6380AutoLead"><i></i><span>교전창 자동 수집</span></div>
-    <div class="v6380AutoControls"><label><input id="v6380AutoEnabled" type="checkbox" checked> ON</label><label>방식 <select id="v6380Mode"><option value="assisted">기존 자동</option><option value="full">완전 자동 (화면 조작)</option></select></label><label>쿨타임 <select id="v6380Cooldown"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option><option value="30">30분</option><option value="60">1시간</option></select></label></div>
-    <div class="v6380AutoCoords" style="font-size:10px"><details><summary>완전 자동 좌표 등록 (준비)</summary><div style="padding:6px 0">게임 창 내부 좌표 · 진입 3곳 + 닫기 1곳<br><input id="vAutoClicks" placeholder="예: 100,200;300,400;500,600;700,800" style="width:min(100%,370px)"><button type="button" id="vAutoSaveClicks">좌표 저장</button><div id="vAutoCoordsNote">좌표만 저장합니다. 실제 백그라운드 클릭은 아직 지원하지 않습니다.</div></div></details></div><div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
+    <div class="v6380AutoControls"><label><input id="v6380AutoEnabled" type="checkbox"> ON</label><label>방식 <select id="v6380Mode"><option value="assisted">기존 자동</option><option value="full">완전 자동 (화면 조작)</option></select></label><label>쿨타임 <select id="v6380Cooldown"><option value="5">5분</option><option value="10" selected>10분</option><option value="15">15분</option><option value="30">30분</option><option value="60">1시간</option></select></label></div>
+    <div class="v6380AutoCoords" style="font-size:11px;color:var(--muted)">클릭·드래그 좌표는 관리 → 수집 좌표 관리에서 설정</div><div class="v6380AutoState" id="v6380AutoState">상태 확인 중</div>
     <div class="v6380AutoSub" id="v6380AutoSub">교전창을 열면 자동 수집 · GitHub 연결 시 자동 공유</div>
   </div>
-  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="nslgPasswordSettingsBtn" type="button">비밀번호 설정</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
+  <div id="v628AdminMenu" class="v628AdminMenu hidden"><div class="v632AdminLabel">일반</div><button data-admin="mappings">매핑 관리</button><button id="nslgPasswordSettingsBtn" type="button">비밀번호 설정</button><button id="nslgCoordinateSettingsBtn" type="button">수집 좌표 관리</button><button id="v632PresetBtn">필터 프리셋</button><button id="v632ReportBtn">시즌 보고서 내보내기</button><div class="v632AdminLabel">데이터</div><button data-admin="diagnostics">시스템 진단</button><button data-click="analysisSettingsBtn">수집 기준 설정</button><button data-click="backupRestoreBtn">백업 복구</button><button data-click="backupMergeBtn">백업 가져오기/병합</button><button data-click="skillDiagBtn">미확정 전법</button><button id="v6331SeasonManageBtn">시즌 관리</button><div class="v632AdminLabel danger">위험 작업</div><button data-click="battleResetBtn" class="dangerMenu">전보 초기화</button></div>
   <div class="cards" id="v628DataCards">
     <div class="card"><div class="k">현재 분석 전보</div><div class="v" id="cTotal">0</div></div>
     <div class="card v6413CoreKpi"><div class="k">관측 승률</div><div class="v" id="v6413ObservedRate">-</div></div>
@@ -3265,15 +3265,16 @@ const period=document.getElementById('v638PeriodSummary');if(period)period.setAt
 (function(){
  const wrap=document.getElementById('gameProcessChooser'),sel=document.getElementById('gameProcessSelect'),refresh=document.getElementById('refreshGameProcesses'),msg=document.getElementById('gameProcessMessage');
  if(!wrap||!sel)return;
- const local=location.hostname==='127.0.0.1'||location.hostname==='localhost';
- if(!local)return;
- wrap.style.display='flex';
+ // Show only after a successful response from the local process API.
+ // Supports localhost and LAN addresses, but not static GitHub Pages.
+
  let loading=false;
  async function load(){
   if(loading)return;loading=true;msg.textContent='검색 중…';
   try{
    const r=await fetch('/api/game-processes?ts='+Date.now(),{cache:'no-store'}),j=await r.json();
    if(!r.ok||!j.ok)throw Error(j.message||'프로세스 검색 실패');
+   wrap.style.display='flex';
    sel.replaceChildren();
    const auto=document.createElement('option');auto.value='0';auto.textContent='자동 선택 (기존 방식)';sel.appendChild(auto);
    for(const p of (j.processes||[])){
@@ -3282,7 +3283,7 @@ const period=document.getElementById('v638PeriodSummary');if(period)period.setAt
    sel.value=String(j.selectedPid||0);
    if(sel.selectedIndex<0){sel.value='0';msg.textContent='선택한 게임이 종료됨 · 다시 선택 필요';}
    else msg.textContent=(j.processes||[]).length+'개 발견';
-  }catch(e){msg.textContent='검색 오류: '+e.message;}finally{loading=false;}
+  }catch(e){if(location.hostname==='127.0.0.1'||location.hostname==='localhost'){wrap.style.display='flex';}msg.textContent='검색 오류: '+e.message;}finally{loading=false;}
  }
  sel.addEventListener('change',async()=>{
   sel.disabled=true;msg.textContent='저장 중…';
@@ -3297,6 +3298,25 @@ const period=document.getElementById('v638PeriodSummary');if(period)period.setAt
  load();
 })();
 </script>
+
+<div id="nslgCoordModal" class="hidden" style="position:fixed;inset:0;z-index:100050;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:16px">
+ <section role="dialog" aria-modal="true" aria-labelledby="nslgCoordTitle" style="background:#1c2029;border:1px solid #605034;border-radius:14px;padding:18px;max-width:740px;width:100%;max-height:90vh;overflow:auto;color:#f3f0e8">
+ <h3 id="nslgCoordTitle" style="margin:0 0 6px">수집 좌표 관리</h3><p style="font-size:12px;color:#b8b8b8">게임 창 내부 1920×960 기준 좌표 · 설정은 이 PC에만 저장됩니다. 자동 수집은 기본 OFF입니다.</p>
+ <div id="nslgCoordFields" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px"></div>
+ <p id="nslgCoordFeedback" style="font-size:12px;min-height:20px" role="status"></p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button id="nslgCoordReset" type="button">기본값 불러오기</button><button id="nslgCoordCancel" type="button">닫기</button><button id="nslgCoordSave" type="button">저장</button></div>
+ </section>
+</div>
+<style>#nslgCoordModal.hidden{display:none!important}#nslgCoordModal input{width:100%;box-sizing:border-box;background:#11151b;border:1px solid #444b56;border-radius:6px;padding:7px;color:#fff}#nslgCoordModal label{display:block;font-size:12px}#nslgCoordModal button{padding:8px 12px;border:1px solid #6d5b38;border-radius:7px;background:#262a30;color:#f3f0e8;cursor:pointer}</style>
+<script id="nslgCoordManagerScript">(()=>{
+const modal=document.getElementById('nslgCoordModal'),fields=document.getElementById('nslgCoordFields'),feedback=document.getElementById('nslgCoordFeedback');if(!modal)return;
+const defaults={a:[[917,608],[1683,133],[955,745],[391,787],[1425,119],[713,130]],b:[[391,787],[1425,119],[713,130]],drag:[[959,902],[970,164]],finish:[130,27],clickDelaySeconds:30,dragDelaySeconds:5,dragCount:50,finishDelaySeconds:10,referenceWidth:1920,referenceHeight:960};
+const defs=[];for(let i=0;i<6;i++)defs.push(['a'+i,'조건 A · '+(i+1)+'번째 클릭','point']);for(let i=0;i<3;i++)defs.push(['b'+i,'조건 B · '+(i+1)+'번째 클릭','point']);defs.push(['drag0','드래그 시작','point'],['drag1','드래그 끝','point'],['finish','수집 후 클릭','point'],['clickDelaySeconds','클릭 간격(초)','number'],['dragDelaySeconds','드래그 전 대기(초)','number'],['dragCount','드래그 횟수','number'],['finishDelaySeconds','수집 후 대기(초)','number']);
+const fieldId=k=>'nslgCoord_'+k;function render(c){fields.innerHTML='';for(const [k,label,type] of defs){const el=document.createElement('label');el.textContent=label;const input=document.createElement('input');input.id=fieldId(k);input.type=type==='point'?'text':'number';input.autocomplete='off';if(type==='number'){input.min='0';input.max='3600'}let val=k.startsWith('a')&&/^a\d$/.test(k)?c.a[+k.slice(1)]:k.startsWith('b')&&/^b\d$/.test(k)?c.b[+k.slice(1)]:k==='drag0'?c.drag[0]:k==='drag1'?c.drag[1]:c[k];input.value=Array.isArray(val)?val.join(','):String(val);el.appendChild(input);fields.appendChild(el)}}
+function collect(){const c=JSON.parse(JSON.stringify(defaults));for(const [k,,type] of defs){const raw=document.getElementById(fieldId(k)).value.trim();if(type==='point'){if(!/^\d{1,4}\s*,\s*\d{1,4}$/.test(raw))throw Error(k+' 좌표는 X,Y 형식이어야 합니다');const p=raw.split(',').map(Number);if(p[0]>=1920||p[1]>=960)throw Error(k+' 좌표가 게임 창 범위를 벗어났습니다');if(/^a\d$/.test(k))c.a[+k.slice(1)]=p;else if(/^b\d$/.test(k))c.b[+k.slice(1)]=p;else if(k==='drag0')c.drag[0]=p;else if(k==='drag1')c.drag[1]=p;else c.finish=p;}else{const v=Number(raw);if(!Number.isInteger(v)||v<0||v>3600)throw Error(k+' 숫자가 잘못되었습니다');c[k]=v}}if(c.dragCount<1||c.dragCount>200)throw Error('드래그 횟수는 1~200회');return c}
+async function open(){if(window.NSLG_PUBLIC_MODE)return;modal.classList.remove('hidden');feedback.textContent='설정 불러오는 중...';try{const r=await fetch('/api/full-auto-coordinates',{cache:'no-store'});const j=await r.json();if(!r.ok||!j.ok)throw Error(j.message||'설정 읽기 실패');render(j.coordinates);feedback.textContent='현재 저장된 좌표입니다.'}catch(e){render(defaults);feedback.textContent='설정 읽기 실패: '+e.message}}
+document.getElementById('nslgCoordinateSettingsBtn')?.addEventListener('click',open);document.getElementById('nslgCoordCancel').onclick=()=>modal.classList.add('hidden');document.getElementById('nslgCoordReset').onclick=()=>{render(defaults);feedback.textContent='기본값을 불러왔습니다. 저장을 누르면 적용됩니다.'};document.getElementById('nslgCoordSave').onclick=async()=>{try{const c=collect();const r=await fetch('/api/full-auto-coordinates',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});const j=await r.json();if(!r.ok||!j.ok)throw Error(j.message||'저장 실패');feedback.textContent='저장 완료 · 다음 완전자동 수집부터 적용됩니다.'}catch(e){feedback.textContent='저장 실패: '+e.message}};
+})();</script>
 <script src="stats_summary.js"></script><script>
 (function(){
   if(!window.NSLG_PUBLIC_MODE)return;
