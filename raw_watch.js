@@ -1,1 +1,1 @@
-﻿window.NSLG_RAW_WATCH={lastScan:"2026-10-16T18:20:34.4047394+09:00",currentUnique:207,previousUnique:207,currentSetHash:"82a5d21f37e4f372f4e8756101dadba91371a9759ff7eb9963b9c6532c8000d4",previousSetHash:"82a5d21f37e4f372f4e8756101dadba91371a9759ff7eb9963b9c6532c8000d4",stableScans:2,ready:true,readyMessage:"BattleID 목록 동일 확인 · 수집 준비 완료",newCount:0,totalSeen:5747,error:""};
+﻿window.NSLG_RAW_WATCH={lastScan:"",currentUnique:0,previousUnique:-1,currentSetHash:"",previousSetHash:"",stableScans:0,ready:false,readyMessage:"교전 탭 확인 대기",newCount:0,totalSeen:0,error:""};
