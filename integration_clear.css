@@ -815,3 +815,135 @@ body.nslg-shell.nslg-editorial #nslgNoticeDialog button{
 body.nslg-shell.nslg-editorial #nslgNoticeSave{background:#203B56!important;color:#fff!important}
 body.nslg-shell.nslg-editorial #nslgNoticeDialog button:disabled{opacity:.55;cursor:wait}
 @media(max-width:1150px){body.nslg-shell.nslg-editorial nav .nslg-notice-panel{order:4;flex:1 1 100%;min-width:0}}
+
+/* v1.0.28: AI side panel readability and responsive research disclosure.
+   Both administrator iframe and the GitHub visitor analyzer load this stylesheet.
+   Scoped only to the AI drawer so other analysis components keep their styles. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel{
+  width:min(590px,100vw)!important;max-width:100vw!important;
+  height:100vh;height:100dvh;max-height:100dvh;min-height:0!important;
+  box-sizing:border-box!important;overflow:hidden!important;
+  background:#F2F5F8!important;color:#172331!important;
+  border-left:1px solid #B4C4D3!important;
+  box-shadow:-18px 0 46px rgba(16,34,53,.22)!important;
+  z-index:100012!important; /* above sticky GitHub visitor notices */
+  isolation:isolate;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiBackdrop{z-index:100011!important;background:rgba(14,30,47,.55)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiHead{
+  flex:0 0 auto!important;background:#FFFFFF!important;color:#172331!important;
+  border-bottom:1px solid #C9D3DE!important;padding:12px 16px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiTitle b{color:#203B56!important;font-size:17px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiStatus{color:#46586B!important;font-size:12px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Quick{
+  flex:0 0 auto!important;gap:7px!important;padding:10px 14px!important;
+  background:#F9FBFD!important;border-bottom:1px solid #D5DFE9!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel :is(.v630AiHeadActions button,.v630Quick button,.v6429Tabs button,.v6429Row button,.v6430Actions button,.v630AiActions button){
+  color:#203B56!important;background:#FFFFFF!important;border:1px solid #BACBD9!important;
+  border-radius:8px!important;font-size:13px!important;font-weight:700!important;
+  min-height:36px!important;padding:7px 11px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel :is(.v6429Tabs button.on,#v630AiSend,.v6430Primary){
+  color:#FFFFFF!important;background:#203B56!important;border-color:#203B56!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiMessages{
+  flex:1 1 0!important;min-height:0!important;overflow-y:auto!important;
+  overscroll-behavior:contain;background:#F2F5F8!important;
+  padding:14px!important;gap:11px!important;scrollbar-gutter:stable;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Msg{
+  max-width:95%!important;width:fit-content;min-width:0;
+  border:1px solid #BDCDDA!important;border-radius:12px!important;
+  font-size:14px!important;line-height:1.7!important;color:#172331!important;
+  overflow-wrap:anywhere!important;white-space:normal!important;
+  background:#FFFFFF!important;padding:12px 13px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Msg.user{
+  background:#E5EEF7!important;color:#193951!important;border-color:#AEC4D7!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Msg.error{
+  background:#FFF0EF!important;color:#8B2E31!important;border-color:#E0A5A5!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Msg :is(div,span,b,strong,p,small){
+  color:inherit!important;opacity:1!important;font-size:inherit;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630Msg .v630MsgMeta{
+  color:#496277!important;font-size:12px!important;font-weight:750!important;margin-bottom:6px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiActions{display:flex!important;gap:7px!important;flex-wrap:wrap!important;margin-top:10px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiComposer{
+  flex:0 0 auto!important;background:#FFFFFF!important;border-top:1px solid #C9D3DE!important;
+  padding:11px 14px max(11px,env(safe-area-inset-bottom))!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiComposer textarea{
+  width:100%!important;box-sizing:border-box!important;display:block!important;
+  min-height:86px!important;max-height:24vh!important;resize:vertical!important;
+  background:#FFFFFF!important;color:#172331!important;border:1px solid #A9B8C7!important;
+  font-size:14px!important;line-height:1.55!important;padding:10px 12px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiComposerRow{gap:12px!important;min-width:0;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiComposerRow .small{
+  min-width:0!important;flex:1 1 auto!important;color:#46586B!important;
+  font-size:12px!important;line-height:1.5!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel #v630AiSend{
+  flex:0 0 auto!important;min-width:70px!important;padding:9px 13px!important;
+  background:#203B56!important;color:#FFFFFF!important;border:1px solid #203B56!important;
+  border-radius:8px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiSettings{
+  max-height:42dvh;overflow-y:auto;flex:0 1 auto;
+  background:#FFFFFF!important;color:#172331!important;border-bottom:1px solid #C9D3DE!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiNote{color:#46586B!important;font-size:12px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Lab{
+  flex:0 0 auto!important;margin:9px 13px!important;
+  background:#FFFFFF!important;color:#172331!important;
+  border:1px solid #C9D3DE!important;border-radius:11px!important;
+  padding:0!important;overflow:hidden!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Toggle{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:12px!important;padding:12px 13px!important;
+  background:#F7FAFC!important;color:#203B56!important;cursor:pointer!important;
+  list-style:none!important;user-select:none;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Toggle::-webkit-details-marker{display:none;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429ToggleMain{display:flex;flex-direction:column;gap:3px;min-width:0;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429ToggleMain strong{
+  font-size:15px!important;color:#203B56!important;line-height:1.35!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429ToggleMain small{font-size:12px!important;color:#54697C!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429ExpandLabel{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;color:#203B56!important;font-size:13px;font-weight:800;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429OpenedLabel{display:none;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Lab[open] .v6429OpenedLabel{display:inline;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Lab[open] .v6429ClosedLabel{display:none;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Lab[open] .v6429Chevron{transform:rotate(180deg);}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Body{
+  max-height:min(48dvh,480px);overflow-y:auto!important;overscroll-behavior:contain;
+  padding:12px 13px!important;border-top:1px solid #D5DFE9!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:8px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Controls select{
+  width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;
+  background:#FFFFFF!important;color:#172331!important;border:1px solid #A9B8C7!important;
+  font-size:13px!important;min-height:39px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel :is(.v6429Summary,.v6429Row small,.v6429Warning,.v6430Actions span){
+  color:#42586C!important;font-size:13px!important;line-height:1.6!important;opacity:1!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Results{max-height:270px!important;overflow-y:auto!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Row{
+  background:#F8FAFC!important;color:#172331!important;border-color:#D1DEE8!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Row :is(b,strong){color:#203B56!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6430Section{color:#203B56!important;}
+@media(max-width:540px){
+  body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel{width:100vw!important;border-left:0!important;}
+  body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiHead{padding:10px 12px!important;}
+  body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiMessages{padding:10px!important;}
+  body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v630AiComposerRow{align-items:flex-start!important;}
+  body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v630AiPanel .v6429Body{max-height:43dvh;}
+}
