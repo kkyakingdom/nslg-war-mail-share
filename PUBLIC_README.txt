@@ -1,7 +1,7 @@
 ﻿NSLG 전보 분석 PUBLIC BUILD v6.45.3 WEB SPEED + USER TEST VALIDATED
-생성: 2026-10-17 13:32:47
+생성: 2026-10-17 13:36:12
 프로필: all
-분석 행: 4046
+분석 행: 4057
 닉네임 공개: none
 접속 잠금: 사용
 
