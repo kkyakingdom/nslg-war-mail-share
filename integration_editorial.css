@@ -559,3 +559,6 @@ body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .v6412MatchPin
 body.nslg-catalog.nslg-editorial #detail .v995-desc{background:#fffefa!important;color:#263c2e!important;line-height:1.7!important;font-size:15px!important;border-color:#d9d0c4!important;}
 body.nslg-catalog.nslg-editorial #detail :is(.v995-table,.v995-table td,.v995-table th,.v998-tactic-top){color:#293d30!important;background:#fffefa!important;}
 body.nslg-catalog.nslg-editorial #detail .v998-hero-dev-content{color:#293c2d!important;}
+
+/* v1.0.31: Excel workbook upload row in the guide library */
+body.nslg-catalog .nslg-xlsx-row{align-items:center}body.nslg-catalog .nslg-xlsx-row strong{white-space:nowrap}body.nslg-catalog .nslg-xlsx-help{flex:1 1 320px;font-size:12.5px;line-height:1.5;color:#5b6570}
