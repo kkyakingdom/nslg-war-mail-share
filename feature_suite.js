@@ -1,4 +1,4 @@
-﻿/* v6.41.0 feature layer: trust, data lineage, setup deltas, promotion effects, chain depth/bias. Core collection works without this file. */
+/* v6.41.0 feature layer: trust, data lineage, setup deltas, promotion effects, chain depth/bias. Core collection works without this file. */
 (()=>{
 'use strict';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -23,7 +23,7 @@ function chainAgg(){const chains=typeof window.v6404BuildChains==='function'?win
 function enhanceChainRanking(){const body=$('#v6405RankRows');if(!body)return;const table=body.closest('table'),head=table?.querySelector('thead tr');if(head&&!head.querySelector('[data-v641-chain-head]'))head.insertAdjacentHTML('beforeend','<th data-v641-chain-head>3연전+</th><th data-v641-chain-head>표본 편향</th>');const agg=chainAgg();$$('tr.v6405RankRow',body).forEach(tr=>{if(tr.querySelector('[data-v641-chain-extra]'))return;const label=tr.querySelector('.v6405RankDeck')?.textContent?.trim(),key=[...agg.keys()].find(k=>(ALIASES[k]||ordered(k.split('|')))===label),z=agg.get(key);const ratio=z&&z.chains?100*z.three/z.chains:0,top=z&&z.chains?Math.max(0,...z.users.values())/z.chains:0;tr.insertAdjacentHTML('beforeend',`<td data-v641-chain-extra>${z?ratio.toFixed(0)+'%':'-'}</td><td data-v641-chain-extra class="${top>=.5&&z?.chains>=4?'v641BiasText':''}">${z&&z.chains>=4?(top>=.5?'⚠ 상위1명 '+(top*100).toFixed(0)+'%':'분산 양호'):'표본 적음'}</td>`)});$$('tr.v6405RankDetail',body).forEach(tr=>{const td=tr.querySelector('td[colspan]');if(td)td.colSpan=9})}
 function installChainObserver(){const b=$('#v6405RankRows');if(!b)return;new MutationObserver(()=>setTimeout(enhanceChainRanking,0)).observe(b,{childList:true,subtree:true});enhanceChainRanking()}
 function addLineageToEvidence(){const m=$('#v629Evidence');if(!m)return;new MutationObserver(()=>{if(!m.classList.contains('show'))return;const h=m.querySelector('.v629EvidenceHint');if(h&&!h.dataset.v641){h.dataset.v641='1';h.insertAdjacentHTML('beforeend','<br><span class="v641Lineage">계산 경로가 표본 수와 함께 고정되어 화면 숫자와 근거 전보가 항상 같은 집합을 사용합니다.</span>')}}).observe(m,{attributes:true,attributeFilter:['class']})}
-function boot(){installTrustPanel();installMatrixObserver();installSetupObserver();installChainObserver();addLineageToEvidence();setInterval(()=>{enhanceMatrix();enhanceChainRanking()},5000)}
+function boot(){installTrustPanel();installMatrixObserver();installSetupObserver();installChainObserver();addLineageToEvidence();if(!window.NSLG_PUBLIC_MODE)setInterval(()=>{enhanceMatrix();enhanceChainRanking()},5000)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else setTimeout(boot,0);
 })();
 
