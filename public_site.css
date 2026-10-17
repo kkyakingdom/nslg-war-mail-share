@@ -1,4 +1,9 @@
 
+/* GitHub visitors do not need collection/backup/sync/system diagnostics.
+   Keep every analysis tab, filtering controls, charts and data evidence available. */
+/* Public collection and publishing controls are removed from HTML; no CSS hiding. */
+html.nslg-public .nslg-public-health{margin:10px 0;padding:11px 15px;border:1px solid #bc693e;border-radius:9px;background:#fff0e5;color:#693016;font:700 13px/1.6 Pretendard,system-ui,sans-serif}
+html.nslg-public .nslg-public-health[hidden]{display:none!important}
 .nslg-pubnav{position:sticky;top:0;z-index:99999;display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:9px 15px;background:#F2F5F8;border-bottom:1px solid #CBD7E2;font:700 14px/1.5 Pretendard,system-ui,sans-serif}
 .nslg-pubnav a{color:#1B3E5E!important;text-decoration:none!important;background:#fff;border:1px solid #B9C9DA;border-radius:9px;padding:9px 14px}
 .nslg-pubnav a.on,.nslg-pubnav a:hover{background:#203B56!important;color:#fff!important}

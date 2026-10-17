@@ -1,1 +1,1 @@
-﻿window.NSLG_DATA_GENERATION={"generation":202,"at":"2026-10-17T13:35:53.5045013+09:00","reason":"collection:20261017-133227","version":"v6.45.3 WEB SPEED + USER TEST VALIDATED"};
+﻿window.NSLG_DATA_GENERATION={"generation":202,"at":"2026-10-17T13:51:38.2817165+09:00","reason":"server-start","version":"v6.45.3 WEB SPEED + USER TEST VALIDATED"};
