@@ -16,7 +16,7 @@ window.NSLG_INTEGRATION={
   return {n:matched.length,den:denominator,pct:Math.round(matched.length*1000/denominator)/10};
  }
 };
-const PERIOD_MS=60*60*1000; // Periodic check every hour, with user-controlled immediate refresh.
+const PERIOD_MS=window.NSLG_PUBLIC_CATALOG ? 60*1000 : 15*1000; // Version-only poll: public 60s, local 15s.
 let isRefreshing=false;
 let currentRevision='';
 let lastCheckAt=0;
@@ -74,7 +74,7 @@ function formatBanner(){
  const count=Number(S.meta?.uniqueDecks||0).toLocaleString('ko-KR');
  const ts=S.meta?.sourceDataUpdatedAt;
  const stamp=ts?(' · 수집 데이터 '+new Date(ts).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})):'';
- return `전보 고유 편성 ${count}개 · 전보 ${Number(S.meta?.sourceBattles||0).toLocaleString('ko-KR')}건 · 장수 상세 ${Number(S.meta?.sourceDetailRows||0).toLocaleString('ko-KR')}행 · 1시간 자동 갱신${stamp} · ${S.meta?.source==='누적 전보 CSV'?'누적 CSV 복구 집계':'원본 data.js 집계'}${S.lastRefreshReport?' | '+S.lastRefreshReport:''}`;
+ return `전보 고유 편성 ${count}개 · 전보 ${Number(S.meta?.sourceBattles||0).toLocaleString('ko-KR')}건 · 장수 상세 ${Number(S.meta?.sourceDetailRows||0).toLocaleString('ko-KR')}행 · ${window.NSLG_PUBLIC_CATALOG?'1분':'15초'} 자동 확인${stamp} · ${S.meta?.source==='누적 전보 CSV'?'누적 CSV 복구 집계':'원본 data.js 집계'}${S.lastRefreshReport?' | '+S.lastRefreshReport:''}`;
 }
 function updateBanner(error){
  const hint=banner();if(!hint)return;
@@ -113,8 +113,8 @@ async function load(verifyOnly=false){
 }
 load();
 window.setInterval(()=>{if(document.visibilityState!=='hidden')load(true)},PERIOD_MS);
-// No focus-triggered checks: the normal cadence is one hour, not every switch.
-// Hidden/visible transitions do not trigger extra requests.
+// Resume one light revision check when a background browser tab becomes visible.
+window.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')load(true)});
 window.addEventListener('click',()=>{if(S.loaded&&!S.error)updateBanner()},true);
 
 })();
