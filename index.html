@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -322,38 +322,7 @@ body.ii-density-compact .card{padding:12px}
 @media(prefers-reduced-motion:reduce){button,input,select,.v6449CounterCard,.v6449DeckRow{transition:none!important}}
 </style>
 </head>
-<body><script>window.NSLG_ACCESS_CONFIG={"specialHash":"7ba6de8b74a1751302131909116affb1ef205843f654190346be26ee8a9177da","webHash":"7ba6de8b74a1751302131909116affb1ef205843f654190346be26ee8a9177da"};</script><script>
-window.NSLG_PUBLIC_MODE=true;
-window.NSLG_PUBLIC_ACCESS_HASH='7ba6de8b74a1751302131909116affb1ef205843f654190346be26ee8a9177da';
-document.documentElement.classList.add('nslgLocked');
-</script>
-<style>
-html.nslgLocked body>*:not(#nslgAccessGate){display:none!important}
-#nslgAccessGate{position:fixed;inset:0;z-index:2147483647;display:flex!important;align-items:center;justify-content:center;background:#0f1115;color:#f0eadc;font-family:Pretendard,"Noto Sans KR",sans-serif;padding:24px}
-#nslgAccessGate .box{width:min(390px,92vw);background:#171b22;border:1px solid #3b3423;border-radius:16px;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
-#nslgAccessGate .title{font-size:20px;font-weight:800;color:#ecd17f;margin-bottom:7px}
-#nslgAccessGate .desc{font-size:12px;color:#9ca5af;line-height:1.6;margin-bottom:16px}
-#nslgAccessGate .row{display:flex;gap:8px}
-#nslgAccessGate input{flex:1;min-width:0;border:1px solid #343d48;background:#0f141a;color:#fff;border-radius:10px;padding:11px 12px;font-size:15px;outline:none}
-#nslgAccessGate input:focus{border-color:#9b7b32;box-shadow:0 0 0 2px rgba(232,195,106,.12)}
-#nslgAccessGate button{border:1px solid #8c6e2e;background:#2a2416;color:#f1d680;border-radius:10px;padding:0 16px;font-weight:800;cursor:pointer}
-#nslgAccessGate .err{height:18px;margin-top:8px;color:#e58c83;font-size:11px}
-#collectNowBtn,.moreWrap,#v628AdminBtn,#sideSetupBtn,#v629UndoBtn,#v629SeasonBtn,#trustDiagBtn,#v640OpsDock,#v6380AutoBar,#v6380AutoCollectBar,#v63756ShareState,#collectorStatus,.qualityBar,#v634CollectGuide,#v640SystemDetails,#v639IntegrityBar,#v629VisitStrip{display:none!important}
-</style>
-<div id="nslgAccessGate"><div class="box"><div class="title">깔개 분석기 공유 화면</div><div class="desc">공유받은 비밀번호를 입력하면 분석 화면이 열립니다.<br>브라우저를 닫으면 다시 입력해야 합니다.</div><div class="row"><input id="nslgAccessPassword" type="password" inputmode="numeric" autocomplete="off" placeholder="비밀번호" maxlength="32"><button id="nslgAccessSubmit" type="button">입장</button></div><div class="err" id="nslgAccessError"></div></div></div>
-<script>
-(function(){
-  const gate=document.getElementById('nslgAccessGate'),input=document.getElementById('nslgAccessPassword'),btn=document.getElementById('nslgAccessSubmit'),err=document.getElementById('nslgAccessError');
-  const hex=buf=>Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-  async function digest(s){return hex(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))}
-  function open(){try{sessionStorage.setItem('nslg_public_unlocked_'+window.NSLG_PUBLIC_ACCESS_HASH,'1')}catch(_){}document.documentElement.classList.remove('nslgLocked');gate.remove()}
-  async function submit(){btn.disabled=true;err.textContent='확인 중…';try{if(await digest(input.value)===window.NSLG_PUBLIC_ACCESS_HASH){open();return}err.textContent='비밀번호가 올바르지 않습니다.';input.select()}catch(_){err.textContent='브라우저에서 비밀번호 확인을 지원하지 않습니다.'}finally{btn.disabled=false}}
-  try{if(sessionStorage.getItem('nslg_public_unlocked_'+window.NSLG_PUBLIC_ACCESS_HASH)==='1'){open();return}}catch(_){}
-  btn.addEventListener('click',submit);input.addEventListener('keydown',e=>{if(e.key==='Enter')submit()});setTimeout(()=>input.focus(),0);
-})();
-</script>
-<div id="nslgPublicBanner" style="position:sticky;top:0;z-index:99999;padding:7px 12px;text-align:center;background:#171b22;border-bottom:1px solid #51472d;color:#e8c36a;font:700 12px Pretendard,sans-serif">PUBLIC · 비밀번호 보호 · 읽기 전용 분석 화면</div>
-<div id="nslgPublicSubmitNote" style="margin:8px auto 10px;max-width:1180px;padding:10px 13px;border:1px solid #33404b;border-radius:10px;background:#111820;color:#c9d1d9;font:600 11px/1.55 Pretendard,sans-serif;text-align:center"><b style="color:#ecd17f">전보 제보 안내</b> · 끄야왕에게 전보 스크린샷을 보내주면 확인 후 분석 데이터에 반영됩니다.</div>
+<body class="nslg-editorial"><script>window.NSLG_PUBLIC_MODE=true;window.NSLG_ACCESS_CONFIG={};</script><nav class="nslg-pubnav" aria-label="공개 분석 서비스"><a class="on" href="./">⚔ 전보분석기</a><a href="catalog/">📖 도감 · 덱편성</a><a href="guide/">📚 공략 자료실</a><span>※ 전보 스크린샷은 디스코드 ‘스크린샷’ 게시판에 올려주세요. 교전 스크린샷 / 전투결과(선택)</span></nav><link rel="stylesheet" href="public_site.css"><link rel="stylesheet" href="integration_editorial.css"><link rel="stylesheet" href="integration_clear.css">
 <div class="wrap">
   <div class="top"><div><h1 id="appHome" class="appHome" role="button" tabindex="0" aria-label="전황 메인화면으로 이동" title="전황 메인화면으로 이동">깔개 분석기</h1><div class="sub">전보 기반 전황 · 상성 · 세팅 분석</div></div><div class="topActions"><div class="modeSwitch" title="간편 모드는 핵심 화면만, 지휘부 모드는 모든 분석 기능을 표시합니다."><button id="modeSimple">일반</button><button id="modeCommand" class="on">지휘부</button></div><button id="v629GlobalSearchBtn" class="commandSetupBtn v629SearchBtn" title="통합 검색 · Ctrl+K">⌕ 검색</button><button id="v630AiBtn" class="commandSetupBtn v630AiTopBtn" title="깔개 AI · 전황 요약과 자연어 분석">✦ 깔개 AI</button><button id="v628CompareBtn" class="commandSetupBtn">비교</button><button id="v632ShareBtn" class="commandSetupBtn" title="GitHub 원클릭 공유 · 첫 실행은 로그인만 하면 저장소와 Pages를 자동 설정합니다">공유</button><button id="v63756ShareState" class="v63756ShareState" type="button" title="GitHub 공유 상태 확인"><i></i><span>GitHub 확인 중</span></button><button id="v6331SeasonChip" class="v6331SeasonChip" title="현재 시즌 관리">시즌: 확인 중</button><div class="badge" id="updated">데이터 로딩 중</div></div></div>
   <div class="tabs mainTabs" id="v628MainTabs"><button class="tab on" data-tab="dashboard" data-group="dashboard">전황</button><button class="tab" data-tab="records" data-group="records">전보</button><button class="tab" data-tab="decks" data-group="decks">덱 분석</button><button class="tab" data-tab="warroom" data-group="warroom">전쟁실</button><button class="tab" data-tab="players" data-group="players">인물</button><button id="v628AdminBtn" class="tab adminTab commandOnly" type="button">관리</button></div>
@@ -3282,13 +3251,7 @@ document.addEventListener('keydown',e=>{if(e.key!=='/'||e.ctrlKey||e.metaKey||e.
 const period=document.getElementById('v638PeriodSummary');if(period)period.setAttribute('role','status');
 })();
 </script>
-<style>
-#nslgSpecialGate,#nslgPasswordSettings{display:none;position:fixed;inset:0;z-index:2147483646;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.82);font-family:Pretendard,"Noto Sans KR",sans-serif}
-.nslgPassBox{box-sizing:border-box;width:min(440px,96vw);background:#1c2029;color:#e9edf2;border:1px solid #8b713b;border-radius:16px;padding:24px;box-shadow:0 20px 80px #000a}
-.nslgPassBox h3{margin:0 0 12px;color:#e8c36a;font-size:19px}.nslgPassBox p{font-size:12px;line-height:1.6;color:#b7bec9}.nslgPassBox label{display:block;font-size:13px;margin:14px 0}
-.nslgPassBox input{box-sizing:border-box;display:block;width:100%;margin:8px 0;padding:11px;border-radius:8px;background:#101319;border:1px solid #4b5360;color:#fff;font-size:15px}
-.nslgPassActions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}.nslgPassActions button{padding:10px 14px;border-radius:8px;border:1px solid #8b713b;background:#2a2416;color:#f4d789;cursor:pointer}.nslgPassError{min-height:18px;color:#ff9e9e;font-size:12px}.nslgPassWarn{color:#e2b76c!important}
-</style><script src="access_layers.js"></script><script>
+<script>
 // PC 로컬 화면에서만 게임 프로세스 선택. GitHub 공개 웹에서는 숨김.
 (function(){
  const wrap=document.getElementById('gameProcessChooser'),sel=document.getElementById('gameProcessSelect'),refresh=document.getElementById('refreshGameProcesses'),msg=document.getElementById('gameProcessMessage');

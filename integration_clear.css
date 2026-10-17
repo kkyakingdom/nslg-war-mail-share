@@ -1,0 +1,765 @@
+/* NSLG Clear Analytics v1.0.15 — one accessible high-contrast theme.
+ * Layered after the existing layout stylesheet; presentation-only.
+ * Contrast-first rules: avoid 10px microcopy, dark islands, low-opacity labels.
+ * No collector, catalog, user data, routing or analytics logic changed.
+ */
+body.nslg-editorial {
+  --ca-bg:#F2F5F8;--ca-surface:#FFFFFF;--ca-subtle:#EAF0F5;
+  --ca-ink:#172331;--ca-text:#27394B;--ca-muted:#46586B;
+  --ca-border:#C9D3DE;--ca-accent:#203B56;--ca-accent-hover:#345A7A;
+  --ca-green:#176044;--ca-red:#A22D3B;--ca-amber:#79550C;
+  --ea-paper:var(--ca-bg);--ea-canvas:var(--ca-bg);--ea-card:var(--ca-surface);
+  --ea-ink:var(--ca-ink);--ea-muted:var(--ca-muted);--ea-line:var(--ca-border);
+  --ea-accent:var(--ca-accent);--ea-olive:var(--ca-accent);
+  --ea-brown:var(--ca-amber);--ea-rose:var(--ca-red);--ea-blue:var(--ca-accent);
+  --ea-shadow:0 2px 9px rgba(24,39,55,.06);
+  --ea-serif:Pretendard,'Noto Sans KR','Malgun Gothic',system-ui,sans-serif;
+  font:400 16px/1.55 Pretendard,'Noto Sans KR','Malgun Gothic',system-ui,sans-serif!important;
+  color:var(--ca-ink)!important;background:var(--ca-bg)!important;color-scheme:light;
+  -webkit-font-smoothing:auto!important;
+}
+body.nslg-editorial * { scrollbar-color:#A7B9CA #F0F4F8; }
+body.nslg-editorial :is(h1,h2,h3,h4,h5,h6){font-family:inherit!important;letter-spacing:-.025em!important;color:var(--ca-ink)!important;line-height:1.36!important;}
+body.nslg-editorial :is(p,li,label,dt,dd){line-height:1.6;}
+body.nslg-editorial :is(button,input,select,textarea){font:500 14px/1.5 Pretendard,'Noto Sans KR','Malgun Gothic',system-ui,sans-serif!important;}
+body.nslg-editorial :is(input,select,textarea){background:#fff!important;color:var(--ca-ink)!important;border:1px solid #A9B8C7!important;border-radius:8px!important;min-height:40px;opacity:1!important;}
+body.nslg-editorial :is(input,textarea)::placeholder{color:#52657B!important;opacity:1!important;}
+body.nslg-editorial :is(button,a,input,select,textarea,[role="button"]):focus-visible{outline:3px solid #287AB7!important;outline-offset:2px!important;box-shadow:0 0 0 4px rgba(32,117,178,.12)!important;}
+body.nslg-editorial :is(button,[role="button"]){min-height:36px;}
+body.nslg-editorial button:not(:disabled){cursor:pointer;}
+body.nslg-editorial :is(button,input,textarea,select):disabled{opacity:.68!important;cursor:not-allowed;}
+body.nslg-editorial a{color:#164C80!important;text-decoration-color:#8CB0CC;}
+body.nslg-editorial a:hover{text-decoration:underline;text-underline-offset:3px;}
+body.nslg-editorial ::selection{background:#BDDDF7;color:#112436;}
+body.nslg-editorial .sr-only{position:absolute!important;clip:rect(0 0 0 0)!important;width:1px!important;height:1px!important;overflow:hidden!important;}
+
+/* Unify panel surfaces and data tables; never recolor semantic heatmap cells generically. */
+body.nslg-editorial:not(.nslg-shell) :is(.section,.card,.mini,.playerTableBlock,.dashWindow,.diagCard,.warCard,.commandPanel,.mappingBlock,.v632DiagPanel,.v6331SeasonPanel,.v628ModalBox,.v640OpsCell,.v640FilterShell,.collectorStatus,.v6381Panel,.v6381Metric,.v641TrustGrid,.v641InsightPanel,.v6366CompareCard,.v6366ScopeGuide,.v628DecisionCard,.v628CompareCard,.v632DeckQuadrant,.v637CoreDeck){
+  background:var(--ca-surface)!important;background-image:none!important;color:var(--ca-ink)!important;
+  border-color:var(--ca-border)!important;box-shadow:0 1px 4px #17233109!important;
+}
+body.nslg-editorial:not(.nslg-shell) :is(.small,.muted,.sub,.hint,.stK,.metaLine,.heroSub,.deck-hint,.deck-status,.v640OpsSub,.v6380AutoSub,.v6381MiniNote,.v6366CompareSub,.v6366CompareFoot){
+  color:var(--ca-muted)!important;opacity:1!important;font-size:max(13px, 0.8125rem)!important;line-height:1.6!important;
+}
+body.nslg-editorial:not(.nslg-shell) :is(.card .k,.mini .k,.statusMetric .k,.v628DecisionCard .k,.v628DecisionCard .s,.v6381Metric span,.v641InsightPanel small,.v6366CompareHead span,.v637CoreDeck .meta){
+  color:var(--ca-muted)!important;opacity:1!important;font-size:13px!important;
+}
+body.nslg-editorial:not(.nslg-shell) :is(.card .v,.mini .v,.statusMetric .v,.v6381Metric b,.v628DecisionCard .v,.v6366CompareMain){
+  color:var(--ca-ink)!important;opacity:1!important;font:800 clamp(19px,2vw,27px)/1.32 Pretendard,system-ui,sans-serif!important;font-variant-numeric:tabular-nums;
+}
+body.nslg-editorial:not(.nslg-shell) :is(.badge,.pill,.ref-badge,.v6366FairTag,.v6366FullTag,.v6422SkillChip){font-size:13px!important;line-height:1.4!important;}
+body.nslg-editorial:not(.nslg-shell) :is(.badge,.pill,.v6366FairTag,.v6366FullTag){background:#E8F0F8!important;border:1px solid #B8CCDE!important;color:#204969!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-shell) :is(.panelTitle,.playerTableTitle,.v641InsightTitle,.section h2,.v6381PanelHead,.v637MetaCoreHead,.v632DeckMetaHead){
+  color:var(--ca-ink)!important;background:#EAF0F5!important;background-image:none!important;border-color:var(--ca-border)!important;
+  font-size:16px!important;font-weight:750!important;line-height:1.4!important;
+}
+body.nslg-editorial:not(.nslg-shell) :is(table,.matrix){font-size:14px!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-shell) :is(table th,.matrix th){font-size:14px!important;font-weight:750!important;line-height:1.5!important;background:#EAF0F5!important;color:#273B50!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-shell) table td{font-size:14px!important;line-height:1.5!important;color:var(--ca-text);border-color:#DAE2EA!important;}
+body.nslg-editorial:not(.nslg-shell) table tr:hover td{background:#F1F6FA!important;}
+body.nslg-editorial:not(.nslg-shell) :is(.win,.good:not(.mx),.trendDeltaUp){color:var(--ca-green)!important;}
+body.nslg-editorial:not(.nslg-shell) :is(.loss,.bad:not(.mx),.trendDeltaDown){color:var(--ca-red)!important;}
+body.nslg-editorial:not(.nslg-shell) :is(.rate,.gold,.v6366Excluded,.v6381Verdict.even){color:#72500B!important;}
+
+/* Top navigation: one system, single theme, normal-size action labels. */
+body.nslg-shell.nslg-editorial {background:var(--ca-bg)!important;}
+body.nslg-shell.nslg-editorial nav {
+  height:66px;background:#fff!important;background-image:none!important;
+  border-bottom:1px solid var(--ca-border)!important;box-shadow:0 2px 9px #1723310B;
+  gap:12px;padding:8px clamp(12px,2vw,28px);
+}
+body.nslg-shell.nslg-editorial nav .nslg-brand {align-items:center;gap:8px;margin-right:16px;}
+body.nslg-shell.nslg-editorial nav .nslg-brand strong{font:850 23px/1.1 Pretendard,system-ui,sans-serif!important;letter-spacing:-.04em;color:var(--ca-ink)!important;}
+body.nslg-shell.nslg-editorial nav .nslg-brand span{font-size:12px!important;letter-spacing:0!important;color:var(--ca-muted)!important;}
+body.nslg-shell.nslg-editorial nav button{font:750 15px/1.3 Pretendard,system-ui,sans-serif!important;background:#fff!important;color:var(--ca-text)!important;border:1px solid var(--ca-border)!important;border-radius:8px!important;padding:10px 18px!important;white-space:nowrap;}
+body.nslg-shell.nslg-editorial nav button.active{background:var(--ca-accent)!important;color:#fff!important;border-color:var(--ca-accent)!important;box-shadow:none!important;}
+body.nslg-shell.nslg-editorial nav small{font-size:13px!important;color:var(--ca-muted)!important;margin-left:auto;max-width:340px;}
+body.nslg-shell.nslg-editorial #view{height:calc(100% - 66px)!important;}
+body.nslg-shell.nslg-editorial iframe{background:var(--ca-bg)!important;}
+
+body.nslg-catalog.nslg-editorial header.v105-header{background:#fff!important;background-image:none!important;border-color:var(--ca-border)!important;padding:20px 24px;}
+body.nslg-catalog.nslg-editorial header.v105-header::before{display:none!important;}
+body.nslg-catalog.nslg-editorial header h1{font:800 25px/1.35 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial header .hint{font-size:14px!important;color:var(--ca-muted)!important;}
+body.nslg-catalog.nslg-editorial main{max-width:1700px!important;padding:18px clamp(12px,2.1vw,30px) 38px!important;}
+body.nslg-catalog.nslg-editorial .bar.v9108-bar{background:#fff!important;border-color:var(--ca-border)!important;box-shadow:none!important;}
+body.nslg-catalog.nslg-editorial .v9108-nav-row{border-color:var(--ca-border)!important;gap:9px!important;}
+body.nslg-catalog.nslg-editorial .bar button,
+body.nslg-catalog.nslg-editorial :is(.deck-presets button,.deck-action){background:#fff!important;color:#26394E!important;border:1px solid #B9C9D7!important;border-radius:8px!important;padding:9px 13px!important;font-size:14px!important;min-height:40px!important;}
+body.nslg-catalog.nslg-editorial .bar button.active,
+body.nslg-catalog.nslg-editorial #deckTab.active,
+body.nslg-catalog.nslg-editorial .deck-presets button.active,
+body.nslg-catalog.nslg-editorial #nslgExtraPanel button.active{background:var(--ca-accent)!important;color:white!important;border-color:var(--ca-accent)!important;}
+body.nslg-catalog.nslg-editorial :is(.v9108-search-row label,.v9108-filter-row,.legend,#stats,.deck-hint,.deck-status){color:var(--ca-muted)!important;font-size:14px!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #grid .card{background:#fff!important;border-color:var(--ca-border)!important;color:var(--ca-ink)!important;box-shadow:none!important;}
+body.nslg-catalog.nslg-editorial #grid .name{font-size:16px!important;font-weight:750!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #grid :is(.meta,.v9107-season){font-size:13px!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail,
+body.nslg-catalog.nslg-editorial dialog.nslg-ed{background:#fff!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial #detail #v997Nav{background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v88-skill-detail,.v90-intro,.v90-controls,.v90-eff,.v90-hero-extra,.v90-icard,.v97-panel,.v98-panel,.v99-hero-profile,.v99-mini,.v99-stat,.v97-grid>div,.v98-fields>div,.v90-effect-text,.v88-desc,.v90-warn,.v89-notice,.note,.v995-desc,.v998-books,.v998-hero-innate){background:#F7FAFC!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-stat .k,.v99-mini .label,.v98-fields small,.v90-metric-table th,.v98-panel small,.v97-panel small){color:var(--ca-muted)!important;font-size:13px!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-stat .v,.v99-mini .value){color:var(--ca-ink)!important;font-size:21px!important;font-weight:800!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v995-desc,.v90-effect-text,.v88-desc,.v98-panel,.v97-panel){font-size:15px!important;line-height:1.76!important;}
+body.nslg-catalog.nslg-editorial .nslg-flat-books .nslg-five-books{grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;}
+body.nslg-catalog.nslg-editorial .nslg-five-books button{background:#fff!important;border-color:#B5C5D4!important;color:var(--ca-ink)!important;min-height:78px;}
+body.nslg-catalog.nslg-editorial .nslg-book-title{font-size:14px!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial .nslg-book-kind{font-size:13px!important;color:var(--ca-muted)!important;}
+/* Deck 5x5x3: portraits stay large, inputs legible, controls are not altered. */
+body.nslg-catalog.nslg-editorial .deck-head h2{font:800 24px/1.35 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial .deck-head h2::before{display:none!important;}
+body.nslg-catalog.nslg-editorial .deck-unit{background:#fff!important;border-color:var(--ca-border)!important;box-shadow:none!important;}
+body.nslg-catalog.nslg-editorial .deck-unit-title{background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial .deck-toggle{color:var(--ca-ink)!important;font:800 18px/1.35 Pretendard,system-ui,sans-serif!important;}
+body.nslg-catalog.nslg-editorial .deck-toggle small{color:var(--ca-muted)!important;font-size:13px!important;}
+body.nslg-catalog.nslg-editorial .deck-table{grid-template-columns:120px repeat(3,minmax(245px,1fr));min-width:855px;}
+body.nslg-catalog.nslg-editorial .deck-lbl{background:#EAF0F5!important;color:#283B50!important;border-color:var(--ca-border)!important;font-size:14px!important;}
+body.nslg-catalog.nslg-editorial .deck-cell{background:#fff!important;border-color:#D9E2EA!important;}
+body.nslg-catalog.nslg-editorial .deck-cell input{font-size:15px!important;min-height:43px!important;}
+body.nslg-catalog.nslg-editorial .deck-portrait{background:#F0F4F8!important;background-image:none!important;height:202px!important;border:1px solid #D8E1E8;border-radius:9px!important;}
+body.nslg-catalog.nslg-editorial .deck-portrait img{height:192px!important;max-width:min(100%,200px)!important;width:auto!important;object-fit:contain!important;filter:none!important;}
+body.nslg-catalog.nslg-editorial .deck-innate{font-size:15px!important;color:#20496B!important;font-weight:700!important;}
+body.nslg-catalog.nslg-editorial .deck-slot-hint{font-size:13px!important;color:var(--ca-muted)!important;}
+body.nslg-catalog.nslg-editorial .deck-option{background:#fff!important;color:var(--ca-ink)!important;font-size:14px!important;min-height:43px!important;}
+body.nslg-catalog.nslg-editorial .deck-option:hover:not([disabled]),body.nslg-catalog.nslg-editorial .deck-option.highlight{background:#E4EFF9!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial .deck-option small{color:var(--ca-muted)!important;font-size:13px!important;}
+body.nslg-catalog.nslg-editorial .deck-tooltip{background:#fff!important;color:var(--ca-ink)!important;border-color:#8FA9C2!important;font-size:15px!important;line-height:1.7!important;}
+body.nslg-catalog.nslg-editorial .deck-tooltip strong{color:#164C80!important;font-size:16px!important;}
+body.nslg-catalog.nslg-editorial #deckPanel .deck-memo{font-size:14px!important;line-height:1.6!important;}
+body.nslg-catalog.nslg-editorial .nslg-stats-banner{color:#224763!important;background:#EAF4FC!important;border-color:#B8CEDE!important;font-size:14px!important;}
+
+/* Personal library / visibility management / HTML previews. */
+body.nslg-catalog.nslg-editorial #nslgExtraPanel{background:#fff!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel h2{font:800 23px/1.4 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel :is(button,.nslg-file-picker){font-size:14px!important;min-height:41px!important;background:#fff!important;color:var(--ca-ink)!important;border-color:#B7C7D5!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel :is(.nslg-lib-toolbar,.nslg-file-row,.nslg-manage-item,.nslg-doc-preview-head,.nslg-empty-season){background:#F2F6FA!important;border-color:var(--ca-border)!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel :is(label,small,p){font-size:14px!important;color:var(--ca-muted)!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-manage-item :is(b,small){font-size:14px!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-manage-item small{color:var(--ca-muted)!important;font-size:13px!important;}
+
+/* Collector: explicit overrides for dark remnants, dashboard, toolbars and stats. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell){
+  --bg:var(--ca-bg);--panel:#fff;--panel2:#F7FAFC;--line:var(--ca-border);--line2:#AFBFCD;
+  --text:var(--ca-ink);--muted:var(--ca-muted);--gold:#203B56;--gold2:#203B56;
+  --good:var(--ca-green);--bad:var(--ca-red);--draw:#596778;--orange:var(--ca-amber);
+  background:var(--ca-bg)!important;color:var(--ca-ink)!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .wrap{max-width:1800px!important;padding:15px clamp(12px,1.75vw,30px)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.top h1,.appHome h1){font:800 26px/1.3 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.top,.mainTabs,.v628SubNav,.v628MobileNav,.v628AdminMenu,.v628EntityMenu,.v628DashboardDetails>summary,.tinybar,.v640MatchMeta,.v6412MatchPinBar,.v641Summary,.v641FooterStats,.v6413CoreKpi,.v6381Picker,.v6381PanelHead,.v6381SetupIntro,.v6381SetupSelect,.v632DeckMetaHead,.v637MetaCoreHead,.v629VisitStrip,.dataTrust,.v640FilterHeader,.v6381Coverage,.v641TrustGrid){background:#fff!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;box-shadow:none!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v628SubNav,.v628MobileNav){background:#fff!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.mainTabs button,.v628SubNav button,.v628MobileNav button,.toolbar button,.toolbar2 button,.toolbar3 button){font-size:14px!important;min-height:38px;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(button.on,.tab.on,.v628SubNav button.on,.v628MobileNav button.on,.v6381SetupActions button.primary,.collectNowBtn){background:var(--ca-accent)!important;color:#fff!important;border-color:var(--ca-accent)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v640OpsCell,.v640FilterShell,.v628AdvancedFilters,.v628DecisionCard,.v628CompareCard,.v6366CompareCard,.v641InsightPanel,.v6381Metric,.v641TrustGrid,.v632DeckQuadrant,.v637CoreDeck){background:#fff!important;background-image:none!important;color:var(--ca-ink)!important;border:1px solid var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v640OpsValue,.v640OpsTitle,.v6381Metric b,.v6366CompareMain,.v641InsightTitle,.v637CoreDeck .name){color:var(--ca-ink)!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v640OpsSub,.v6380AutoSub,.v6366CompareSub,.v6366CompareFoot,.v6381PanelHead span,.v6381Metric small,.v637CoreDeck .meta,.v641InsightPanel small,.v641TrustGrid small){color:var(--ca-muted)!important;opacity:1!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.cards .card,.statusMetric,.v629VisitMetric){background:#fff!important;border:1px solid var(--ca-border)!important;box-shadow:none!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .cards .card .v{font:800 clamp(20px,2vw,28px)/1.25 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6381SetupTable td,.v6381SetupTable th,.v641TrustGrid td,.v641TrustGrid th,.v6405RankDetail td,.v6405RankDetail th){font-size:14px!important;color:var(--ca-ink)!important;line-height:1.5!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6381SkillLine,.v6381MatchLabel,.v6419OppDeck){font-size:14px!important;color:var(--ca-text)!important;line-height:1.5!important;white-space:normal!important;overflow-wrap:anywhere!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .v6381Verdict.good{color:var(--ca-green)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .v6381Verdict.bad{color:var(--ca-red)!important;}
+
+/* Matchups heatmap: pastel cells plus legible dark percentages even at low sample sizes. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups :is(.matrixLegend,.v632MatchTools,#v6412MatchPinBar,.v6412MatchPinBar,.v6412MatchPinLead){background:#fff!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx{opacity:1!important;border:1px solid #C9D3DE!important;text-shadow:none!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.g3{background:#BDE7D0!important;color:#115437!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.g2{background:#D9F0E3!important;color:#165940!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.even{background:#FFF0C3!important;color:#664706!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.r2{background:#FCE0E3!important;color:#952E3E!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.r3{background:#F4C6CC!important;color:#832635!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx.empty{background:#EFF3F6!important;color:#46586B!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx .mxrate{color:inherit!important;font:800 18px/1.25 Pretendard,system-ui,sans-serif!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .mx :is(.mxn,.mxconf){color:inherit!important;font-size:13px!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups :is(.v6432DeckName,.v6419OppDeck,.v6432DeckHead){color:var(--ca-ink)!important;font-size:14px!important;}
+
+/* Unit/troop usage / setting combinations: no dark cards or gold-on-dark chips. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage :is(.matrix thead th,.matrix th,.matrix .corner,.matrix .rowdeck,.mappingControls){background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage :is(.v6422SkillChip,.v6422UsageRow,.v6422UsageTable){background:#fff!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;font-size:14px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage :is(.matrix td,.matrix th){font-size:14px!important;line-height:1.5!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #setupfinder :is(.v6381Panel,.v6381PanelHead,.v6381SetupIntro,.v6381Picker,.v6381Metric,.v6381Coverage,.setupCard,.v641InsightPanel,.v6405RankDetail){background:#fff!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #setupfinder :is(.v6381SetupIntro,.v6381PanelHead){background:#EAF0F5!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #setupfinder :is(.v6381SkillLine,.v6381Chip,.v6381Suggest,.v6381Selected){background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:#B9C9D7!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #setupfinder :is(.v6381Metric b,.v641InsightTitle,.v641InsightPanel b){color:var(--ca-ink)!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #setupfinder :is(.v6381Metric small,.v641InsightPanel small){color:var(--ca-muted)!important;opacity:1!important;font-size:13px!important;}
+
+/* Alliance, player, record and season-admin cards reuse one light table system. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6366ScopeGuide,.v6366Compare,.v632DeckMeta,.v632DeckMetaHead,.v637MetaCoreList,.v637MetaCoreHead,.v637MetaControls,.v641Summary,.v641FooterStats,.v641TrustGrid,.v641InsightPanel,.v6419MetaList,.v628DecisionCard,.v628DecisionChanges,.v628FavRow,.v628ChangeLine){background:#fff!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6366CompareHead b,.v6366CompareMain,.v641TrustGrid b,.v641InsightTitle b,.v637MetaCoreHead b){color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6366CompareSub,.v6366CompareFoot,.v641TrustGrid small,.v632DeckMeta small,.v637MetaCoreList small,.v628FavStat,.v628ChangeText){color:var(--ca-muted)!important;opacity:1!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #records :is(.heroLevel,.heroInlineLevel,.v6431ArmsBadge){color:#254A6B!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #records .deckHeroes{color:var(--ca-ink)!important;font-size:14px!important;line-height:1.55!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #sideSetupModal :is(.sideSetupRow,.sideChoice){background:#fff!important;border-color:var(--ca-border)!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #sideSetupModal .sideChoice.on{background:var(--ca-accent)!important;color:#fff!important;border-color:var(--ca-accent)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #nslg-skill-overlay .nslg-skill-window{background:#fff!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #nslg-skill-overlay .nslg-skill-window-top{background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+
+@media(max-width:920px){
+ body.nslg-shell.nslg-editorial nav{gap:8px;padding:8px!important;}
+ body.nslg-shell.nslg-editorial nav .nslg-brand span{display:none;}
+ body.nslg-shell.nslg-editorial nav small{font-size:12px!important;}
+ body.nslg-catalog.nslg-editorial .nslg-flat-books .nslg-five-books{grid-template-columns:repeat(3,minmax(0,1fr));}
+ body.nslg-catalog.nslg-editorial .deck-table{grid-template-columns:110px repeat(3,minmax(225px,1fr));min-width:785px;}
+}
+@media(max-width:640px){
+ body.nslg-shell.nslg-editorial nav{height:61px!important;}
+ body.nslg-shell.nslg-editorial nav button{font-size:13px!important;padding:9px 10px!important;}
+ body.nslg-shell.nslg-editorial nav .nslg-brand strong{font-size:19px!important;}
+ body.nslg-shell.nslg-editorial #view{height:calc(100% - 61px)!important;}
+ body.nslg-catalog.nslg-editorial .nslg-flat-books .nslg-five-books{grid-template-columns:repeat(2,minmax(0,1fr));}
+ body.nslg-catalog.nslg-editorial main{padding:12px!important;}
+ body.nslg-catalog.nslg-editorial .deck-table{grid-template-columns:100px repeat(3,minmax(210px,1fr));min-width:730px;}
+ body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) .wrap{padding:12px!important;}
+}
+@media(prefers-reduced-motion:reduce){body.nslg-editorial *,body.nslg-editorial *:before,body.nslg-editorial *:after{transition-duration:0s!important;animation-duration:0s!important;}}
+
+/* FINAL HIGH-CONTRAST AUDIT: catalog detail (previously dark CSS-owned islands).
+   All nodes below are original UI components, no DOM/function changes. */
+body.nslg-catalog.nslg-editorial #detail :is(
+  .v99-section,.v99-skill-shell,.v99-skill-art,.v99-headbox,.v99-skill-desc,
+  .v99-meta-item,.v99-rawdesc,.g-skill,.g-art,.g-skill-main,.g-description,
+  .g-description-head,.g-description-body,.v998-hero-top,.v998-featuredesc,
+  .v998-tech,.v998-admin-tail,.v998-tech-content,.v998-attrs>div,
+  .v998-reader-controls,.v998-pills span,.v999-hero-stats,.v9100-hero-top,
+  .v998-hero-bio,.v995-tactic-top,.v998-skill,.v99-skill-layout
+){background:#F7FAFC!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-skill-artname,.v99-skill-label,.v99-headbox .value,.v99-meta-item .value,.v99-skill-desc .text,.v998-attrs strong,.v998-section-heading,.v998-skill-head h3,.v998-featuredesc h3,.v998-reader-controls label,.v998-tech>summary,.v998-admin-tail>summary){color:var(--ca-ink)!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-headbox .label,.v99-meta-item .label,.v99-headbox .sub,.v998-attrs span:first-child,.v998-hero-bio,.v99-sub,.v998-tech summary small,.v97-grid small,.v99-stat-hint){color:var(--ca-muted)!important;font-size:13px!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-skill-desc .text,.g-description-body,.v995-desc,.v998-featuredesc,.v99-rawdesc){font-size:16px!important;line-height:1.78!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-skill-desc .text strong,.g-description-body strong){color:#116441!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v99-headbox .value,.v99-meta-item .value){font-size:17px!important;font-weight:750!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v998-reader-controls button,.v998-reader-controls select,.v99-skill-shell button,.g-skill button){background:#fff!important;color:var(--ca-ink)!important;border:1px solid #B6C6D4!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v998-reader-controls button.active,.v998-reader-controls button.on,.g-skill button.active){background:var(--ca-accent)!important;color:#fff!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.g-description-head,.v99-skill-desc h3){background:#EAF0F5!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v90-eff,.v99-skill-shell,.v998-section-heading){border-color:#C9D3DE!important;}
+body.nslg-catalog.nslg-editorial .bar.v9108-bar :is(input,select),body.nslg-catalog.nslg-editorial #deckPanel :is(input,textarea,select){background:#fff!important;color:var(--ca-ink)!important;border-color:#A9B8C7!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v996-hero-book,.v997-bookgroup,.v97-chip,.v98-row,.v998-tech-content){border-color:#C9D3DE!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v97-chip,.v998-tech summary,.v998-admin-tail summary,.v99-title h2){color:var(--ca-ink)!important;font-size:14px!important;}
+body.nslg-catalog.nslg-editorial #detail .v99-title h2{font-size:25px!important;}
+
+/* Collector high specificity header tables (older game CSS had 10–11px). */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix :is(th,td,.corner,.rowdeck){font:650 14px/1.48 Pretendard,system-ui,sans-serif!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix :is(thead th,.corner,.rowdeck){background:#EAF0F5!important;background-image:none!important;border-color:var(--ca-border)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix td.mx{font-size:14px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix td.mx :is(.mxrate,.mxn,.mxconf){color:inherit!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v6381SkillLine,.v6422SkillChip,.v6366ScopeGuide span,.v6412MatchPinLead,.v6412MatchPinBar){font-size:14px!important;color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.v632DeckQuadrant,.v6366CompareCard,.v641TrustGrid,.v641Summary,.v641FooterStats) :is(span,small,b,strong){color:var(--ca-ink)!important;opacity:1!important;}
+/* Operational controls: one readable button system; semantic active rules below remain stronger. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(button,input,textarea,select){font-size:14px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.topActions button,.mainTabs button,.v628SubNav button,.v628AdvancedFilters button,.v640FilterShell button){background:#fff!important;color:var(--ca-ink)!important;border:1px solid #B7C7D6!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(.topActions button.on,.mainTabs button.on,.v628SubNav button.on,.v628AdvancedFilters button.on,.v640FilterShell button.on){background:var(--ca-accent)!important;color:#fff!important;border-color:var(--ca-accent)!important;}
+/* Game skill reader v9.9.9 — controls formerly kept their dark background. */
+body.nslg-catalog.nslg-editorial #detail :is(.v999-level-line,.v999-rank-line,.v999-spec-grid,.v999-quick,.v999-step,.v997-rank-status){background:#EAF0F5!important;background-image:none!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v999-quick button,.v999-step button){background:#fff!important;color:var(--ca-ink)!important;border-color:var(--ca-border)!important;font-size:15px!important;}
+body.nslg-catalog.nslg-editorial #detail .v999-step button{font-size:19px!important;}
+body.nslg-catalog.nslg-editorial #detail .v999-quick button[aria-pressed="true"]{background:var(--ca-accent)!important;color:#fff!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v999-inkey,.v999-spec>span,.v999-spec strong,.v999-spec .g-troops,.v999-step output,.v999-skill .v999-art .g-art-name,.v999-skill .v999-desc .g-description-head strong){color:var(--ca-ink)!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v999-max,.v999-spec .v999-trait){background:#DCEAF8!important;color:#184F80!important;border:1px solid #B7CBDD!important;font-size:13px!important;}
+body.nslg-catalog.nslg-editorial #detail :is(.v999-rank-hint,.v997-rank-status,.v999-spec .g-unknown){color:var(--ca-muted)!important;font-size:13px!important;}
+body.nslg-catalog.nslg-editorial #detail .v999-skill .v999-desc .g-description-head{background:#EAF0F5!important;color:var(--ca-ink)!important;}
+body.nslg-catalog.nslg-editorial #detail .v999-skill .v999-desc .g-description-body{background:#fff!important;color:var(--ca-ink)!important;font-size:16px!important;line-height:1.8!important;}
+body.nslg-catalog.nslg-editorial #v997NavIndex{color:var(--ca-ink)!important;font:750 14px/1.4 Pretendard,system-ui,sans-serif!important;opacity:1!important;}
+body.nslg-catalog.nslg-editorial #v997Nav :is(button,.close){color:var(--ca-ink)!important;background:#fff!important;border:1px solid #A9B8C7!important;font-size:14px!important;}
+/* Non-embedded direct-page toolbar shares the same single light palette. */
+body.nslg-editorial #nslg-unified-nav{background:#fff!important;border-bottom:1px solid var(--ca-border)!important;box-shadow:none!important;}
+body.nslg-editorial #nslg-unified-nav a{background:#fff!important;color:var(--ca-ink)!important;border:1px solid #B7C7D6!important;font-size:14px!important;min-height:39px;display:inline-flex;align-items:center;}
+body.nslg-catalog.nslg-editorial #nslg-unified-nav .nslg-nav-catalog,
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #nslg-unified-nav .nslg-nav-collector{background:var(--ca-accent)!important;color:white!important;border-color:var(--ca-accent)!important;}
+body.nslg-editorial #nslg-unified-nav span{font-size:13px!important;color:var(--ca-muted)!important;}
+
+/* v1.0.16 readability pass — requested fixes for quadrant tooltip, matchup headers,
+   deck records, arms usage, alliance promotion bands, and player spotlight cards. */
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip{
+  background:#FFFFFF!important;color:var(--ca-ink)!important;border:1px solid #AFC3D6!important;
+  border-radius:16px!important;box-shadow:0 14px 28px rgba(23,35,49,.18)!important;
+  padding:16px 18px!important;max-width:360px!important;min-width:300px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip .ttl{
+  color:#173C60!important;font:800 19px/1.35 Pretendard,system-ui,sans-serif!important;
+  margin-bottom:10px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip .meta{
+  display:grid!important;grid-template-columns:max-content 1fr;gap:8px 12px!important;
+  background:#F5F9FC!important;border:1px solid #D5E0EA!important;border-radius:12px!important;
+  padding:12px 13px!important;margin-bottom:10px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip .meta span{
+  color:#5A6E82!important;font-size:13px!important;font-weight:700!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip .meta b{
+  color:var(--ca-ink)!important;font-size:15px!important;font-weight:800!important;justify-self:end;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #v632QuadTooltip .hint{
+  color:#32485D!important;font-size:14px!important;line-height:1.72!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks .v632DeckQuadrant [data-deck]{
+  background:#FFFFFF!important;border:1px solid #CFD9E3!important;box-shadow:0 4px 12px rgba(23,35,49,.08)!important;
+  color:var(--ca-ink)!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks .v632DeckQuadrant [data-deck] .sub{
+  color:#516577!important;font-size:12px!important;font-weight:700!important;
+}
+
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups #matchHead th:not(.corner){
+  background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:#C9D3DE!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups :is(.v6419OppDeck,.v6442OpponentHeroes){
+  background:#F7FAFC!important;background-image:none!important;color:var(--ca-ink)!important;
+  border:1px solid #C9D3DE!important;border-radius:10px!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .v6419OppDeck{
+  min-height:64px!important;padding:8px 6px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups :is(.v6432DeckName,.v6442OpponentHero){
+  color:var(--ca-ink)!important;font-size:13px!important;font-weight:800!important;
+  line-height:1.45!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups :is(.v6432Usage,.v6432Pct){
+  color:#36546F!important;font-size:12px!important;font-weight:700!important;background:none!important;border:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix .rowdeck{
+  background:#F4F8FB!important;color:var(--ca-ink)!important;border-color:#C9D3DE!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix tbody tr.v64110FocusedRow>.rowdeck{
+  color:#173C60!important;background:#EEF5FB!important;box-shadow:inset 4px 0 0 #6AA4D4!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix thead th.v64110ColSelected .v6419OppDeck,
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #matchups .matrix thead th:not(.corner):hover .v6419OppDeck{
+  background:#FFF7E3!important;color:#5B4300!important;border-color:#DFC27A!important;box-shadow:none!important;
+}
+
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks .tablewrap table{font-size:14px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows td{
+  color:#31465A!important;font-size:14px!important;line-height:1.55!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows td.deck{
+  color:var(--ca-ink)!important;font-size:15px!important;font-weight:800!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows .v6366DeckRecord{font-size:14px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows .v6366DeckRecord .all{
+  color:#174F84!important;font-size:14px!important;font-weight:800!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows .v6366DeckRecord .fair{
+  color:#244A2D!important;font-size:14px!important;font-weight:800!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows :is(.rate,.adjRate){font-weight:800!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows td:nth-child(8),
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows td:nth-child(10),
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #decks #deckRows td:nth-child(11){font-weight:700!important;}
+
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage :is(.mappingControls,.matrix thead th){
+  background:#EAF0F5!important;color:var(--ca-ink)!important;border-color:#C9D3DE!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage .matrix tbody th:first-child{
+  background:#F7FAFC!important;color:#1E4A72!important;border-color:#C9D3DE!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage .matrix tbody th:first-child .small{
+  color:#5C6F82!important;font-size:12px!important;opacity:1!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage .usageCard{
+  background:#FFFFFF!important;border:1px solid #CCD7E2!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage .usageCard b{
+  color:var(--ca-ink)!important;font-size:14px!important;font-weight:800!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsage .usageCard strong{
+  color:#195C94!important;font-size:18px!important;font-weight:800!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #armsUsageRows button.v6448Open{
+  background:#FFFFFF!important;color:#1C4E79!important;border:1px solid #C8D6E3!important;border-radius:10px!important;
+  padding:6px 10px!important;box-shadow:none!important;
+}
+
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(#v6423PlayerPromo,#v6423AlliancePromo){
+  background:#FFFFFF!important;border:1px solid #C9D3DE!important;border-radius:16px!important;
+  padding:14px 16px!important;margin:14px 16px 16px!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(#v6423PlayerPromo .v6423Stat,#v6423AlliancePromo .v6423Band,#v6423AlliancePromo .v6423Person){
+  background:#FFFFFF!important;border:1px solid #CBD7E1!important;color:var(--ca-ink)!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) :is(#v6423PlayerPromo .v6423Stat span,#v6423PlayerPromo .v6423Stat small,#v6423AlliancePromo .v6423Title small,#v6423AlliancePromo .v6423RosterTitle small,#v6423AlliancePromo .v6423Person small){
+  color:#627489!important;font-size:13px!important;opacity:1!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423PlayerPromo .v6423Stat b{color:#173C60!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Title{color:var(--ca-ink)!important;font-size:22px!important;line-height:1.35!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423RosterTitle{color:var(--ca-ink)!important;font-size:18px!important;font-weight:800!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band{padding:14px 16px!important;min-width:128px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band b{display:block!important;font-size:22px!important;font-weight:900!important;margin-top:6px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band[data-band="0-1"] b{color:#19724E!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band[data-band="2-3"] b{color:#8C5C00!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band[data-band="4-5"] b{color:#A03543!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band[data-band="unknown"] b{color:#5F7080!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band.active[data-band="0-1"]{background:#EAF7F0!important;border-color:#9BC8AF!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band.active[data-band="2-3"]{background:#FFF6E0!important;border-color:#DFC37A!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band.active[data-band="4-5"]{background:#FDECEF!important;border-color:#D7A0AA!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Band.active[data-band="unknown"]{background:#EFF3F6!important;border-color:#C8D2DC!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo:has(.v6423Band.active[data-band="0-1"]) .v6423Roster .v6423Person span{color:#19724E!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo:has(.v6423Band.active[data-band="2-3"]) .v6423Roster .v6423Person span{color:#8C5C00!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo:has(.v6423Band.active[data-band="4-5"]) .v6423Roster .v6423Person span{color:#A03543!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo:has(.v6423Band.active[data-band="unknown"]) .v6423Roster .v6423Person span{color:#5F7080!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423PeopleGrid{gap:10px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Person{
+  border-radius:12px!important;padding:10px 8px!important;min-height:84px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Person b{color:var(--ca-ink)!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #v6423AlliancePromo .v6423Person span{font-size:14px!important;font-weight:800!important;}
+
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .playerChip{
+  background:#FFFFFF!important;border:1px solid #CBD6E0!important;color:var(--ca-ink)!important;
+  padding:9px 12px!important;font-size:14px!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .playerChip .pcName{color:var(--ca-ink)!important;font-size:15px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .playerChip .pcAlliance{
+  background:#F6F9FC!important;border-color:#C8D6E3!important;color:#31506B!important;font-size:12px!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .playerChip .pcStat{
+  color:#526576!important;font-size:13px!important;font-weight:700!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .playerTier{
+  font-size:12px!important;min-width:28px!important;background:#EFF3F7!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players :is(.tierS,.tierA,.tierB,.tierC){border-width:1px!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .tierS{color:#B2303E!important;background:#FBECEF!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .tierA{color:#8D6300!important;background:#FFF5DE!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .tierB{color:#706100!important;background:#FAF6DB!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .tierC{color:#606D79!important;background:#EFF3F7!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players #playerSummary .mini{
+  background:#FFFFFF!important;border:1px solid #CCD6E0!important;box-shadow:none!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players #playerSummary .mini .k{
+  color:#5C6F82!important;font-size:13px!important;font-weight:700!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players #playerSummary .mini .v{
+  color:var(--ca-ink)!important;font-size:21px!important;font-weight:850!important;line-height:1.35!important;
+}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players :is(.playerTableTitle,.spotlightHint){color:var(--ca-ink)!important;}
+body.nslg-editorial:not(.nslg-catalog):not(.nslg-shell) #players .spotlightHint{font-size:13px!important;}
+
+/* Clear Analytics 2.0 · v1.0.17 readability system.
+   This file is intentionally loaded LAST. Original game collector styles and
+   computational JS stay intact. All preferences are presentation-only. */
+body.nslg-editorial{
+  --ca-font-base:16px;--ca-font-table:14px;--ca-font-helper:13px;
+  --ca-table-pad-y:12px;--ca-space:12px;
+}
+body.nslg-editorial[data-ca-text="large"]{--ca-font-base:17px;--ca-font-table:16px;--ca-font-helper:14px;}
+body.nslg-editorial[data-ca-text="xl"]{--ca-font-base:19px;--ca-font-table:17px;--ca-font-helper:15px;}
+body.nslg-editorial[data-ca-rows="compact"]{--ca-table-pad-y:9px;}
+body.nslg-editorial[data-ca-spacing="wide"]{--ca-space:20px;}
+body.nslg-editorial{font-size:var(--ca-font-base)!important;}
+body.nslg-editorial:not(.nslg-shell) :is(p,li,.deck-status,.deck-hint,.spotlightHint,.matrixLegend .small,.v632DeckMetaHead span,.v637MetaCoreHead span,.v6366ScopeGuide span){
+  line-height:1.55!important;opacity:1!important;
+}
+/* Large-text modes scale DATA and interactivity, not the artwork or density-independent map. */
+body.nslg-editorial[data-ca-text="large"] :is(button,input,textarea,select),
+body.nslg-editorial[data-ca-text="xl"] :is(button,input,textarea,select){font-size:var(--ca-font-table)!important;}
+body.nslg-editorial[data-ca-text="large"]:not(.nslg-shell) :is(table td,table th,.matrix th,.matrix td,.v6432DeckName,.v6442OpponentHero,.v6423Person b,.deck-slot-hint,.deck-lbl,.deck-option),
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-shell) :is(table td,table th,.matrix th,.matrix td,.v6432DeckName,.v6442OpponentHero,.v6423Person b,.deck-slot-hint,.deck-lbl,.deck-option){font-size:var(--ca-font-table)!important;line-height:1.5!important;}
+body.nslg-editorial[data-ca-text="large"]:not(.nslg-shell) :is(.small,.muted,.hint,.heroSub,.deck-hint,.deck-status,.v632DeckMetaHead span,.v632QuadHint em,.v6423Person small,.pcStat),
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-shell) :is(.small,.muted,.hint,.heroSub,.deck-hint,.deck-status,.v632DeckMetaHead span,.v632QuadHint em,.v6423Person small,.pcStat){font-size:var(--ca-font-helper)!important;}
+body.nslg-editorial[data-ca-text="large"]:not(.nslg-shell) :is(.card .v,.mini .v,.v6381Metric b),
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-shell) :is(.card .v,.mini .v,.v6381Metric b){font-size:clamp(22px,2.4vw,30px)!important;}
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-shell) :is(.card .v,.mini .v,.v6381Metric b){font-size:clamp(25px,2.6vw,34px)!important;}
+body.nslg-editorial[data-ca-text="large"]:not(.nslg-shell) :is(#matchups .v6432DeckName,#matchups .v6442OpponentHero),
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-shell) :is(#matchups .v6432DeckName,#matchups .v6442OpponentHero){white-space:normal!important;overflow:visible!important;}
+/* Uniform readable row spacing (tables keep horizontal scrolling, no squeezed columns). */
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) :is(#decks,#players,#alliances,#records,#setupfinder,#armsUsage,#matchups,#warroom) .tablewrap table:not(.matrix) :is(td,th){padding-top:var(--ca-table-pad-y)!important;padding-bottom:var(--ca-table-pad-y)!important;vertical-align:middle!important;}
+body.nslg-editorial[data-ca-rows="comfortable"]:not(.nslg-shell):not(.nslg-catalog) #armsUsage .matrix tbody tr{height:auto!important;min-height:90px!important;}
+body.nslg-editorial[data-ca-rows="comfortable"]:not(.nslg-shell):not(.nslg-catalog) #armsUsage .matrix tbody :is(td,th){padding-top:12px!important;padding-bottom:12px!important;}
+body.nslg-editorial[data-ca-rows="comfortable"]:not(.nslg-shell):not(.nslg-catalog) #matchups .matrix :is(td,th){padding-top:10px!important;padding-bottom:10px!important;}
+body.nslg-editorial[data-ca-rows="comfortable"]:not(.nslg-shell):not(.nslg-catalog) #matchups .mx{min-height:82px!important;height:auto!important;}
+/* Fixed row/column labels can be disabled on small screens or at user preference. */
+body.nslg-editorial[data-ca-sticky="off"] :is(#matchups .matrix th,#armsUsage .matrix th,.tablewrap thead th){position:static!important;top:auto!important;left:auto!important;}
+body.nslg-editorial[data-ca-sticky="on"] :is(#matchups .matrix thead th,#armsUsage .matrix thead th){position:sticky!important;top:0!important;z-index:6!important;}
+body.nslg-editorial[data-ca-sticky="on"] :is(#matchups .matrix .rowdeck,#armsUsage .matrix tbody th:first-child){position:sticky!important;left:0!important;z-index:5!important;}
+body.nslg-editorial[data-ca-sticky="on"] :is(#matchups .matrix .corner,#armsUsage .matrix thead th:first-child){z-index:8!important;left:0!important;}
+body.nslg-editorial[data-ca-strong="on"]:not(.nslg-shell) :is(#deckRows .rate,#deckRows .adjRate,.mxrate,.usageCard strong,.v6366CompareMain,.v6423Band b,.v6423Person span,.playerChip .pcStat,.playerHead .mini .v){font-weight:850!important;font-variant-numeric:tabular-nums!important;}
+body.nslg-editorial[data-ca-strong="off"]:not(.nslg-shell) :is(#deckRows .rate,#deckRows .adjRate,.mxrate,.usageCard strong,.v6366CompareMain,.v6423Band b,.v6423Person span,.playerChip .pcStat,.playerHead .mini .v){font-weight:600!important;}
+body.nslg-editorial[data-ca-spacing="wide"]:not(.nslg-shell) :is(.cards,.diagGrid,.playerHead,.v6381Summary,.v6423PeopleGrid,.deck-presets,.deck-actions){gap:var(--ca-space)!important;}
+body.nslg-editorial[data-ca-spacing="wide"]:not(.nslg-shell) :is(.card,.diagCard,.mini,.v6381Metric){padding:16px!important;}
+
+/* Clear Analytics design corrections across older dark styling islands. */
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) :is(.v632QuadHint,.v632QuadLegend){
+  background:#FFFFFFF2!important;border:1px solid #B7CADB!important;color:#263C50!important;backdrop-filter:none!important;
+  border-radius:10px!important;box-shadow:0 3px 12px #1D364710!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .v632QuadHint strong{color:#1D4F75!important;font-size:14px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .v632QuadHint em{color:#4C6073!important;font-size:12px!important;line-height:1.45!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .v632QuadLegend b{color:#1A3A58!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .v632AxisText{color:#40586D!important;font-size:12px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks .v637CoreDeck :is(.name,.meta){font-size:13px!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks .v637MetaCoreItems{gap:10px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks .v637CoreDeck .rank{color:#173C60!important;background:#E7F0F7!important;font-size:13px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks #v632QuadTooltip{
+  max-width:min(390px,calc(100% - 24px))!important;min-width:0!important;
+  right:12px!important;top:52px!important;bottom:auto!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups :is(.v6419OppDeck,.v6442OpponentHeroes){min-width:0!important;max-height:none!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .matrix .v6432DeckHead{
+  width:200px!important;min-width:200px!important;max-width:220px!important;white-space:normal!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .v6442OpponentHero{
+  font-size:14px!important;white-space:normal!important;word-break:keep-all!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .v6432DeckName{
+  font-size:14px!important;white-space:normal!important;word-break:keep-all!important;overflow:visible!important;display:block!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .matrix thead th:not(.corner){height:auto!important;min-height:94px!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .matrix td.mx :is(.mxrate,.mxn,.mxconf){color:inherit!important;opacity:1!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #armsUsage .matrix tbody th:first-child .v6448Open{
+  font-size:15px!important;color:#1C4E79!important;font-weight:850!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #armsUsage .usageCard :is(b,strong){opacity:1!important;text-shadow:none!important;}
+/* Data rows: read total, wins, losses separately without changing calculations. */
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #deckRows .v6366DeckRecord .all,
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #deckRows .v6366DeckRecord .fair{
+  display:flex!important;flex-wrap:wrap!important;gap:4px 7px!important;color:#1B476E!important;
+  white-space:normal!important;opacity:1!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .ca-record-piece{
+  font-size:14px!important;font-weight:750!important;white-space:nowrap!important;
+  display:inline-flex;align-items:center;padding:3px 6px;border-radius:6px;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .ca-record-total{background:#E8F2FB;color:#164C7A!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .ca-record-win{background:#E7F5EC;color:#11643A!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .ca-record-loss{background:#FFF0F1;color:#9C2B39!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks #deckRows td{font-variant-numeric:tabular-nums!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #decks #deckRows td:nth-child(n+2){white-space:normal!important;}
+/* Main dashboard spotlight actually lives under #dashboard (not under #players). */
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChips{
+  display:grid!important;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr))!important;gap:10px!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip{
+  display:flex!important;flex-wrap:wrap!important;justify-content:flex-start;align-items:center;
+  gap:8px 10px!important;width:100%!important;max-width:none!important;text-align:left!important;
+  background:#FFFFFF!important;color:var(--ca-ink)!important;border:1px solid #C9D6E2!important;
+  border-radius:12px!important;padding:12px!important;font-size:14px!important;box-sizing:border-box;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip .pcName{
+  font-size:15px!important;color:var(--ca-ink)!important;font-weight:850!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip .pcAlliance{
+  font-size:12px!important;color:#19456B!important;background:#EAF2FA!important;border-color:#BFCFE0!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip .pcStat{
+  color:#354B60!important;font-size:13px!important;opacity:1!important;line-height:1.55!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip .pcWin{color:#11643A!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChip .pcLoss{color:#9C2B39!important;}
+/* Category is signposted by label AND color; users do not have to rely on hue. */
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #v6423AlliancePromo .v6423Bands .v6423Band{
+  font-size:15px!important;font-weight:800!important;line-height:1.4!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #v6423AlliancePromo .v6423PeopleGrid{
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #v6423AlliancePromo .v6423Person small{font-size:13px!important;white-space:normal!important;}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #players #playerSummary .playerHead{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))!important;gap:12px!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #players #playerSummary .playerHead .mini{
+  min-width:0!important;overflow-wrap:anywhere!important;
+}
+body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #players #playerSummary .playerHead .mini .v{line-height:1.45!important;}
+
+/* Manager > Screen display settings. One single Clear Analytics visual language. */
+body.nslg-catalog.nslg-editorial .ca-display-grid{
+  display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))!important;
+  gap:14px!important;margin:18px 0!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-field{
+  display:flex!important;flex-direction:column!important;gap:9px!important;padding:18px!important;
+  background:#FFFFFF!important;color:var(--ca-ink)!important;border:1px solid #C6D3DF!important;
+  border-radius:12px!important;font-size:16px!important;font-weight:800!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-field small{
+  font-size:13px!important;font-weight:500!important;color:#475B70!important;line-height:1.55!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-field select{
+  width:100%!important;max-width:none!important;background:#FFFFFF!important;color:var(--ca-ink)!important;
+  border:1px solid #98ABBD!important;min-height:44px!important;font-size:15px!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-check input[type="checkbox"]{
+  width:24px!important;height:24px!important;min-height:24px!important;accent-color:#203B56!important;
+  margin-top:2px!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-preview{
+  padding:18px 20px!important;border:1px solid #CBD7E3!important;background:#F4F8FC!important;
+  border-radius:12px!important;color:var(--ca-ink)!important;margin:16px 0!important;
+}
+body.nslg-catalog.nslg-editorial .ca-display-preview>strong{font-size:18px!important;color:#173A59!important;}
+body.nslg-catalog.nslg-editorial .ca-preview-stats{
+  display:flex!important;flex-wrap:wrap!important;gap:10px!important;margin:12px 0!important;
+}
+body.nslg-catalog.nslg-editorial .ca-preview-stats span{
+  display:inline-flex;gap:7px;padding:10px 12px;background:#FFFFFF!important;border:1px solid #C9D6E2!important;
+  color:var(--ca-ink)!important;border-radius:9px!important;font-size:14px!important;
+}
+body.nslg-catalog.nslg-editorial .ca-preview-stats b{font-weight:850!important;}
+body.nslg-catalog.nslg-editorial .ca-preview-win{color:#11643A!important;}
+body.nslg-catalog.nslg-editorial .ca-preview-loss{color:#9C2B39!important;}
+body.nslg-catalog.nslg-editorial .ca-display-preview p{font-size:13px!important;color:#536678!important;}
+@media(max-width:680px){
+ body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .v632DeckQuadrant #v632QuadTooltip{left:10px!important;right:10px!important;width:auto!important;max-width:none!important;}
+ body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) #matchups .matrix .v6432DeckHead{width:165px!important;min-width:165px!important;max-width:175px!important;}
+ body.nslg-editorial:not(.nslg-shell):not(.nslg-catalog) .playerSpotlight .playerChips{grid-template-columns:1fr!important;}
+ body.nslg-catalog.nslg-editorial .ca-display-grid{grid-template-columns:1fr!important;}
+}
+/* Text size preference must beat the older catalog's input/label !important rules. */
+body.nslg-catalog.nslg-editorial[data-ca-text="large"] :is(.deck-cell input,.deck-cell textarea,.deck-lbl,.deck-input,.deck-memo,#nslgExtraPanel input,#nslgExtraPanel select,#nslgExtraPanel button),
+body.nslg-catalog.nslg-editorial[data-ca-text="xl"] :is(.deck-cell input,.deck-cell textarea,.deck-lbl,.deck-input,.deck-memo,#nslgExtraPanel input,#nslgExtraPanel select,#nslgExtraPanel button){font-size:var(--ca-font-table)!important;line-height:1.55!important;}
+body.nslg-catalog.nslg-editorial[data-ca-text="large"] #detail :is(.g-description-body,.v99-skill-desc .text,.v998-featuredesc,.v995-desc),
+body.nslg-catalog.nslg-editorial[data-ca-text="xl"] #detail :is(.g-description-body,.v99-skill-desc .text,.v998-featuredesc,.v995-desc){font-size:var(--ca-font-base)!important;line-height:1.85!important;}
+body.nslg-editorial[data-ca-text="xl"]:not(.nslg-catalog):not(.nslg-shell) .playerSpotlight .playerChip .pcStat{font-size:15px!important;}
+body.nslg-editorial[data-ca-text="large"]:not(.nslg-catalog):not(.nslg-shell) .playerSpotlight .playerChip .pcStat{font-size:14px!important;}
+
+/* v1.0.18: one guide → season → horizontal HTML card grid. */
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-list{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr))!important;
+  gap:10px!important;margin:14px 0 22px!important;align-items:stretch!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-list > p{grid-column:1 / -1;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row{
+  display:flex!important;flex-direction:column!important;gap:6px!important;
+  background:#FFFFFF!important;border:1px solid var(--ca-border)!important;
+  border-radius:12px!important;padding:9px!important;min-width:0!important;
+  box-shadow:0 1px 3px rgba(23,35,49,.04)!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row.nslg-file-selected{
+  background:#EBF3FB!important;border:2px solid #466A92!important;padding:8px!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row .nslg-file-title{
+  display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  text-align:left!important;justify-content:flex-start!important;align-items:flex-start!important;
+  overflow:hidden!important;overflow-wrap:anywhere!important;white-space:normal!important;
+  background:#F3F7FA!important;color:var(--ca-ink)!important;
+  border:1px solid #D7E1EB!important;border-radius:7px!important;
+  width:100%!important;flex:1 0 auto!important;min-height:47px!important;max-height:70px!important;
+  font:750 15px/1.48 Pretendard,'Noto Sans KR',system-ui,sans-serif!important;
+  padding:10px 11px!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row .nslg-file-title.active{
+  background:#203B56!important;color:#FFFFFF!important;border-color:#203B56!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row .nslg-file-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:30px;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row .nslg-file-footer small{
+  color:#516578!important;font-size:13px!important;white-space:nowrap;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-row .nslg-file-footer button{
+  font-size:13px!important;min-height:30px!important;padding:4px 10px!important;
+}
+body.nslg-catalog.nslg-editorial .deck-head-actions{
+  display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;
+}
+body.nslg-catalog.nslg-editorial #deckPanel .deck-reset{
+  border:1px solid #D5A6AB!important;background:#FFF4F4!important;color:#932D3E!important;
+  font-weight:750!important;padding:9px 12px!important;
+}
+body.nslg-catalog.nslg-editorial #deckPanel .deck-reset:hover{
+  background:#FDE5E8!important;border-color:#B8505E!important;
+}
+@media(max-width:650px){
+  body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-file-list{grid-template-columns:repeat(auto-fill,minmax(min(100%,175px),1fr))!important;}
+  body.nslg-catalog.nslg-editorial .deck-head-actions{justify-content:flex-start;}
+}
+
+
+/* v1.0.19 — Guide: use all available width without disturbing the other catalog tabs. */
+body.nslg-catalog.nslg-editorial.nslg-aux-active:has(#nslgGuideTab.active) main {
+  max-width:none!important;width:100%!important;box-sizing:border-box!important;
+  padding-inline:clamp(8px,1.1vw,22px)!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel:has(.nslg-doc-preview){max-width:none!important;width:100%!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview{
+  max-width:none!important;width:100%!important;min-width:0!important;
+  box-sizing:border-box!important;overflow:visible!important;background:#FFFFFF!important;
+  border:1px solid #C5D5E3!important;border-radius:12px!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-head{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:14px!important;flex-wrap:wrap!important;padding:12px 16px!important;
+  background:#EAF0F5!important;border-radius:10px 10px 0 0!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-head strong{
+  color:#172331!important;font-size:18px!important;line-height:1.5!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-tools{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-tools label{
+  color:#334A60!important;font-size:14px!important;font-weight:750!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-tools :is(select,button){
+  color:#172331!important;background:#FFFFFF!important;border:1px solid #B1C3D4!important;
+  border-radius:8px!important;min-height:40px!important;padding:7px 11px!important;
+  font-size:14px!important;font-weight:700!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-tools button{
+  background:#203B56!important;color:#FFFFFF!important;border-color:#203B56!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview > iframe{
+  display:block!important;width:100%!important;height:var(--nslg-preview-vh,80vh)!important;
+  min-height:340px!important;max-height:none!important;border:0!important;border-radius:0 0 10px 10px!important;
+  background:#FFFFFF!important;
+}
+body.nslg-catalog.nslg-editorial.nslg-guide-fullscreen{overflow:hidden!important;}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview.nslg-doc-expanded{
+  position:fixed!important;inset:clamp(5px,1vw,16px)!important;
+  width:auto!important;height:auto!important;max-width:none!important;max-height:none!important;
+  z-index:2147483000!important;display:flex!important;flex-direction:column!important;
+  box-shadow:0 0 0 100vmax rgba(18,32,45,.68),0 18px 50px rgba(0,0,0,.30)!important;
+  border-radius:12px!important;overflow:hidden!important;
+}
+body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview.nslg-doc-expanded > iframe{
+  flex:1 1 auto!important;height:0!important;min-height:0!important;border-radius:0!important;
+}
+@media(max-width:640px){
+ body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-head{padding:10px!important;}
+ body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview-tools{width:100%;margin-left:0;}
+ body.nslg-catalog.nslg-editorial #nslgExtraPanel .nslg-doc-preview > iframe{min-height:280px!important;}
+}
+/* v1.0.19 — Fixed screenshot submission notice in unified navigation. */
+body.nslg-shell.nslg-editorial{display:flex!important;flex-direction:column!important;}
+body.nslg-shell.nslg-editorial nav{
+  height:auto!important;min-height:83px!important;box-sizing:border-box!important;
+  flex:0 0 auto!important;flex-wrap:wrap!important;row-gap:4px!important;
+}
+body.nslg-shell.nslg-editorial #view{
+  height:auto!important;min-height:0!important;flex:1 1 auto!important;
+}
+body.nslg-shell.nslg-editorial nav .nslg-discord-note{
+  margin-left:auto;flex:0 1 590px;min-width:330px;padding:5px 12px;
+  border-left:3px solid #2C6391;background:#EFF6FC;border-radius:6px;
+  font-size:13px!important;line-height:1.43!important;font-weight:650!important;
+  color:#17344F!important;white-space:normal;
+}
+body.nslg-shell.nslg-editorial nav .nslg-discord-note span{display:block;}
+body.nslg-shell.nslg-editorial nav .nslg-discord-note strong{font-weight:850!important;color:#163B5C!important;}
+body.nslg-shell.nslg-editorial nav #collectorHealth{
+  max-width:170px!important;min-width:105px!important;margin-left:0!important;
+  font-size:12px!important;line-height:1.4!important;
+}
+@media(max-width:1150px){
+ body.nslg-shell.nslg-editorial nav .nslg-discord-note{flex:1 1 100%;order:4;margin:0!important;min-width:0;}
+ body.nslg-shell.nslg-editorial nav #collectorHealth{margin-left:auto!important;}
+}
+@media(max-width:640px){
+ body.nslg-shell.nslg-editorial nav{height:auto!important;min-height:0!important;padding:7px 9px!important;}
+ body.nslg-shell.nslg-editorial nav .nslg-discord-note{font-size:12px!important;padding:5px 8px;}
+}
+/* v1.0.21: compact GitHub public share control in the existing unified header. */
+body.nslg-shell.nslg-editorial nav #nslgPublicShareBtn{
+  font-size:12px!important;padding:8px 11px!important;min-height:35px!important;
+  color:#173C60!important;border-color:#B2C7D8!important;background:#EEF5FB!important;
+}
+body.nslg-shell.nslg-editorial nav #nslgPublicShareState{
+  margin-left:0!important;max-width:150px!important;min-width:75px;
+  font-size:12px!important;line-height:1.4!important;font-weight:650!important;
+}
+@media(max-width:1280px){
+ body.nslg-shell.nslg-editorial nav #nslgPublicShareBtn{order:2;}
+ body.nslg-shell.nslg-editorial nav #nslgPublicShareState{order:3;}
+}
